@@ -53,15 +53,7 @@ export function WorkoutList({
           delay={index}
         />
       ))}
-      <motion.p
-        layout
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center gap-2 rounded-full border-2 border-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground"
-      >
-        <Sparkles className="size-4 text-primary" />
-        Slide open for cues. Tap to lock a win.
-      </motion.p>
+      
     </motion.div>
   );
 }
