@@ -8,6 +8,8 @@ import { DashboardHeader } from "@/app/components/DashboardHeader";
 import { StatsGrid } from "@/app/components/StatsGrid";
 import { WorkoutList } from "@/app/components/WorkoutList";
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 interface DashboardProps {
   name: string;
   joinDate: string;
@@ -24,9 +26,7 @@ export function Dashboard({
   toggleComplete,
 }: DashboardProps) {
   const today = new Date();
-  const todayLabel = today.toLocaleDateString("en-US", {
-    weekday: "long",
-  });
+  const todayLabel = today.toLocaleDateString("en-US", { weekday: "long" });
   const focus =
     workoutPlan.schedule[todayLabel] ?? Object.values(workoutPlan.schedule)[0];
   const exercisesToday = workoutPlan.workouts[focus] ?? [];
@@ -47,7 +47,6 @@ export function Dashboard({
   const workoutsThisWeek = Object.values(workoutPlan.schedule).filter(
     (value) => value !== "Rest Day"
   ).length;
-  const hasExercises = exercisesToday.length > 0;
   const previewExercises = exercisesToday.slice(0, 3);
   const nextRestDay =
     Object.entries(workoutPlan.schedule).find(
@@ -77,10 +76,10 @@ export function Dashboard({
   return (
     <div className="min-h-screen bg-transparent text-foreground">
       <motion.main
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 pb-24 pt-10"
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-4 pb-24 pt-8 sm:px-6 lg:px-8"
       >
         <DashboardHeader
           name={name}
@@ -91,136 +90,111 @@ export function Dashboard({
           focus={focus}
           planName={workoutPlan.planName}
         />
-        <motion.section
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
-          className="grid gap-4 md:grid-cols-2"
-        >
-          <div className="neubrut-card bg-card px-6 py-6">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
-                  Up next
-                </p>
-                <h3 className="text-2xl font-semibold leading-tight">
-                  {focus}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {todayLabel} · {friendlyDate}
-                </p>
-              </div>
-              <span className="rounded-full border-2 border-border bg-secondary px-4 py-1 text-xs font-semibold uppercase tracking-wider">
-                {workoutPlan.planName}
-              </span>
-            </div>
-            <div className="mt-5 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
-              <SummaryStat
-                label="Moves today"
-                value={`${exercisesToday.length}`}
-              />
-              <SummaryStat
-                label="Weekly sessions"
-                value={`${workoutsThisWeek}`}
-              />
-              <SummaryStat label="Next rest" value={nextRestDay} />
-            </div>
-            {hasExercises ? (
-              <div className="mt-5">
-                <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
-                  First moves
-                </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {previewExercises.map((exercise) => (
-                    <span
-                      key={exercise.id}
-                      className="rounded-full border-2 border-border bg-white px-4 py-1 text-xs font-semibold"
-                    >
-                      {exercise.name}
-                    </span>
-                  ))}
-                  {exercisesToday.length > previewExercises.length ? (
-                    <span className="rounded-full border-2 border-dashed border-border/60 bg-muted px-4 py-1 text-xs text-muted-foreground">
-                      +{exercisesToday.length - previewExercises.length} more
-                    </span>
-                  ) : null}
-                </div>
-              </div>
-            ) : (
-              <p className="mt-5 rounded-2xl border-2 border-dashed border-border/70 bg-muted px-4 py-3 text-sm text-muted-foreground">
-                Recovery day. Walk, stretch, and hydrate.
-              </p>
-            )}
-          </div>
 
-          <div className="neubrut-card bg-secondary/40 px-6 py-6">
-            <div className="space-y-1">
-              <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
-                Week at a glance
-              </p>
-              <h3 className="text-xl font-semibold">Keep your rhythm easy</h3>
-            </div>
-            <div className="mt-4 space-y-3">
-              {upcomingBlocks.map(({ day, block }) => (
-                <div
-                  key={day}
-                  className="flex items-center justify-between rounded-2xl border-2 border-border bg-white px-4 py-3"
-                >
-                  <div>
-                    <p className="text-sm font-semibold">{day}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {day === todayLabel ? "Today" : "Next"}
-                    </p>
-                  </div>
-                  <span
-                    className={`rounded-full border-2 border-border px-3 py-1 text-xs font-semibold ${
-                      block === "Rest Day" ? "bg-muted" : "bg-accent/30"
-                    }`}
-                  >
-                    {block}
-                  </span>
+        <motion.section
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="space-y-6"
+        >
+          <StatsGrid
+            focus={focus}
+            progressPercent={progressPercent}
+            streakDays={streakDays}
+            workoutsThisWeek={workoutsThisWeek}
+            nextRestDay={nextRestDay}
+          />
+
+          <Tabs defaultValue="today" className="space-y-4">
+            <TabsList className="flex w-full justify-start gap-2 rounded-full bg-secondary/30 p-1 sm:w-fit">
+              <TabsTrigger
+                value="today"
+                className="flex-1 rounded-full px-4 py-1 text-sm sm:flex-none"
+              >
+                Today
+              </TabsTrigger>
+              <TabsTrigger
+                value="week"
+                className="flex-1 rounded-full px-4 py-1 text-sm sm:flex-none"
+              >
+                Week
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="today" className="mt-0">
+              <motion.div
+                key="today"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <WorkoutList
+                  exercises={exercisesToday}
+                  completedIds={completedExercises}
+                  dayLabel={todayLabel}
+                  onToggle={toggleComplete}
+                />
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="week" className="mt-0">
+              <motion.div
+                key="week"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="space-y-4"
+              >
+                <div className="space-y-1">
+                  <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
+                    Week glance
+                  </p>
+                  <h4 className="text-lg font-semibold text-foreground">
+                    Stay in rhythm
+                  </h4>
                 </div>
-              ))}
-            </div>
-            <p className="mt-4 rounded-2xl border-2 border-border bg-white px-4 py-3 text-sm font-medium">
-              Next deep rest lands on{" "}
-              <span className="text-primary">{nextRestDay}</span>. Pre-book it
-              like any other session.
-            </p>
-          </div>
+                <div className="space-y-3">
+                  {upcomingBlocks.map(({ day, block }) => (
+                    <motion.div
+                      key={day}
+                      whileHover={{ y: -2 }}
+                      className="flex items-center justify-between border-b border-border/60 py-3 last:border-b-0"
+                    >
+                      <div>
+                        <p className="text-sm font-semibold">{day}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {day === todayLabel ? "Today" : "Next"}
+                        </p>
+                      </div>
+                      <span className="text-xs font-semibold">
+                        {block}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+                <p className="text-sm font-medium">
+                  Next deep rest: <span className="text-primary">{nextRestDay}</span>.
+                </p>
+              </motion.div>
+            </TabsContent>
+          </Tabs>
         </motion.section>
 
-        <StatsGrid
-          focus={focus}
-          progressPercent={progressPercent}
-          streakDays={streakDays}
-          workoutsThisWeek={workoutsThisWeek}
-          nextRestDay={nextRestDay}
-        />
-
         <motion.section
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="space-y-3"
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="space-y-3 rounded-3xl border border-border/60 bg-white/60 px-4 py-6 shadow-lg shadow-black/5 backdrop-blur"
         >
-          <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
-              {format(new Date(), "MMM d, yyyy")}
-            </p>
-            <h3 className="text-2xl font-semibold text-foreground">
-              {todayLabel}&apos;s checklist
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Tick items as you go. Everything lives here—no PDFs, no guessing.
-            </p>
-          </div>
-          <WorkoutList
-            exercises={exercisesToday}
-            completedIds={completedExercises}
-            dayLabel={todayLabel}
-            onToggle={toggleComplete}
-          />
+          <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
+            {format(new Date(), "MMM d, yyyy")}
+          </p>
+          <h3 className="text-2xl font-semibold text-foreground">
+            {todayLabel}&apos;s checklist ✅
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Tick items as you go. Everything lives here—no PDFs, no guessing.
+          </p>
         </motion.section>
       </motion.main>
     </div>
