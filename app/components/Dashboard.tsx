@@ -143,7 +143,7 @@ export function Dashboard({
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="space-y-4"
+                className="space-y-4 rounded-2xl bg-secondary/20 p-4"
               >
                 <div className="space-y-1">
                   <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
@@ -158,7 +158,7 @@ export function Dashboard({
                     <motion.div
                       key={day}
                       whileHover={{ y: -2 }}
-                      className="flex items-center justify-between border-b border-border/60 py-3 last:border-b-0"
+                      className="flex items-center justify-between rounded-2xl border border-border bg-white px-4 py-3"
                     >
                       <div>
                         <p className="text-sm font-semibold">{day}</p>
@@ -166,14 +166,19 @@ export function Dashboard({
                           {day === todayLabel ? "Today" : "Next"}
                         </p>
                       </div>
-                      <span className="text-xs font-semibold">
+                      <span
+                        className={`rounded-full border border-border px-3 py-1 text-xs font-semibold ${
+                          block === "Rest Day" ? "bg-muted" : "bg-accent/40"
+                        }`}
+                      >
                         {block}
                       </span>
                     </motion.div>
                   ))}
                 </div>
-                <p className="text-sm font-medium">
-                  Next deep rest: <span className="text-primary">{nextRestDay}</span>.
+                <p className="rounded-2xl border border-border bg-white px-4 py-3 text-sm font-medium">
+                  Next deep rest:{" "}
+                  <span className="text-primary">{nextRestDay}</span>.
                 </p>
               </motion.div>
             </TabsContent>
