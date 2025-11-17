@@ -50,10 +50,11 @@ export function Onboarding({ onComplete }: OnboardingProps) {
             Quick start
           </p>
           <h1 className="mt-3 text-4xl font-semibold leading-tight">
-            Build your plan in two breezy steps
+            Create your plan in two simple steps
           </h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            Say your name, drop your PDF, and we mock the import for you.
+            Enter your name, upload your PDF, and we&apos;ll set up your workout
+            plan.
           </p>
         </motion.div>
 
@@ -74,15 +75,15 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                       Step 1 of 2
                     </p>
                     <h2 className="text-2xl font-semibold">
-                      What do we call you?
+                      What&apos;s your name?
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      Pops up on the dashboard header and streaks.
+                      This will appear on your dashboard and progress tracking.
                     </p>
                   </div>
                   <Input
                     autoFocus
-                    placeholder="Type your name"
+                    placeholder="Enter your name"
                     value={name}
                     onChange={(event) => setName(event.target.value)}
                     className="border-2 border-border"
@@ -92,7 +93,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                     disabled={!name.trim()}
                     onClick={() => setStep(2)}
                   >
-                    Continue
+                    Next
                   </Button>
                 </motion.div>
               ) : (
@@ -112,7 +113,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                       Upload your workout PDF
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      We mock the AI today, but the flow matches production.
+                      Upload a PDF of your workout plan to get started.
                     </p>
                   </div>
                   <label className="flex cursor-pointer flex-col items-center gap-3 rounded-3xl border-2 border-dashed border-border bg-secondary/40 px-4 py-10 text-center transition hover:-translate-y-0.5">
@@ -125,10 +126,10 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                     )}
                     <span className="text-base font-semibold text-primary">
                       {isUploading
-                        ? "Reading your plan..."
+                        ? "Processing your plan..."
                         : isComplete
-                        ? "Plan imported"
-                        : "Drop or tap to upload"}
+                        ? "Plan uploaded"
+                        : "Drop or click to upload"}
                     </span>
                     <span className="text-xs text-muted-foreground">
                       {fileName}
@@ -161,7 +162,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                         })
                       }
                     >
-                      Use sample plan
+                      Use Beginner plan
                     </Button>
                   </div>
                 </motion.div>
