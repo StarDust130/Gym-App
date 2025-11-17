@@ -1,5 +1,3 @@
-"use client";
-
 import { differenceInDays, format } from "date-fns";
 import { motion } from "framer-motion";
 
@@ -47,7 +45,7 @@ export function Dashboard({
   const workoutsThisWeek = Object.values(workoutPlan.schedule).filter(
     (value) => value !== "Rest Day"
   ).length;
-  const previewExercises = exercisesToday.slice(0, 3);
+
   const nextRestDay =
     Object.entries(workoutPlan.schedule).find(
       ([, value]) => value === "Rest Day"
@@ -62,16 +60,7 @@ export function Dashboard({
     "Friday",
     "Saturday",
   ];
-  const todayIndex = weekDays.indexOf(todayLabel);
-  const upcomingBlocks = Array.from({ length: 3 }).map((_, index) => {
-    const dayIndex =
-      todayIndex === -1 ? index : (todayIndex + index) % weekDays.length;
-    const dayName = weekDays[dayIndex];
-    return {
-      day: dayName,
-      block: workoutPlan.schedule[dayName] ?? "Rest Day",
-    };
-  });
+
 
   return (
     <div className="min-h-screen bg-transparent text-foreground">
@@ -165,7 +154,7 @@ export function Dashboard({
               whileHover={{ y: -2 }}
               className={`flex items-center justify-between rounded-2xl border px-4 py-3 shadow-md ${
               isToday
-          ? "border-primary bg-gradient-to-r from-primary/20 to-primary/10 shadow-primary/20 ring-2 ring-primary/30"
+          ? "border-primary bg-linear-to-r from-primary/20 to-primary/10 shadow-primary/20 ring-2 ring-primary/30"
           : "border-border bg-white"
               }`}
               >
@@ -223,13 +212,3 @@ function buildGreeting() {
   return "Good evening 🔥";
 }
 
-function SummaryStat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border-2 border-border bg-white px-4 py-4 text-center shadow-[4px_4px_0_var(--border)]">
-      <p className="text-2xl font-semibold text-primary">{value}</p>
-      <p className="text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
-        {label}
-      </p>
-    </div>
-  );
-}
