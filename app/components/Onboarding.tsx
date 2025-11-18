@@ -1,4 +1,6 @@
-import { useState, type ChangeEvent } from "react";
+"use client";
+
+import { useState, type ChangeEvent, KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Loader2, UploadCloud } from "lucide-react";
 
@@ -14,30 +16,76 @@ type OnboardingProps = {
 export function Onboarding({ onComplete }: OnboardingProps) {
   const [step, setStep] = useState(1);
   const [name, setName] = useState("");
-  const [fileName, setFileName] = useState("Drop your PDF or tap to upload");
+  const [fileName, setFileName] = useState(
+    "Upload an image of your workout plan"
+  );
   const [isUploading, setIsUploading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 
-  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
+  // ----------------------------- FILE HANDLER -----------------------------
+  const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file) {
-      setFileName("Drop your PDF or tap to upload");
-      return;
-    }
+    if (!file) return;
+
     setFileName(file.name);
     setIsUploading(true);
     setIsComplete(false);
 
-    setTimeout(() => {
+    // ❌ Reject PDFs
+    if (file.type === "application/pdf") {
       setIsUploading(false);
-      setIsComplete(true);
-      onComplete({ name: name.trim(), plan: MOCK_WORKOUT_PLAN });
-    }, 1800);
+      setFileName(
+        "❌ PDF not supported — take screenshot and upload the IMAGE"
+      );
+      return;
+    }
+
+    // Convert image to base64
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      try {
+        const base64 = reader.result as string;
+
+        const res = await fetch("/api/parse-image", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: base64 }),
+        });
+
+        const json = await res.json();
+
+        if (!json.ok) {
+          setIsUploading(false);
+          setFileName("❌ This doesn’t look like a workout plan");
+          return;
+        }
+
+        localStorage.setItem("workoutPlan", JSON.stringify(json.data));
+
+        setIsUploading(false);
+        setIsComplete(true);
+
+        onComplete({ name: name.trim(), plan: json.data });
+      } catch (err) {
+        setIsUploading(false);
+        setFileName("❌ Upload failed");
+      }
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  // ENTER key on name input
+  const handleEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && name.trim()) {
+      setStep(2);
+    }
   };
 
   return (
-    <div className="min-h-screen px-4 py-10 text-foreground">
-      <div className="mx-auto max-w-md space-y-6">
+    <div className="min-h-screen px-4 py-10 flex items-center justify-center text-foreground">
+      <div className="w-full max-w-md space-y-6">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,19 +95,20 @@ export function Onboarding({ onComplete }: OnboardingProps) {
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
             Quick start
           </p>
-          <h1 className="mt-3 text-4xl font-semibold leading-tight">
-            Create your plan in two simple steps
+          <h1 className="mt-3 text-3xl font-semibold leading-tight">
+            Create your plan fast
           </h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            Enter your name, upload your PDF, and we&apos;ll set up your workout
-            plan.
+            Enter your name and upload your workout plan image.
           </p>
         </motion.div>
 
+        {/* Card */}
         <Card className="neubrut-card bg-card">
           <CardContent className="p-6">
             <AnimatePresence mode="wait">
               {step === 1 ? (
+                // ------------------------ STEP 1 ------------------------
                 <motion.div
                   key="step-one"
                   initial={{ opacity: 0, y: 20 }}
@@ -76,16 +125,19 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                       What&apos;s your name?
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      This will appear on your dashboard and progress tracking.
+                      This will appear on your dashboard.
                     </p>
                   </div>
+
                   <Input
                     autoFocus
                     placeholder="Enter your name"
                     value={name}
-                    onChange={(event) => setName(event.target.value)}
+                    onChange={(e) => setName(e.target.value)}
+                    onKeyDown={handleEnter}
                     className="border-2 border-border"
                   />
+
                   <Button
                     className="w-full border-2 border-border bg-primary text-primary-foreground shadow-[4px_4px_0_var(--border)] hover:bg-primary/90"
                     disabled={!name.trim()}
@@ -95,6 +147,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                   </Button>
                 </motion.div>
               ) : (
+                // ------------------------ STEP 2 ------------------------
                 <motion.div
                   key="step-two"
                   initial={{ opacity: 0, y: 20 }}
@@ -108,12 +161,13 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                       Step 2 of 2
                     </p>
                     <h2 className="text-2xl font-semibold">
-                      Upload your workout PDF
+                      Upload your workout image
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      Upload a PDF of your workout plan to get started.
+                      PDFs not supported — take a screenshot & upload the photo.
                     </p>
                   </div>
+
                   <label className="flex cursor-pointer flex-col items-center gap-3 rounded-3xl border-2 border-dashed border-border bg-secondary/40 px-4 py-10 text-center transition hover:-translate-y-0.5">
                     {isUploading ? (
                       <Loader2 className="size-10 animate-spin text-primary" />
@@ -122,24 +176,28 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                     ) : (
                       <UploadCloud className="size-10 text-primary" />
                     )}
+
                     <span className="text-base font-semibold text-primary">
                       {isUploading
-                        ? "Processing your plan..."
+                        ? "Processing..."
                         : isComplete
                         ? "Plan uploaded"
-                        : "Drop or click to upload"}
+                        : "Drop or tap to upload"}
                     </span>
+
                     <span className="text-xs text-muted-foreground">
                       {fileName}
                     </span>
+
                     <Input
                       type="file"
-                      accept="application/pdf"
+                      accept="image/*,application/pdf"
                       className="sr-only"
                       disabled={isUploading}
                       onChange={handleFileUpload}
                     />
                   </label>
+
                   <div className="flex gap-2 text-sm">
                     <Button
                       variant="ghost"
@@ -148,19 +206,6 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                       disabled={isUploading}
                     >
                       Back
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="flex-1 border-2 border-border bg-primary text-primary-foreground shadow-[4px_4px_0_var(--border)] hover:bg-primary/90"
-                      disabled={isUploading}
-                      onClick={() =>
-                        onComplete({
-                          name: name.trim(),
-                          plan: MOCK_WORKOUT_PLAN,
-                        })
-                      }
-                    >
-                      Use Beginner plan
                     </Button>
                   </div>
                 </motion.div>
