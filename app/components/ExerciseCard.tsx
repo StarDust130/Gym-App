@@ -89,20 +89,15 @@ export function ExerciseCard({
       .filter(Boolean);
   }, [tip]);
 
-  // FIX: Remove `loadingTip` from here.
-  // The box will ONLY show if we have actual lines or an error.
-  // This prevents the box from appearing briefly and disappearing if data is empty.
-  const shouldShowTips = tipLines.length > 0 || !!tipError;
+  // Only show tips box if accordion is open and tips or error are present
+  const shouldShowTips = isOpen && (tipLines.length > 0 || !!tipError);
 
   return (
     <motion.div
-      // LAG FIX: Removed `layout` prop here.
-      // The parent WorkoutList handles the position reordering.
-      // Including `layout` here causes conflicts with Accordion height animation.
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, delay: delay * 0.03 }}
-      whileHover={{ scale: 1.005 }} // Reduced scale slightly for smoother feel
+      whileHover={{ scale: 1.005 }}
       className="rounded-3xl"
     >
       <Accordion
@@ -143,8 +138,12 @@ export function ExerciseCard({
             </div>
 
             {shouldShowTips && (
-              // Added simple fade-in animation for when content arrives
-              <div className="mt-5 animate-in fade-in slide-in-from-top-2 duration-500 rounded-2xl border-2 border-border/70 bg-white/80 p-4 shadow-[3px_3px_0_var(--border)]">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35 }}
+                className="mt-5 rounded-2xl border-2 border-border/70 bg-white/80 p-4 shadow-[3px_3px_0_var(--border)]"
+              >
                 <div className="mb-2 flex items-center justify-between">
                   <p className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">
                     Quick tips
@@ -168,7 +167,7 @@ export function ExerciseCard({
                     ))}
                   </ul>
                 )}
-              </div>
+              </motion.div>
             )}
           </AccordionContent>
         </AccordionItem>
