@@ -24,14 +24,14 @@ export function WorkoutList({
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md mx-auto"
+        className="w-full px-3 sm:px-6"
       >
-        <Card className="border-none bg-gradient-to-br from-primary/15 via-background to-background shadow-lg rounded-3xl">
-          <CardContent className="text-center px-6 py-10 space-y-3">
-            <p className="text-2xl font-semibold text-foreground">
+        <Card className="border-none bg-gradient-to-br from-primary/15 via-background to-background shadow-lg rounded-2xl sm:rounded-3xl overflow-hidden">
+          <CardContent className="text-center px-4 py-8 sm:px-6 sm:py-12 space-y-2 sm:space-y-3">
+            <p className="text-xl sm:text-2xl font-semibold text-foreground leading-tight">
               {dayLabel} reset mode
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-xs mx-auto">
               Light walks, big exhales, solid fuel. Still training.
             </p>
           </CardContent>
@@ -50,7 +50,7 @@ export function WorkoutList({
   return (
     <motion.div
       layout
-      className="space-y-3 sm:space-y-4 w-full max-w-3xl mx-auto px-2 sm:px-0"
+      className="space-y-2.5 sm:space-y-3 md:space-y-4 w-full max-w-3xl mx-auto px-2 sm:px-4 md:px-6 pb-6 sm:pb-8"
     >
       {sortedExercises.map((exercise, index) => {
         const completed = completedSet.has(exercise.id);
@@ -58,7 +58,14 @@ export function WorkoutList({
           <motion.div
             key={exercise.id}
             layout
-            transition={{ type: "spring", duration: 0.45, bounce: 0.2 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              type: "spring", 
+              duration: 0.45, 
+              bounce: 0.2,
+              delay: index * 0.05
+            }}
           >
             <ExerciseCard
               exercise={exercise}
