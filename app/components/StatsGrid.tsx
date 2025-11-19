@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import {  CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useMemo, useState, useEffect } from "react";
-import { createPortal } from "react-dom"; // Import createPortal
+import { createPortal } from "react-dom";
 import {
   RotateCcw,
   Timer as TimerIcon,
@@ -25,7 +25,6 @@ const emojis = ["🐥", "💪", "🔥", "⚡", "🎯", "🚀", "⭐", "🏋️",
 const WORKOUT_DURATION = 45 * 60; // 45 minutes
 
 // --- Helper Hook: Get Window Size ---
-// This ensures confetti covers the full viewport
 function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
     width: 0,
@@ -33,18 +32,14 @@ function useWindowSize() {
   });
 
   useEffect(() => {
-    // Handler to call on window resize
     function handleResize() {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
     }
-    // Add event listener
     window.addEventListener("resize", handleResize);
-    // Call handler right away so state gets updated with initial window size
     handleResize();
-    // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -56,16 +51,18 @@ export function StatsGrid(props: StatsGridProps) {
   const [timeLeft, setTimeLeft] = useState(WORKOUT_DURATION);
   const [isActive, setIsActive] = useState(false);
   const [startTime, setStartTime] = useState<string | null>(null);
+
+  // NEW: Add state for End Time
+  const [endTime, setEndTime] = useState<string | null>(null);
+
   const [completionDuration, setCompletionDuration] = useState<string | null>(
     null
   );
   const [showConfetti, setShowConfetti] = useState(false);
-  const [mounted, setMounted] = useState(false); // For portal safety
+  const [mounted, setMounted] = useState(false);
 
-  // Get window dimensions for fullscreen confetti
   const { width, height } = useWindowSize();
 
-  // --- Emoji Logic ---
   const dailyEmoji = useMemo(() => {
     const today = new Date().toDateString();
     const seed = today
@@ -74,7 +71,6 @@ export function StatsGrid(props: StatsGridProps) {
     return emojis[seed % emojis.length];
   }, []);
 
-  // --- 100% Completion Logic ---
   const isFinished = props.progressPercent >= 100;
 
   useEffect(() => {
@@ -93,9 +89,17 @@ export function StatsGrid(props: StatsGridProps) {
       const durationString = `${m} min ${s > 0 ? `${s}s` : ""}`;
 
       setCompletionDuration(durationString);
-      setShowConfetti(true);
 
-      // Hide confetti after 5 seconds
+      // NEW: Capture the End Time
+      setEndTime(
+        new Date().toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        })
+      );
+
+      setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 5000);
     }
   }, [isFinished, isActive, timeLeft]);
@@ -131,6 +135,7 @@ export function StatsGrid(props: StatsGridProps) {
     setIsActive(false);
     setTimeLeft(WORKOUT_DURATION);
     setStartTime(null);
+    setEndTime(null); // NEW: Reset End Time
     setCompletionDuration(null);
     setShowConfetti(false);
   };
@@ -164,9 +169,6 @@ export function StatsGrid(props: StatsGridProps) {
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="mx-auto max-w-sm font-sans relative"
     >
-      {/* PORTAL: This breaks the confetti out of the 'motion.div' stacking context
-         and renders it directly into the document body.
-      */}
       {mounted &&
         showConfetti &&
         createPortal(
@@ -256,10 +258,17 @@ export function StatsGrid(props: StatsGridProps) {
                     key="finished"
                     initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-1.5 text-xs font-bold text-emerald-600"
+                    // Changed layout to flex-col to stack the duration and the timestamps
+                    className="flex flex-col items-center text-emerald-600"
                   >
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    Completed in {completionDuration}
+                    <div className="flex items-center gap-1.5 text-xs font-bold">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      Completed in {completionDuration}
+                    </div>
+                    {/* NEW: Display Start Time - End Time */}
+                    <span className="text-[10px] font-medium opacity-80 mt-0.5">
+                      {startTime} - {endTime}
+                    </span>
                   </motion.div>
                 ) : isActive ? (
                   <motion.div
