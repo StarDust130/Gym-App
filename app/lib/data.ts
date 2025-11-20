@@ -74,12 +74,23 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/LEG-EXTENSION.gif",
         ],
         video: [
-          "https://youtube.com/embed/EotSw18oR9w",
+          "https://youtube.com/embed/pCLf-OeSMtQ",
           "https://youtube.com/embed/iQ92TuvBqRo",
         ],
       },
       {
         id: "lb-4",
+        name: "Leg curl",
+        reps: "20-15",
+        sets: "2-3",
+        note: null,
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif",
+        ],
+        video: ["https://youtube.com/embed/_lgE0gPvbik"],
+      },
+      {
+        id: "lb-5",
         name: "Standing calf",
         reps: "20-15",
         sets: "2-3",
@@ -91,7 +102,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: ["https://youtube.com/embed/wdOkFomQNp8"],
       },
       {
-        id: "lb-5",
+        id: "lb-6",
         name: "Seated calf",
         reps: "20-15",
         sets: "2-3",
@@ -100,17 +111,6 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://burnfit.io/wp-content/uploads/2023/11/SEAT_CALF_RAISE.gif",
         ],
         video: ["https://youtube.com/embed/S2yhz3klwdU"],
-      },
-      {
-        id: "lb-6",
-        name: "Leg curl",
-        reps: "20-15",
-        sets: "2-3",
-        note: null,
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif",
-        ],
-        video: ["https://youtube.com/embed/_lgE0gPvbik"],
       },
       {
         id: "lb-7",

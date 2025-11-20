@@ -278,17 +278,37 @@ export function ExerciseCard({
                     <div
                       ref={videoScrollRef}
                       onScroll={handleVideoScroll}
-                      className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+                      className={`
+        pb-4 scrollbar-hide
+        ${
+          (exercise.video?.length ?? 0) === 1
+            ? "w-full" // full width
+            : "flex gap-4 overflow-x-auto snap-x snap-mandatory"
+        }
+      `}
                     >
                       {exercise.video.map((vid, idx) => (
                         <div
                           key={idx}
-                          className="snap-center shrink-0 w-56 sm:w-64 first:ml-2 last:mr-2"
+                          className={`
+            ${
+              (exercise.video?.length ?? 0) === 1
+                ? "w-full" // full width card
+                : "snap-center shrink-0 w-56 sm:w-64 first:ml-2 last:mr-2"
+            }
+          `}
                         >
                           <iframe
                             ref={(el) => (videoRefs.current[idx] = el)}
                             src={`${vid}?mute=1&controls=1&enablejsapi=1`}
-                            className="w-full aspect-9/16 rounded-xl border-2 border-border shadow-[3px_3px_0_var(--border)] bg-black"
+                            className={`
+              rounded-xl border-2 border-border shadow-[3px_3px_0_var(--border)] bg-black
+              ${
+                (exercise.video?.length ?? 0) === 1
+                  ? "w-full aspect-9/16" // full width 16:9 look
+                  : "w-full aspect-9/16" // vertical shorts layout
+              }
+            `}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                           />
