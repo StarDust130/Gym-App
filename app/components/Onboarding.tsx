@@ -146,52 +146,69 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                     Next
                   </Button>
                 </motion.div>
-              ) : (// ------------------------ STEP 2 ------------------------
-<motion.div
-  key="step-two"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  exit={{ opacity: 0, y: -20 }}
-  transition={{ duration: 0.35 }}
-  className="space-y-6"
->
-  <div className="space-y-2">
-    <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-      Step 2 of 2
-    </p>
-    <h2 className="text-2xl font-semibold">Start your plan</h2>
-    <p className="text-sm text-muted-foreground">
-      No need to upload anything — begin immediately with the Beginner Plan.
-    </p>
-  </div>
+              ) : (
+                // ------------------------ STEP 2 ------------------------
+                <motion.div
+                  key="step-two"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.35 }}
+                  className="space-y-6"
+                >
+                  <div className="space-y-2">
+                    <p className="text-sm font-semibold uppercase tracking-wide text-primary">
+                      Step 2 of 2
+                    </p>
+                    <h2 className="text-2xl font-semibold">
+                      Upload your workout image
+                    </h2>
+                    <p className="text-sm text-muted-foreground">
+                      PDFs not supported — take a screenshot & upload the photo.
+                    </p>
+                  </div>
 
-  {/* ⭐ Start with Beginner Plan button */}
-  <Button
-    className="w-full border-2 border-border bg-primary text-primary-foreground shadow-[4px_4px_0_var(--border)] hover:bg-primary/90"
-    onClick={() => {
-      localStorage.setItem("workoutPlan", JSON.stringify(MOCK_WORKOUT_PLAN));
-      onComplete({ name: name.trim(), plan: MOCK_WORKOUT_PLAN });
-    }}
-  >
-    Start with Beginner Plan
-  </Button>
+                  <label className="flex cursor-pointer flex-col items-center gap-3 rounded-3xl border-2 border-dashed border-border bg-secondary/40 px-4 py-10 text-center transition hover:-translate-y-0.5">
+                    {isUploading ? (
+                      <Loader2 className="size-10 animate-spin text-primary" />
+                    ) : isComplete ? (
+                      <CheckCircle2 className="size-10 text-primary" />
+                    ) : (
+                      <UploadCloud className="size-10 text-primary" />
+                    )}
 
-  {/* Optional Upload (disabled visually) */}
-  <div className="text-center text-xs text-muted-foreground">
-    (Upload removed — Beginner Plan selected automatically)
-  </div>
+                    <span className="text-base font-semibold text-primary">
+                      {isUploading
+                        ? "Processing..."
+                        : isComplete
+                        ? "Plan uploaded"
+                        : "Drop or tap to upload"}
+                    </span>
 
-  <div className="flex gap-2 text-sm">
-    <Button
-      variant="ghost"
-      className="flex-1 border-2 border-border bg-white shadow-[4px_4px_0_var(--border)]"
-      onClick={() => setStep(1)}
-    >
-      Back
-    </Button>
-  </div>
-</motion.div>
+                    <span className="text-xs text-muted-foreground">
+                      {fileName}
+                    </span>
 
+                    <Input
+                      type="file"
+                      accept="image/*,application/pdf"
+                      className="sr-only"
+                      disabled={isUploading}
+                      onChange={handleFileUpload}
+                    />
+                  </label>
+
+                  <div className="flex gap-2 text-sm">
+                    <Button
+                      variant="ghost"
+                      className="flex-1 border-2 border-border bg-white shadow-[4px_4px_0_var(--border)]"
+                      onClick={() => setStep(1)}
+                      disabled={isUploading}
+                    >
+                      Back
+                    </Button>
+                  </div>
+                </motion.div>
               )}
             </AnimatePresence>
           </CardContent>
