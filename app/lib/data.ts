@@ -38,10 +38,10 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "2-3",
         note: "Use own body weight for 1st week, then Dumbbells.",
         image: [
-          "https://training.fit/wp-content/uploads/2020/03/kniebeugen-1024x573.png",
+          "https://www.inspireusafoundation.org/file/2021/06/bodyweight-squat.gif",
           "https://www.wikihow.com/images/thumb/b/b1/Do-Free-Squats-Step-11-Version-2.jpg/aid3265293-v4-728px-Do-Free-Squats-Step-11-Version-2.jpg.webp",
-          "https://hips.hearstapps.com/hmg-prod/images/goblet-squat-1594986802.jpg?resize=980:*",
-          "https://training.fit/wp-content/uploads/2020/03/kniebeugen-kurzhanteln-1024x573.png",
+          "https://www.inspireusafoundation.org/file/2021/10/dumbbell-sumo-squat.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2023/09/Dumbbell-Squat.gif",
         ],
         video: [
           "https://www.youtube.com/embed/-5LhNSMBrEs",
