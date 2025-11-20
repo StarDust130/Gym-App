@@ -59,7 +59,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://c.tenor.com/wTulE6li6AEAAAAd/tenor.gif",
         ],
         video: [
-          "https://youtube.com/embed/BYe4uyGF-h4",
+          "https://youtube.com/embed/38xlLGfguz4",
           "https://youtube.com/embed/HIM0GrawvAU",
         ],
       },
