@@ -215,9 +215,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "2-3",
         note: null,
         image: [
-          "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop&q=60",
+          "https://liftmanual.com/wp-content/uploads/2023/04/dumbbell-seated-external-rotation.jpg",
         ],
-        video: [],
+        video: ["https://youtube.com/embed/Nhq49UJefwI"],
       },
       {
         id: "ub-9",
@@ -226,9 +226,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "2-3",
         note: "Start Back extension after 15 days.",
         image: [
-          "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?w=800&auto=format&fit=crop&q=60",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman-exercise.gif",
+          "https://www.inspireusafoundation.org/file/2022/04/weighted-hyperextension.gif",
         ],
-        video: [],
+        video: [
+          "https://youtube.com/embed/VD6ma6oe4ZA",
+          "https://youtube.com/embed/Wpreb69h2fE",
+        ],
       },
       {
         id: "ub-10",
@@ -237,9 +241,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "2-3",
         note: "Start in Week 1.",
         image: [
-          "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop&q=60",
+          "https://newlife.com.cy/wp-content/uploads/2019/11/23211301-Dumbbell-Standing-Inner-Biceps-Curl-version-2_Upper-Arms_360.gif",
         ],
-        video: [],
+        video: ["https://youtube.com/embed/_aoad2yuP5w"],
       },
       {
         id: "ub-11",
