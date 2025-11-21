@@ -286,7 +286,6 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         image: [
           "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/shoulder-roll-stretch-and-exercise-gif.gif?w=1845",
           "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/overhead-arm-reach-stretch-gif.gif?w=1845",
-          "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/cat-cow-pose-stretch-and-exercise-gif.gif?w=1845",
           "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/wall-stretch-exercise-gif.gif?w=1845",
           "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/neck-flexion-stretch-and-exercise-gif.gif?w=1845",
         ],
