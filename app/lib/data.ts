@@ -129,9 +129,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "ub-1",
         name: "Lats pull down",
-        reps: "20-15",
-        sets: "2-3",
-        note: "Start in Week 1.",
+        reps: "10-12",
+        sets: "2",
+        note: "Pull to upper chest. Keep elbows down.",
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lat-Pulldown.gif",
         ],
@@ -140,9 +140,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "ub-2",
         name: "Supported Low row / Seated row M/C",
-        reps: "20-15",
-        sets: "2-3",
-        note: "Use M/C in Week 2.",
+        reps: "10-12",
+        sets: "2",
+        note: "Focus on squeezing shoulder blades.",
         image: [
           "https://c.tenor.com/2NYcfHsikFcAAAAd/tenor.gif",
           "https://i.pinimg.com/originals/a0/1e/6e/a01e6e9ac81f3e913ec42ec5802c13a3.gif",
@@ -154,21 +154,21 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
       {
         id: "ub-3",
-        name: "Shrugs DB",
-        reps: "20-15",
-        sets: "2-3",
-        note: null,
+        name: "Overhead press DB",
+        reps: "8-10",
+        sets: "2",
+        note: "Beginner shoulder-safe range.",
         image: [
-          "https://cdn.shopify.com/s/files/1/0547/0486/5477/files/dumbbell-shrug_480x480.gif?v=1701426774",
+          "https://fitnessprogramer.com/wp-content/uploads/2023/09/Standing-Dumbbell-Overhead-Press.gif",
         ],
-        video: ["https://youtube.com/embed/rFsSeClGnNA"],
+        video: ["https://youtube.com/embed/eNMl9UoO7YA"],
       },
       {
         id: "ub-4",
         name: "Flat DB Press",
-        reps: "20-15",
-        sets: "2-3",
-        note: null,
+        reps: "10-12",
+        sets: "2",
+        note: "Control weight on the way down.",
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press.gif",
         ],
@@ -177,9 +177,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "ub-5",
         name: "Incline DB Press",
-        reps: "20-15",
-        sets: "2-3",
-        note: "Start in Week 1.",
+        reps: "10",
+        sets: "2",
+        note: "Keep elbows 45°; avoid flaring.",
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif",
         ],
@@ -187,33 +187,32 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
       {
         id: "ub-6",
-        name: "Overhead press DB",
-        reps: "20-15",
-        sets: "2-3",
-        note: null,
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2023/09/Standing-Dumbbell-Overhead-Press.gif",
-        ],
-        video: ["https://youtube.com/embed/eNMl9UoO7YA"],
-      },
-      {
-        id: "ub-7",
         name: "Incline M/C Press (optional)",
-        reps: "20-15",
-        sets: "2-3",
-        note: "Start in Week 2.",
+        reps: "10",
+        sets: "1-2",
+        note: "Do only if energy left.",
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Chest-Press-Machine.gif",
         ],
         video: ["https://youtube.com/embed/hkU6fSHcslw"],
       },
-
+      {
+        id: "ub-7",
+        name: "Shrugs DB",
+        reps: "12-15",
+        sets: "2",
+        note: "Lift shoulders straight up, not in circles.",
+        image: [
+          "https://cdn.shopify.com/s/files/1/0547/0486/5477/files/dumbbell-shrug_480x480.gif?v=1701426774",
+        ],
+        video: ["https://youtube.com/embed/rFsSeClGnNA"],
+      },
       {
         id: "ub-8",
         name: "External rotation DB",
-        reps: "20-15",
-        sets: "2-3",
-        note: null,
+        reps: "12-15",
+        sets: "2",
+        note: "Very slow, very light weight. Protects shoulders.",
         image: [
           "https://liftmanual.com/wp-content/uploads/2023/04/dumbbell-seated-external-rotation.jpg",
         ],
@@ -222,9 +221,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "ub-9",
         name: "Superman / Back extension",
-        reps: "20-15",
-        sets: "2-3",
-        note: "Start Back extension after 15 days.",
+        reps: "12-15",
+        sets: "2",
+        note: "Lift chest gently; don’t over-arch.",
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman-exercise.gif",
           "https://www.inspireusafoundation.org/file/2022/04/weighted-hyperextension.gif",
@@ -237,9 +236,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "ub-10",
         name: "Supination DB curl",
-        reps: "20-15",
-        sets: "2-3",
-        note: "Start in Week 1.",
+        reps: "10-12",
+        sets: "2",
+        note: "Rotate wrist at the top for full bicep peak.",
         image: [
           "https://newlife.com.cy/wp-content/uploads/2019/11/23211301-Dumbbell-Standing-Inner-Biceps-Curl-version-2_Upper-Arms_360.gif",
         ],
@@ -248,9 +247,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "ub-11",
         name: "Biceps curl",
-        reps: "20-15",
-        sets: "2-3",
-        note: "Start in Week 2.",
+        reps: "10-12",
+        sets: "2",
+        note: "Don’t swing. Keep elbows locked to sides.",
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Curl.gif",
         ],
@@ -259,9 +258,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "ub-12",
         name: "Triceps push down cable",
-        reps: "20-15",
-        sets: "2-3",
-        note: null,
+        reps: "10-12",
+        sets: "2",
+        note: "Keep elbows fixed; push only with triceps.",
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif",
         ],
@@ -270,9 +269,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "ub-13",
         name: "Forearm Gorilla Gripper",
-        reps: "20-15",
-        sets: "2-3",
-        note: null,
+        reps: "12-15",
+        sets: "2",
+        note: "Squeeze slowly; don’t rush the reps.",
         image: [
           "https://5.imimg.com/data5/SELLER/Default/2021/10/GI/IC/WX/13678780/gorilla-gripper-1000x1000.jpg",
         ],
@@ -281,9 +280,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "ub-14",
         name: "Upper body stretch",
-        reps: "N/A",
+        reps: "30-40s",
         sets: "1",
-        note: "Hold each stretch for 30s.",
+        note: "Slow cool-down. Hold each stretch gently.",
         image: [
           "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/shoulder-roll-stretch-and-exercise-gif.gif?w=1845",
           "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/overhead-arm-reach-stretch-gif.gif?w=1845",
@@ -294,6 +293,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: [],
       },
     ],
+
     "Cardio & Abs": [
       {
         id: "ca-1",
