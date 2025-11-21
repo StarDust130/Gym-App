@@ -301,9 +301,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "2-3",
         note: null,
         image: [
-          "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&auto=format&fit=crop&q=60",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Sit-ups.gif",
         ],
-        video: [],
+        video: ["https://youtube.com/embed/qXpYgvQ6_m4"],
       },
       {
         id: "ca-2",
@@ -312,9 +312,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "2-3",
         note: null,
         image: [
-          "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&auto=format&fit=crop&q=60",
+          "https://homeworkouts.org/wp-content/uploads/anim-oblique-crunches.gif",
         ],
-        video: [],
+        video: ["https://youtube.com/embed/f06w3nrXeEQ"],
       },
       {
         id: "ca-3",
@@ -323,9 +323,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "2-3",
         note: null,
         image: [
-          "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&auto=format&fit=crop&q=60",
+          "https://www.inspireusafoundation.org/file/2022/12/captains-chair-leg-raise.gif",
         ],
-        video: [],
+        video: ["https://youtube.com/embed/FijNSgahpz0"],
       },
       {
         id: "ca-4",
@@ -334,9 +334,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "2-3",
         note: null,
         image: [
-          "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&auto=format&fit=crop&q=60",
+          "https://www.kettlebellkings.com/cdn/shop/articles/russian-twist_cf5b5524-a334-4364-9cb9-54b5a04962d9.gif?v=1739267488&width=1000",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/05/Dumbbell-Side-Bend.gif",
         ],
-        video: [],
+        video: [
+          "https://youtube.com/embed/iFQV6q4xRXM",
+          "https://youtube.com/embed/44DazvtgpGE",
+        ],
       },
       {
         id: "ca-5",
@@ -344,10 +348,8 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "30-60s",
         sets: "2-3",
         note: null,
-        image: [
-          "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&auto=format&fit=crop&q=60",
-        ],
-        video: [],
+        image: ["https://www.inspireusafoundation.org/file/2022/01/plank.gif"],
+        video: ["https://youtube.com/embed/xe2MXatLTUw"],
       },
       {
         id: "ca-6",
@@ -356,7 +358,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "1",
         note: null,
         image: [
-          "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?w=800&auto=format&fit=crop&q=60",
+          "https://media.tenor.com/YcE7CHM_HCsAAAAm/bubu-exercise-bubu-stretching.webp",
         ],
         video: [],
       },
