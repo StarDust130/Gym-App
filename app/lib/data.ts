@@ -305,6 +305,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         ],
         video: ["https://youtube.com/embed/qXpYgvQ6_m4"],
       },
+
       {
         id: "ca-2",
         name: "Leg raise",
@@ -316,6 +317,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         ],
         video: ["https://youtube.com/embed/FijNSgahpz0"],
       },
+
       {
         id: "ca-3",
         name: "Side crunch",
@@ -327,6 +329,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         ],
         video: ["https://youtube.com/embed/f06w3nrXeEQ"],
       },
+
       {
         id: "ca-4",
         name: "Russian twists (legs on floor) / Side bend DB",
@@ -342,6 +345,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://youtube.com/embed/44DazvtgpGE",
         ],
       },
+
       {
         id: "ca-5",
         name: "Plank",
@@ -351,6 +355,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         image: ["https://www.inspireusafoundation.org/file/2022/01/plank.gif"],
         video: ["https://youtube.com/embed/xe2MXatLTUw"],
       },
+
       {
         id: "ca-6",
         name: "Stretching",
@@ -361,6 +366,20 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://media.tenor.com/YcE7CHM_HCsAAAAm/bubu-exercise-bubu-stretching.webp",
         ],
         video: [],
+      },
+
+      // ⭐ NEW: Cardio finisher added at end
+      {
+        id: "ca-7",
+        name: "Light Cardio (Cycling / Treadmill)",
+        reps: "10 minutes",
+        sets: "1",
+        note: "Keep pace easy; just warm and steady.",
+        image: [
+          "https://cdn.dribbble.com/userupload/42373824/file/original-aaddc4ceb0bc77336cf30c67459a331d.gif",
+          "https://ugokawaii.com/wp-content/uploads/2024/01/bicycle.gif",
+        ],
+        video: [""],
       },
     ],
 
