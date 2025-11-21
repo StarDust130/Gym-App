@@ -252,7 +252,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "2-3",
         note: "Start in Week 2.",
         image: [
-          "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop&q=60",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Curl.gif",
         ],
         video: ["https://youtube.com/embed/MKWBV29S6c0"],
       },
@@ -263,9 +263,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "2-3",
         note: null,
         image: [
-          "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&auto=format&fit=crop&q=60",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif",
         ],
-        video: [],
+        video: ["https://youtube.com/embed/1FjkhpZsaxc"],
       },
       {
         id: "ub-13",
@@ -274,9 +274,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "2-3",
         note: null,
         image: [
-          "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop&q=60",
+          "https://5.imimg.com/data5/SELLER/Default/2021/10/GI/IC/WX/13678780/gorilla-gripper-1000x1000.jpg",
         ],
-        video: [],
+        video: ["https://youtube.com/embed/J62QOrYtbfo"],
       },
       {
         id: "ub-14",
@@ -285,7 +285,11 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "1",
         note: "Hold each stretch for 30s.",
         image: [
-          "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?w=800&auto=format&fit=crop&q=60",
+          "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/shoulder-roll-stretch-and-exercise-gif.gif?w=1845",
+          "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/overhead-arm-reach-stretch-gif.gif?w=1845",
+          "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/cat-cow-pose-stretch-and-exercise-gif.gif?w=1845",
+          "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/wall-stretch-exercise-gif.gif?w=1845",
+          "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/325/325373/neck-flexion-stretch-and-exercise-gif.gif?w=1845",
         ],
         video: [],
       },
