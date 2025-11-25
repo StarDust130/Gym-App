@@ -71,7 +71,7 @@ export function DashboardHeader({
             <p className="text-xs text-muted-foreground/80 sm:text-sm">
               {todayLabel} ·{" "}
               <span className="font-semibold text-foreground">
-                {dateDisplay}
+                {new Date(dateDisplay).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
               </span>
             </p>
           </div>
