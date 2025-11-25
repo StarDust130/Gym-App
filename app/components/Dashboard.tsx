@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { differenceInDays, format } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, Loader2, UploadCloud, X } from "lucide-react";
+import {  Loader2, X } from "lucide-react";
 
 import type { WorkoutPlan } from "@/app/lib/data";
 import { DashboardHeader } from "@/app/components/DashboardHeader";
