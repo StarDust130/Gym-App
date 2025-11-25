@@ -196,7 +196,10 @@ export function Dashboard({
   const isNameDirty = editedName.trim() && editedName.trim() !== name.trim();
 
   return (
-    <div className="min-h-screen bg-transparent text-foreground">
+    <div
+      className="min-h-screen bg-transparent text-foreground"
+      suppressHydrationWarning
+    >
       <motion.main
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
