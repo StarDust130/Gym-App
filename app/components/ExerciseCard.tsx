@@ -1,7 +1,5 @@
-"use client";
-
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 import {
   Accordion,
@@ -278,46 +276,48 @@ export function ExerciseCard({
                   value="videos"
                   className="mt-4 focus-visible:outline-none"
                 >
-                  {exercise.video && exercise.video.length > 0 ? (
+                  {exercise.video &&
+                  exercise.video.filter((v) => v && v.trim().length > 0)
+                    .length > 0 ? (
                     <div
                       ref={videoScrollRef}
                       onScroll={handleVideoScroll}
                       className={`
         pb-4 scrollbar-hide
         ${
-          (exercise.video?.length ?? 0) === 1
-            ? "w-full" // full width
+          exercise.video.filter((v) => v && v.trim().length > 0).length === 1
+            ? "w-full"
             : "flex gap-4 overflow-x-auto snap-x snap-mandatory"
         }
       `}
                     >
-                      {exercise.video.map((vid, idx) => (
-                        <div
-                          key={idx}
-                          className={`
-            ${
-              (exercise.video?.length ?? 0) === 1
-                ? "w-full" // full width card
-                : "snap-center shrink-0 w-56 sm:w-64 first:ml-2 last:mr-2"
-            }
-          `}
-                        >
-                          <iframe
-                            ref={(el) => (videoRefs.current[idx] = el)}
-                            src={`${vid}?mute=1&controls=1&enablejsapi=1`}
+                      {exercise.video
+                        .filter((v) => v && v.trim().length > 0)
+                        .map((vid, idx) => (
+                          <div
+                            key={idx}
                             className={`
-              rounded-xl border-2 border-border shadow-[3px_3px_0_var(--border)] bg-black
               ${
-                (exercise.video?.length ?? 0) === 1
-                  ? "w-full aspect-9/16" // full width 16:9 look
-                  : "w-full aspect-9/16" // vertical shorts layout
+                exercise.video.filter((v) => v && v.trim().length > 0)
+                  .length === 1
+                  ? "w-full"
+                  : "snap-center shrink-0 w-56 sm:w-64 first:ml-2 last:mr-2"
               }
             `}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        </div>
-                      ))}
+                          >
+                            <iframe
+                              ref={(el) => (videoRefs.current[idx] = el)}
+                              src={`${vid}?mute=1&controls=1&enablejsapi=1`}
+                              className="
+                w-full aspect-9/16
+                rounded-xl border-2 border-border 
+                shadow-[3px_3px_0_var(--border)] bg-black
+              "
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
+                          </div>
+                        ))}
                     </div>
                   ) : (
                     <div className="flex h-32 items-center justify-center rounded-xl border-2 border-dashed border-border/50 bg-white/50">

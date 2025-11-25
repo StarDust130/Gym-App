@@ -372,7 +372,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "ca-4",
         name: "Russian twists (legs on floor) / Side bend DB",
-        reps: "12-16 total",
+        reps: "12-16",
         sets: "2",
         note: "Keep spine neutral; twist from core.",
         image: [
@@ -424,7 +424,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "ca-7",
         name: "Light Cardio (Cycling / Treadmill)",
-        reps: "10 minutes",
+        reps: "10 min",
         sets: "1",
         note: "Keep pace easy; just warm and steady.",
         image: [
