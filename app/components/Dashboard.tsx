@@ -436,7 +436,7 @@ export function Dashboard({
 
                 <Image
                   // src="https://pa1.aminoapps.com/5715/52f102e550dbcbdba83dbb8ba571082e3629ae89_hq.gif"
-                  src="https://gifsec.com/wp-content/uploads/2022/10/anime-dance-gif-1.gif"
+                  src="/anime-dance-gif-1.gif"
                   alt="Anime girl dancing energetically"
                   width={500}
                   height={300}
