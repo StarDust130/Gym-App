@@ -428,6 +428,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "1",
         note: "Keep pace easy; just warm and steady.",
         image: [
+          "https://anime2.funnyjunk.com/gifs/Exercise+routine_c244c6_7179399.gif",
           "https://cdn.dribbble.com/userupload/42373824/file/original-aaddc4ceb0bc77336cf30c67459a331d.gif",
           "https://ugokawaii.com/wp-content/uploads/2024/01/bicycle.gif",
         ],
