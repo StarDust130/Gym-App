@@ -343,14 +343,23 @@ export function Dashboard({
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: "easeOut" }}
-          className="space-y-3 rounded-3xl border border-border/60 bg-white/60 px-4 py-6 shadow-lg shadow-black/5 backdrop-blur"
+          className="space-y-3 rounded-3xl border border-border/60 bg-white px-4 py-6 shadow-lg shadow-black/5 backdrop-blur"
         >
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
             {format(new Date(), "MMM d, yyyy")}
           </p>
+
           <h3 className="text-2xl font-semibold text-foreground">
             {todayLabel}&apos;s checklist ✅
           </h3>
+          <Image
+            src="frog.gif"
+            alt="Today's checklist"
+            width={100}
+            height={100}
+            className="mx-auto block rounded-lg object-contain"
+          />
+
           <p className="text-sm text-muted-foreground">
             Tick items as you go. Everything lives here—no PDFs, no guessing.
           </p>
