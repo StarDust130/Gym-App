@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 type NextConfigWithEslint = NextConfig & {
-  eslint?: {
-    ignoreDuringBuilds?: boolean;
+  eslint?: { ignoreDuringBuilds?: boolean };
+  images?: {
+    unoptimized?: boolean;
   };
 };
 
@@ -12,6 +13,10 @@ const nextConfig: NextConfigWithEslint = {
   },
   typescript: {
     ignoreBuildErrors: true,
+  },
+  images: {
+    // allow all external images (disables optimization)
+    unoptimized: true,
   },
 };
 

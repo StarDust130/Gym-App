@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import type { WorkoutPlan } from "@/app/lib/data";
+import { MOCK_WORKOUT_PLAN, type WorkoutPlan } from "@/app/lib/data";
 
 const STORE_KEY = "gym-app-store";
 
@@ -35,6 +35,12 @@ export function useWorkoutStore() {
     if (!data) return { ...initialState, lastResetDate: todayKey };
     try {
       const parsed = JSON.parse(data) as WorkoutStoreState;
+
+      // Sync with latest MOCK_WORKOUT_PLAN to get new images/videos
+      if (parsed.workoutPlan?.planName === MOCK_WORKOUT_PLAN.planName) {
+        parsed.workoutPlan = MOCK_WORKOUT_PLAN;
+      }
+
       if (parsed.lastResetDate === todayKey) return parsed;
       return { ...parsed, completedExercises: [], lastResetDate: todayKey };
     } catch (error) {

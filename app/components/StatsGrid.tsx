@@ -12,25 +12,17 @@ import {
 } from "lucide-react";
 import Confetti from "react-confetti";
 
-interface StatsGridProps {
-  focus: string;
-  progressPercent: number;
-  workoutsThisWeek: number;
-  nextRestDay: string;
-  todayExercisesDone: number;
-  todayExercisesTotal: number;
-}
+// -------------------------
+const WORKOUT_DURATION = 45 * 60; // 45 minutes
+// -------------------------
 
 const emojis = ["🐥", "💪", "🔥", "⚡", "🎯", "🚀", "⭐", "🏋️", "🎉", "✨"];
 const WORKOUT_DURATION = 45 * 60; // 45 minutes
 const TIMER_STORAGE_KEY = "workout-timer-state";
 
-// --- Helper Hook: Get Window Size ---
+// Window size hook
 function useWindowSize() {
-  const [windowSize, setWindowSize] = useState({
-    width: 0,
-    height: 0,
-  });
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     function handleResize() {
@@ -56,7 +48,6 @@ export function StatsGrid(props: StatsGridProps) {
     WORKOUT_DURATION
   );
 
-  // OLD UI STATES
   const [endTime, setEndTime] = useState<string | null>(null);
   const [completionDuration, setCompletionDuration] = useState<string | null>(
     null
@@ -68,13 +59,11 @@ export function StatsGrid(props: StatsGridProps) {
 
   const dailyEmoji = useMemo(() => {
     const today = new Date().toDateString();
-    const seed = today
-      .split("")
-      .reduce((acc, c) => acc + c.charCodeAt(0), 0);
+    const seed = today.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
     return emojis[seed % emojis.length];
   }, []);
 
-  const isFinished = props.progressPercent >= 100;
+  const isFinished = progressPercent >= 100;
 
   useEffect(() => {
     setMounted(true);
@@ -120,7 +109,9 @@ export function StatsGrid(props: StatsGridProps) {
     }
   }, []);
 
-  // --- REAL TIME TIMER LOOP ---
+  // -------------------------
+  // 2️⃣ REAL TIME TIMER LOOP
+  // -------------------------
   useEffect(() => {
     if (!isActive || !startTimestamp) return;
 
@@ -136,8 +127,11 @@ export function StatsGrid(props: StatsGridProps) {
 
   // --- HANDLE FINISH (BASED ON PROGRESS) ---
   useEffect(() => {
-    if (isFinished && isActive) {
-      setIsActive(false);
+    if (!isFinished) return;
+
+    setIsActive(false);
+    localStorage.removeItem("timerStart");
+    localStorage.removeItem("timerActive");
 
       // total elapsed based on countdown
       const totalElapsed = WORKOUT_DURATION - timeLeft;
@@ -145,8 +139,7 @@ export function StatsGrid(props: StatsGridProps) {
       const s = totalElapsed % 60;
       const durationString = `${m} min ${s > 0 ? `${s}s` : ""}`;
 
-      setCompletionDuration(durationString);
-
+      setCompletionDuration(`${m} min ${s > 0 ? `${s}s` : ""}`);
       setEndTime(
         new Date().toLocaleTimeString("en-US", {
           hour: "numeric",
@@ -154,7 +147,6 @@ export function StatsGrid(props: StatsGridProps) {
           hour12: true,
         })
       );
-
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 5000);
 
@@ -185,6 +177,9 @@ export function StatsGrid(props: StatsGridProps) {
     );
   };
 
+  // -------------------------
+  // 4️⃣ Timer toggle (start / pause)
+  // -------------------------
   const toggleTimer = () => {
     if (isFinished) return;
 
@@ -221,8 +216,12 @@ export function StatsGrid(props: StatsGridProps) {
     }
   };
 
+  // -------------------------
+  // 5️⃣ Reset timer
+  // -------------------------
   const resetTimer = (e: React.MouseEvent) => {
     e.stopPropagation();
+
     setIsActive(false);
     setStartTimestamp(null);
 
@@ -235,71 +234,52 @@ export function StatsGrid(props: StatsGridProps) {
     localStorage.removeItem(TIMER_STORAGE_KEY);
   };
 
+  // -------------------------
   const formatTime = (seconds: number) => {
-    const isOvertime = seconds < 0;
-    const absSeconds = Math.abs(seconds);
-    const m = Math.floor(absSeconds / 60);
-    const s = absSeconds % 60;
+    const overtime = seconds < 0;
+    const t = Math.abs(seconds);
+    const m = Math.floor(t / 60);
+    const s = t % 60;
+
     return {
-      text: `${isOvertime ? "+" : ""}${m.toString().padStart(2, "0")}:${s
+      text: `${overtime ? "+" : ""}${m.toString().padStart(2, "0")}:${s
         .toString()
         .padStart(2, "0")}`,
-      isOvertime,
+      overtime,
     };
   };
 
-  const { text: timeText, isOvertime } = formatTime(timeLeft);
+  const { text: timeText, overtime } = formatTime(timeLeft);
 
-  const getStatusColor = () => {
-    if (isFinished) return "text-emerald-600";
-    if (isOvertime) return "text-red-600";
-    return "text-primary";
-  };
+  const statusColor = isFinished
+    ? "text-emerald-600"
+    : overtime
+    ? "text-red-600"
+    : "text-primary";
 
+  // -------------------------
+  // UI
+  // -------------------------
   return (
     <motion.div
       layout
       initial={{ opacity: 0, y: 16, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.4 }}
       className="mx-auto max-w-sm font-sans relative"
     >
       {mounted &&
         showConfetti &&
         createPortal(
           <div className="fixed inset-0 z-[9999] pointer-events-none">
-            <Confetti
-              width={width}
-              height={height}
-              recycle={true}
-              numberOfPieces={400}
-              gravity={0.2}
-            />
+            <Confetti width={width} height={height} recycle={false} />
           </div>,
           document.body
         )}
 
-      <motion.div
-        animate={
-          isOvertime && isActive && !isFinished
-            ? {
-                borderColor: ["#e5e7eb", "#ef4444", "#e5e7eb"],
-                boxShadow: [
-                  "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                  "0 0 0 4px rgba(239, 68, 68, 0.1)",
-                  "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                ],
-              }
-            : {
-                borderColor: isFinished ? "#10b981" : "#e5e7eb",
-                boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-              }
-        }
-        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        className="neubrut-card relative overflow-hidden rounded-xl border bg-white shadow-lg ring-1 ring-black/5 backdrop-blur-sm"
-      >
+      <motion.div className="neubrut-card relative overflow-hidden rounded-xl border bg-white shadow-lg ring-1 ring-black/5 backdrop-blur-sm">
         <CardContent className="space-y-6 px-5 py-6 relative z-10">
-          {/* --- TIMER SECTION --- */}
+          {/* TIMER */}
           <div
             onClick={toggleTimer}
             className="relative flex flex-col items-center justify-center cursor-pointer select-none active:scale-95 transition-transform duration-200 min-h-[100px]"
@@ -313,7 +293,7 @@ export function StatsGrid(props: StatsGridProps) {
               <span className="text-[10px] uppercase tracking-[0.3em] font-semibold">
                 {isFinished
                   ? "Session Complete"
-                  : isOvertime
+                  : overtime
                   ? "Overtime"
                   : "Session Timer"}
               </span>
@@ -324,7 +304,7 @@ export function StatsGrid(props: StatsGridProps) {
                 key="timer-display"
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className={`text-5xl font-bold tracking-tighter tabular-nums leading-none ${getStatusColor()}`}
+                className={`text-5xl font-bold tracking-tighter tabular-nums leading-none ${statusColor}`}
               >
                 {timeText}
               </motion.div>
@@ -381,15 +361,13 @@ export function StatsGrid(props: StatsGridProps) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 5 }}
                     className={`flex items-center gap-1.5 text-xs font-medium ${
-                      isOvertime
+                      overtime
                         ? "text-red-500 font-bold animate-pulse"
                         : "text-emerald-600"
                     }`}
                   >
-                    {isOvertime && <Zap className="w-3 h-3 fill-current" />}
-                    {isOvertime
-                      ? "Limit Exceeded!"
-                      : startTimestamp
+                    {overtime && <Zap className="w-3 h-3 fill-current" />}
+                    {startTimestamp
                       ? `Started at ${new Date(
                           startTimestamp
                         ).toLocaleTimeString("en-US", {
@@ -416,7 +394,7 @@ export function StatsGrid(props: StatsGridProps) {
 
           <div className="h-px w-full bg-border/60" />
 
-          {/* --- BOTTOM INFO SECTION --- */}
+          {/* BOTTOM STATS */}
           <div className="space-y-5">
             <div className="flex items-end justify-between">
               <div>
@@ -424,11 +402,12 @@ export function StatsGrid(props: StatsGridProps) {
                   Workout Completed
                 </p>
                 <p className="text-3xl font-semibold text-primary">
-                  {Math.round(props.progressPercent)}%
+                  {Math.round(progressPercent)}%
                 </p>
               </div>
+
               <motion.div
-                key={`${props.todayExercisesDone}-${props.todayExercisesTotal}`}
+                key={`${todayExercisesDone}-${todayExercisesTotal}`}
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{
@@ -440,15 +419,15 @@ export function StatsGrid(props: StatsGridProps) {
               >
                 <span className="text-lg leading-none">{dailyEmoji}</span>
                 <span className="tracking-wide">
-                  {props.todayExercisesDone}
+                  {todayExercisesDone}
                   <span className="mx-0.5 text-muted-foreground">/</span>
-                  {props.todayExercisesTotal}
+                  {todayExercisesTotal}
                 </span>
               </motion.div>
             </div>
 
             <Progress
-              value={props.progressPercent}
+              value={progressPercent}
               className="h-1.5 border border-border bg-transparent [&>div]:bg-linear-to-r [&>div]:from-primary [&>div]:to-primary/60"
             />
           </div>

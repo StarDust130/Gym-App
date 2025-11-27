@@ -146,4 +146,12 @@
     border-radius: var(--radius-xl);
     box-shadow: 6px 6px 0 var(--border);
   }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

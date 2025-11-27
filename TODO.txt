@@ -1,0 +1,11 @@
+### Things to ADD: 🏋️🥳
+- Real Database (MongoDB)
+- Progress Tracking (Charts)
+- User Can Track Diet/Nutrition
+- Dark Mode Toggle
+- Social Features (Friends, Sharing Workouts)
+- Notifications/Reminders
+
+
+### Things to FIX: 🐛🔧
+- Shreyesh's Uncle 👴

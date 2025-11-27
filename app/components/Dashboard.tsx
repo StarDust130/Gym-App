@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { differenceInDays, format } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, Loader2, UploadCloud, X } from "lucide-react";
+import {  Loader2, X } from "lucide-react";
 
 import type { WorkoutPlan } from "@/app/lib/data";
 import { DashboardHeader } from "@/app/components/DashboardHeader";
@@ -11,6 +11,7 @@ import { WorkoutList } from "@/app/components/WorkoutList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 interface DashboardProps {
   name: string;
@@ -195,7 +196,10 @@ export function Dashboard({
   const isNameDirty = editedName.trim() && editedName.trim() !== name.trim();
 
   return (
-    <div className="min-h-screen bg-transparent text-foreground">
+    <div
+      className="min-h-screen bg-transparent text-foreground"
+      suppressHydrationWarning
+    >
       <motion.main
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -339,14 +343,23 @@ export function Dashboard({
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: "easeOut" }}
-          className="space-y-3 rounded-3xl border border-border/60 bg-white/60 px-4 py-6 shadow-lg shadow-black/5 backdrop-blur"
+          className="space-y-3 rounded-3xl border border-border/60 bg-white px-4 py-6 shadow-lg shadow-black/5 backdrop-blur"
         >
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
             {format(new Date(), "MMM d, yyyy")}
           </p>
+
           <h3 className="text-2xl font-semibold text-foreground">
             {todayLabel}&apos;s checklist ✅
           </h3>
+          <Image
+            src="frog.gif"
+            alt="Today's checklist"
+            width={100}
+            height={100}
+            className="mx-auto block rounded-lg object-contain"
+          />
+
           <p className="text-sm text-muted-foreground">
             Tick items as you go. Everything lives here—no PDFs, no guessing.
           </p>
@@ -433,40 +446,14 @@ export function Dashboard({
                   )}
                 </div>
 
-                <div className="space-y-4 rounded-3xl border border-dashed border-border bg-secondary/10 p-4 shadow-[4px_4px_0_var(--border)] sm:p-6">
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">
-                      Upload a new workout schedule
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      We parse it instantly and refresh today&apos;s focus.
-                    </p>
-                  </div>
-                  <label className="flex cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-border bg-white px-4 py-8 text-center transition hover:-translate-y-0.5">
-                    {planUploadState.status === "uploading" ? (
-                      <Loader2 className="size-9 animate-spin text-primary" />
-                    ) : planUploadState.status === "success" ? (
-                      <CheckCircle2 className="size-9 text-primary" />
-                    ) : planUploadState.status === "error" ? (
-                      <X className="size-9 text-destructive" />
-                    ) : (
-                      <UploadCloud className="size-9 text-primary" />
-                    )}
-                    <span className="text-base font-semibold text-foreground">
-                      {planUploadState.title}
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      {planUploadState.helper}
-                    </span>
-                    <Input
-                      type="file"
-                      accept="image/*,application/pdf"
-                      className="sr-only"
-                      disabled={planUploadState.status === "uploading"}
-                      onChange={handlePlanUpload}
-                    />
-                  </label>
-                </div>
+                <Image
+                  // src="https://pa1.aminoapps.com/5715/52f102e550dbcbdba83dbb8ba571082e3629ae89_hq.gif"
+                  src="/anime-dance-gif-1.gif"
+                  alt="Anime girl dancing energetically"
+                  width={500}
+                  height={300}
+                  className="rounded-2xl border border-border/70 shadow-[4px_4px_0_var(--border)]"
+                />
               </div>
 
               <div className="mt-6 flex items-center justify-end">
