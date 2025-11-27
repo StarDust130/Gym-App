@@ -23,6 +23,7 @@ interface StatsGridProps {
 
 const emojis = ["🐥", "💪", "🔥", "⚡", "🎯", "🚀", "⭐", "🏋️", "🎉", "✨"];
 const WORKOUT_DURATION = 45 * 60; // 45 minutes
+const TIMER_STORAGE_KEY = "workout-timer-state";
 
 // --- Helper Hook: Get Window Size ---
 function useWindowSize() {
@@ -47,10 +48,13 @@ function useWindowSize() {
 }
 
 export function StatsGrid(props: StatsGridProps) {
-  // --- TIMER STATE (NEW) ---
+  // --- TIMER STATE ---
   const [isActive, setIsActive] = useState(false);
   const [startTimestamp, setStartTimestamp] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState(WORKOUT_DURATION);
+  const [remainingAtLastStart, setRemainingAtLastStart] = useState(
+    WORKOUT_DURATION
+  );
 
   // OLD UI STATES
   const [endTime, setEndTime] = useState<string | null>(null);
@@ -76,40 +80,69 @@ export function StatsGrid(props: StatsGridProps) {
     setMounted(true);
   }, []);
 
-  // --- LOAD TIMER FROM STORAGE IF APP WAS CLOSED ---
+  // --- LOAD TIMER FROM STORAGE ---
   useEffect(() => {
-    const savedStart = localStorage.getItem("timerStart");
+    try {
+      const saved = localStorage.getItem(TIMER_STORAGE_KEY);
+      if (!saved) return;
 
-    if (savedStart) {
-      const ts = Number(savedStart);
-      setStartTimestamp(ts);
-      setIsActive(true);
+      const parsed = JSON.parse(saved) as {
+        isActive: boolean;
+        startTimestamp: number | null;
+        remainingAtLastStart: number;
+      };
+
+      const savedRemaining =
+        typeof parsed.remainingAtLastStart === "number"
+          ? parsed.remainingAtLastStart
+          : WORKOUT_DURATION;
+
+      setRemainingAtLastStart(savedRemaining);
+
+      if (parsed.isActive && parsed.startTimestamp) {
+        const now = Date.now();
+        const elapsed = Math.floor((now - parsed.startTimestamp) / 1000);
+        const remaining = savedRemaining - elapsed;
+        setTimeLeft(remaining);
+        setIsActive(true);
+        setStartTimestamp(parsed.startTimestamp);
+      } else {
+        setTimeLeft(savedRemaining);
+        setIsActive(false);
+        setStartTimestamp(null);
+      }
+    } catch {
+      // if something is wrong, fall back to defaults
+      setIsActive(false);
+      setStartTimestamp(null);
+      setTimeLeft(WORKOUT_DURATION);
+      setRemainingAtLastStart(WORKOUT_DURATION);
     }
   }, []);
 
   // --- REAL TIME TIMER LOOP ---
   useEffect(() => {
+    if (!isActive || !startTimestamp) return;
+
     const interval = setInterval(() => {
-      if (isActive && startTimestamp) {
-        const now = Date.now();
-        const elapsed = Math.floor((now - startTimestamp) / 1000);
-        const remaining = WORKOUT_DURATION - elapsed;
-        setTimeLeft(remaining);
-      }
+      const now = Date.now();
+      const elapsed = Math.floor((now - startTimestamp) / 1000);
+      const remaining = remainingAtLastStart - elapsed;
+      setTimeLeft(remaining);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [isActive, startTimestamp]);
+  }, [isActive, startTimestamp, remainingAtLastStart]);
 
+  // --- HANDLE FINISH (BASED ON PROGRESS) ---
   useEffect(() => {
     if (isFinished && isActive) {
       setIsActive(false);
 
-      const now = Date.now();
-      const elapsed = Math.floor((now - (startTimestamp ?? now)) / 1000);
-
-      const m = Math.floor(elapsed / 60);
-      const s = elapsed % 60;
+      // total elapsed based on countdown
+      const totalElapsed = WORKOUT_DURATION - timeLeft;
+      const m = Math.floor(totalElapsed / 60);
+      const s = totalElapsed % 60;
       const durationString = `${m} min ${s > 0 ? `${s}s` : ""}`;
 
       setCompletionDuration(durationString);
@@ -124,33 +157,82 @@ export function StatsGrid(props: StatsGridProps) {
 
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 5000);
+
+      // update storage to paused at current remaining
+      localStorage.setItem(
+        TIMER_STORAGE_KEY,
+        JSON.stringify({
+          isActive: false,
+          startTimestamp: null,
+          remainingAtLastStart: timeLeft,
+        })
+      );
     }
-  }, [isFinished, isActive, startTimestamp]);
+  }, [isFinished, isActive, timeLeft]);
+
+  const persistTimerState = (
+    nextIsActive: boolean,
+    nextStartTimestamp: number | null,
+    nextRemainingAtLastStart: number
+  ) => {
+    localStorage.setItem(
+      TIMER_STORAGE_KEY,
+      JSON.stringify({
+        isActive: nextIsActive,
+        startTimestamp: nextStartTimestamp,
+        remainingAtLastStart: nextRemainingAtLastStart,
+      })
+    );
+  };
 
   const toggleTimer = () => {
     if (isFinished) return;
 
+    // START / RESUME
     if (!isActive) {
-      if (!startTimestamp) {
-        const now = Date.now();
-        localStorage.setItem("timerStart", now.toString());
-        setStartTimestamp(now);
-      }
+      const now = Date.now();
+      // snapshot current remaining as baseline for this run
+      const baselineRemaining = timeLeft;
+
+      setStartTimestamp(now);
+      setIsActive(true);
+      setRemainingAtLastStart(baselineRemaining);
+
+      persistTimerState(true, now, baselineRemaining);
+      return;
     }
 
-    setIsActive(!isActive);
+    // PAUSE
+    if (isActive) {
+      let remainingNow = timeLeft;
+
+      if (startTimestamp) {
+        const now = Date.now();
+        const elapsed = Math.floor((now - startTimestamp) / 1000);
+        remainingNow = remainingAtLastStart - elapsed;
+      }
+
+      setTimeLeft(remainingNow);
+      setRemainingAtLastStart(remainingNow);
+      setIsActive(false);
+      setStartTimestamp(null);
+
+      persistTimerState(false, null, remainingNow);
+    }
   };
 
   const resetTimer = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsActive(false);
     setStartTimestamp(null);
-    localStorage.removeItem("timerStart");
 
     setTimeLeft(WORKOUT_DURATION);
+    setRemainingAtLastStart(WORKOUT_DURATION);
     setEndTime(null);
     setCompletionDuration(null);
     setShowConfetti(false);
+
+    localStorage.removeItem(TIMER_STORAGE_KEY);
   };
 
   const formatTime = (seconds: number) => {
@@ -280,11 +362,14 @@ export function StatsGrid(props: StatsGridProps) {
 
                     <span className="text-[10px] font-medium opacity-80 mt-0.5">
                       {startTimestamp
-                        ? new Date(startTimestamp).toLocaleTimeString("en-US", {
-                            hour: "numeric",
-                            minute: "2-digit",
-                            hour12: true,
-                          })
+                        ? new Date(startTimestamp).toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "numeric",
+                              minute: "2-digit",
+                              hour12: true,
+                            }
+                          )
                         : null}{" "}
                       - {endTime}
                     </span>
