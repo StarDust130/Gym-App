@@ -3,58 +3,68 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  Calendar as CalendarIcon,
   CalendarDays,
-  CheckCircle2,
+  Check,
+  ChevronDown,
+  ChevronUp,
+  Droplets,
+  Flame,
   Frown,
   Info,
   Loader2,
-  PenSquare,
-  Sparkles,
+  Minus,
+  Plus,
+  Target,
   Trash2,
+  Trophy,
+  Utensils,
+  Zap,
 } from "lucide-react";
 
-import { DashboardHeader } from "@/app/components/DashboardHeader";
 import { useWorkoutStore } from "@/app/lib/hooks";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-const STORAGE_KEY = "gym-buddy-diet-user";
+// --- CONSTANTS & CONFIG ---
+
+const STORAGE_KEY = "gym-buddy-diet-user-v3";
 
 const GOAL_OPTIONS = [
   {
     value: "weight_loss",
     label: "Weight Loss",
-    blurb: "Deficit & Satiety",
-    color: "bg-emerald-500/10 text-emerald-700 border-emerald-200",
+    blurb: "Deficit",
+    theme: "bg-emerald-500",
+    border: "border-emerald-600",
   },
   {
     value: "weight_gain",
     label: "Weight Gain",
-    blurb: "Surplus & Power",
-    color: "bg-blue-500/10 text-blue-700 border-blue-200",
+    blurb: "Surplus",
+    theme: "bg-blue-500",
+    border: "border-blue-600",
   },
   {
     value: "muscle_gain",
     label: "Muscle Gain",
-    blurb: "High Protein",
-    color: "bg-violet-500/10 text-violet-700 border-violet-200",
+    blurb: "Build",
+    theme: "bg-violet-500",
+    border: "border-violet-600",
   },
   {
     value: "muscle_loss",
     label: "Muscle Cut",
-    blurb: "Lean & Strong",
-    color: "bg-rose-500/10 text-rose-700 border-rose-200",
+    blurb: "Shred",
+    theme: "bg-rose-500",
+    border: "border-rose-600",
   },
 ] as const;
 
@@ -74,6 +84,7 @@ type DietProfile = {
   heightCm: number;
   heightText: string;
   proteinTarget: number;
+  waterTarget: number;
 };
 
 type MealEntry = {
@@ -84,11 +95,6 @@ type MealEntry = {
   notes?: string;
   nutrients: Nutrients;
   confidence?: "low" | "medium" | "high";
-};
-
-type DietEntryPayload = {
-  meals: MealEntry[];
-  proteinGoal: number;
 };
 
 type AiHint = {
@@ -109,44 +115,39 @@ const MEAL_FORM_DEFAULT = {
   description: "",
 };
 
-const HINT_TONE_CONFIG: Record<
-  AiHint["tone"],
-  {
-    Icon: typeof Info;
-    container: string;
-    accent: string;
-    badge: string;
-  }
-> = {
+const QUICK_ADDS = [
+  { emoji: "☕", label: "Black Coffee" },
+  { emoji: "🍌", label: "Banana" },
+  { emoji: "🥤", label: "Protein Shake" },
+  { emoji: "🥚", label: "2 Boiled Eggs" },
+];
+
+const HINT_TONE_CONFIG = {
   info: {
     Icon: Info,
-    container: "border-sky-100 bg-sky-50 text-sky-900",
-    accent: "bg-sky-100 text-sky-600",
-    badge: "text-sky-600",
+    bg: "bg-blue-50",
+    border: "border-blue-200",
+    text: "text-blue-800",
   },
   success: {
-    Icon: CheckCircle2,
-    container: "border-emerald-100 bg-emerald-50 text-emerald-900",
-    accent: "bg-emerald-100 text-emerald-600",
-    badge: "text-emerald-600",
+    Icon: Check,
+    bg: "bg-emerald-50",
+    border: "border-emerald-200",
+    text: "text-emerald-800",
   },
   warning: {
     Icon: Info,
-    container: "border-amber-100 bg-amber-50 text-amber-900",
-    accent: "bg-amber-100 text-amber-600",
-    badge: "text-amber-600",
+    bg: "bg-amber-50",
+    border: "border-amber-200",
+    text: "text-amber-800",
   },
   error: {
     Icon: Frown,
-    container: "border-rose-100 bg-rose-50 text-rose-900",
-    accent: "bg-rose-100 text-rose-600",
-    badge: "text-rose-600",
+    bg: "bg-rose-50",
+    border: "border-rose-200",
+    text: "text-rose-800",
   },
 };
-
-const MEAL_TYPES_LOOKUP = Object.fromEntries(
-  MEAL_TYPES.map((type) => [type.value, type.label])
-);
 
 const GOAL_COPY: Record<
   ProfileGoal,
@@ -154,138 +155,86 @@ const GOAL_COPY: Record<
     greeting: string;
     badge: string;
     title: string;
-    cue: string;
-    goal: string;
     message: (dateLabel: string, protein: number) => string;
     tips: string[];
   }
 > = {
   weight_loss: {
     greeting: "Stay light",
-    badge: "Cutting",
+    badge: "Cutting Phase",
     title: "Weight Loss",
-    cue: "High volume, low cal.",
-    goal: "Deficit",
     message: (dateLabel, protein) =>
-      `On ${dateLabel}, focus on fiber-rich meals. Hit ${protein}g protein to stay full.`,
-    tips: [
-      "Front-load protein to stay satisfied",
-      "Swap sauces for citrus or herbs",
-    ],
+      `Prioritize fiber today. Hit ${protein}g protein to stay full.`,
+    tips: ["Drink water before meals", "Volume eating is key"],
   },
   weight_gain: {
     greeting: "Eat big",
-    badge: "Bulking",
+    badge: "Bulking Phase",
     title: "Weight Gain",
-    cue: "Calorie density is key.",
-    goal: "Surplus",
     message: (dateLabel, protein) =>
-      `It is ${dateLabel}. Add healthy fats and keep ${protein}g protein consistent for quality mass.`,
-    tips: [
-      "Add nut butters or olive oil to meals",
-      "Blend quick shakes between meals",
-    ],
+      `Add healthy fats and keep ${protein}g protein consistent.`,
+    tips: ["Liquid calories help", "Don't skip breakfast"],
   },
   muscle_gain: {
     greeting: "Build mode",
-    badge: "Gains",
+    badge: "Hypertrophy",
     title: "Muscle Gain",
-    cue: "Protein timing matters.",
-    goal: "Hypertrophy",
     message: (dateLabel, protein) =>
-      `Stronger sessions start with fuel. Aim for ${protein}g protein spread across ${dateLabel}.`,
-    tips: [
-      "Include protein within 60 min of training",
-      "Add carbs to support recovery",
-    ],
+      `Fuel the machine. Aim for ${protein}g protein today.`,
+    tips: ["Carbs pre-workout", "Protein post-workout"],
   },
   muscle_loss: {
     greeting: "Get lean",
-    badge: "Toning",
+    badge: "Recomp",
     title: "Muscle Cut",
-    cue: "Maintain strength.",
-    goal: "Recomp",
     message: (dateLabel, protein) =>
-      `Stay sharp on ${dateLabel}. Keep protein high (${protein}g) to protect muscle while you cut.`,
-    tips: ["Pair veggies with lean protein", "Prioritize sleep for recovery"],
+      `Keep protein high (${protein}g) to retain mass while cutting.`,
+    tips: ["Sleep is crucial", "Keep lifting heavy"],
   },
 };
 
-type MealQuality = "prime" | "balanced" | "concern";
-
-const QUALITY_STYLES: Record<
-  MealQuality,
-  {
-    label: string;
-    pill: string;
-    card: string;
-    accent: string;
-    emoji?: string | null;
-  }
-> = {
-  prime: {
-    label: "Clean fuel",
-    pill: "bg-emerald-100 text-emerald-700",
-    card: "border-emerald-100",
-    accent: "text-emerald-600",
-    emoji: null,
-  },
-  balanced: {
-    label: "Balanced",
-    pill: "bg-sky-100 text-sky-700",
-    card: "border-slate-100",
-    accent: "text-sky-600",
-    emoji: null,
-  },
-  concern: {
-    label: "Indulgent",
-    pill: "bg-rose-100 text-rose-700",
-    card: "border-rose-100",
-    accent: "text-rose-600",
-    emoji: "😞",
-  },
-};
+// --- COMPONENTS ---
 
 export default function DietPage() {
   const { userProfile } = useWorkoutStore();
   const [userKey, setUserKey] = useState<string | null>(null);
   const [profile, setProfile] = useState<DietProfile | null>(null);
-  const [profileLoading, setProfileLoading] = useState(true);
-  const [profileSaving, setProfileSaving] = useState(false);
-  const [view, setView] = useState<"loading" | "setup" | "dashboard">(
-    "loading"
-  );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
+  // View State
+  const [view, setView] = useState<"onboarding" | "dashboard">("dashboard");
+
+  // Data State
   const [meals, setMeals] = useState<MealEntry[]>([]);
-  const [proteinGoal, setProteinGoal] = useState(120);
-  const [entryLoading, setEntryLoading] = useState(false);
-  const [entryError, setEntryError] = useState<string | null>(null);
-
-  const [mealForm, setMealForm] = useState(MEAL_FORM_DEFAULT);
-  const [editingMealId, setEditingMealId] = useState<string | null>(null);
-  const [analyzingMeal, setAnalyzingMeal] = useState(false);
-  const [aiHint, setAiHint] = useState<AiHint | null>(null);
-  const [expandedMealId, setExpandedMealId] = useState<string | null>(null);
-
+  const [waterIntake, setWaterIntake] = useState(0);
+  const [proteinGoal, setProteinGoal] = useState(150);
   const [selectedDate, setSelectedDate] = useState<Date>(() =>
     startOfDay(new Date())
   );
 
+  // Composer State
+  const [mealForm, setMealForm] = useState(MEAL_FORM_DEFAULT);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [aiHint, setAiHint] = useState<AiHint | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+
+  // Computed
   const dateKey = useMemo(() => getDateKey(selectedDate), [selectedDate]);
-  const prettyDate = useMemo(() => formatDate(dateKey), [dateKey]);
-  const viewingToday = useMemo(
+  const isToday = useMemo(
     () => dateKey === getDateKey(startOfDay(new Date())),
     [dateKey]
   );
+  const prettyDate = useMemo(() => formatDate(dateKey), [dateKey]);
 
   const macros = useMemo(
     () =>
       meals.reduce(
-        (totals, meal) => ({
-          calories: totals.calories + (meal.nutrients.calories || 0),
-          protein: totals.protein + (meal.nutrients.protein || 0),
-          carbs: totals.carbs + (meal.nutrients.carbs || 0),
-          fat: totals.fat + (meal.nutrients.fat || 0),
+        (acc, m) => ({
+          calories: acc.calories + (m.nutrients.calories || 0),
+          protein: acc.protein + (m.nutrients.protein || 0),
+          carbs: acc.carbs + (m.nutrients.carbs || 0),
+          fat: acc.fat + (m.nutrients.fat || 0),
         }),
         { calories: 0, protein: 0, carbs: 0, fat: 0 }
       ),
@@ -293,160 +242,92 @@ export default function DietPage() {
   );
 
   const calorieGoal = useMemo(
-    () => (profile ? estimateCalorieTarget(profile) : 0),
+    () => (profile ? estimateCalorieTarget(profile) : 2000),
     [profile]
   );
-  const carbGoal = useMemo(
-    () => (calorieGoal ? Math.round((calorieGoal * 0.4) / 4) : 0),
-    [calorieGoal]
+  const targets = useMemo(
+    () => ({
+      protein: proteinGoal,
+      carbs: Math.round((calorieGoal * 0.4) / 4),
+      fat: Math.round((calorieGoal * 0.25) / 9),
+    }),
+    [calorieGoal, proteinGoal]
   );
-  const fatGoal = useMemo(
-    () => (calorieGoal ? Math.round((calorieGoal * 0.25) / 9) : 0),
-    [calorieGoal]
-  );
+
+  // --- INIT & FETCH ---
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const key = ensureUserKey();
-    if (key) {
-      setUserKey(key);
-    }
+    setUserKey(key);
   }, []);
 
   useEffect(() => {
     if (!userKey) return;
-    const fetchProfile = async () => {
-      setProfileLoading(true);
-      setEntryError(null);
+
+    const init = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const res = await fetch(`/api/diet-entry/profile?userKey=${userKey}`);
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.error || "Failed to load profile");
-        }
-        if (data.profile) {
-          setProfile(data.profile);
-          setProteinGoal(
-            data.profile.proteinTarget ?? data.profile.weightKg * 2
+        const pRes = await fetch(`/api/diet-entry/profile?userKey=${userKey}`);
+        const pData = await pRes.json();
+
+        if (pData.profile) {
+          setProfile(pData.profile);
+          setProteinGoal(pData.profile.proteinTarget || 150);
+
+          const mRes = await fetch(
+            `/api/diet-entry?dateKey=${dateKey}&userKey=${userKey}`
           );
+          const mData = await mRes.json();
+          setMeals(Array.isArray(mData.meals) ? mData.meals : []);
+
+          // Initialize water intake (simulated for demo as it's not in schema yet)
+          setWaterIntake(0);
+
           setView("dashboard");
         } else {
-          setView("setup");
+          setView("onboarding");
         }
-      } catch (error) {
-        console.error(error);
-        setEntryError(error instanceof Error ? error.message : "Profile error");
-        setView("setup");
+      } catch (e) {
+        console.error("Init error", e);
+        setError("Could not load your data. Check connection.");
       } finally {
-        setProfileLoading(false);
+        setLoading(false);
       }
     };
-    fetchProfile();
-  }, [userKey]);
 
-  useEffect(() => {
-    if (!userKey || !profile) return;
-    const fetchEntry = async () => {
-      setEntryLoading(true);
-      setEntryError(null);
-      try {
-        const res = await fetch(
-          `/api/diet-entry?dateKey=${dateKey}&userKey=${userKey}`
-        );
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.error || "Failed to load day");
-        }
-        setMeals(Array.isArray(data.meals) ? data.meals : []);
-        setProteinGoal(data.proteinGoal ?? profile.proteinTarget);
-      } catch (error) {
-        console.error(error);
-        setEntryError(
-          error instanceof Error ? error.message : "Unable to load day"
-        );
-      } finally {
-        setEntryLoading(false);
-      }
-    };
-    fetchEntry();
-  }, [userKey, profile, dateKey]);
+    init();
+  }, [userKey, dateKey]);
 
-  const persistEntry = async (
-    overrides?: Partial<DietEntryPayload> & { meals?: MealEntry[] }
-  ) => {
+  // --- ACTIONS ---
+
+  const saveProfile = async (data: any) => {
     if (!userKey) return;
+    setLoading(true);
     try {
-      const payload = {
-        userKey,
-        dateKey,
-        meals: overrides?.meals ?? meals,
-        proteinGoal: overrides?.proteinGoal ?? proteinGoal,
-      };
+      const proteinTarget = calcProteinTarget(data.weightKg, data.goal);
+      const newProfile = { ...data, proteinTarget, waterTarget: 8 };
 
-      const res = await fetch("/api/diet-entry", {
+      await fetch("/api/diet-entry/profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ userKey, profile: newProfile }),
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Failed to save");
-      }
-    } catch (error) {
-      console.error(error);
-      setEntryError(error instanceof Error ? error.message : "Save failed");
+      setProfile(newProfile);
+      setProteinGoal(proteinTarget);
+      setView("dashboard");
+    } catch (e) {
+      setError("Failed to save profile.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleMealDelete = async (mealId: string) => {
-    const nextMeals = meals.filter((meal) => meal.id !== mealId);
-    setMeals(nextMeals);
-    if (editingMealId === mealId) {
-      resetComposer();
-    }
-    await persistEntry({ meals: nextMeals });
-  };
-
-  const handleMealEdit = (meal: MealEntry) => {
-    setMealForm({ mealType: meal.mealType, description: meal.description });
-    setEditingMealId(meal.id);
-    setAiHint(null);
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  const resetComposer = useCallback(() => {
-    setMealForm(MEAL_FORM_DEFAULT);
-    setEditingMealId(null);
-    setAiHint(null);
-  }, []);
-
-  useEffect(() => {
-    resetComposer();
-    setExpandedMealId(null);
-  }, [dateKey, resetComposer]);
-
-  const goToToday = useCallback(() => {
-    setSelectedDate(startOfDay(new Date()));
-  }, []);
-
-  const handleDateSelect = useCallback((date: Date | undefined) => {
-    if (!date) return;
-    setSelectedDate(startOfDay(date));
-  }, []);
-
-  const handleMealSubmit = async () => {
-    if (!mealForm.description.trim()) {
-      setAiHint({
-        tone: "info",
-        title: "Need more detail",
-        message: "Tell me what you ate and how it was prepared.",
-      });
-      return;
-    }
-    setAnalyzingMeal(true);
+  const submitMeal = async () => {
+    if (!mealForm.description.trim()) return;
+    setAnalyzing(true);
     setAiHint(null);
 
     try {
@@ -461,869 +342,677 @@ export default function DietPage() {
       });
 
       const data = await res.json();
-      if (!res.ok || !data.ok) {
-        const message = data.message || "I need more detail about that meal.";
-        setAiHint({
-          tone: "warning",
-          title: "More context please",
-          message,
-        });
-        return;
-      }
 
-      if (data.confidence === "low") {
+      if (!data.ok || data.confidence === "low") {
         setAiHint({
           tone: "error",
-          title: "Does not look like food",
-          message: data.feedback || "That does not look like food. Try again!",
+          title: "Try Again",
+          message: data.feedback || "That doesn't look like food.",
         });
+        setAnalyzing(false);
         return;
       }
 
-      const analyzedMeal: MealEntry = {
-        id: editingMealId ?? createClientId(),
+      const newMeal: MealEntry = {
+        id: editingId || safeGenerateId(),
         mealType: mealForm.mealType,
-        description: mealForm.description.trim(),
-        createdAt: editingMealId
-          ? meals.find((meal) => meal.id === editingMealId)?.createdAt ??
+        description: mealForm.description,
+        createdAt: editingId
+          ? meals.find((m) => m.id === editingId)?.createdAt ||
             new Date().toISOString()
           : new Date().toISOString(),
         notes: data.feedback,
         confidence: data.confidence,
         nutrients: {
-          calories: Math.round(data.nutrients.calories ?? 0),
-          protein: Math.round(data.nutrients.protein ?? 0),
-          carbs: Math.round(data.nutrients.carbs ?? 0),
-          fat: Math.round(data.nutrients.fat ?? 0),
+          calories: Math.round(data.nutrients.calories || 0),
+          protein: Math.round(data.nutrients.protein || 0),
+          carbs: Math.round(data.nutrients.carbs || 0),
+          fat: Math.round(data.nutrients.fat || 0),
         },
       };
 
-      const nextMeals = editingMealId
-        ? meals.map((meal) => (meal.id === editingMealId ? analyzedMeal : meal))
-        : [analyzedMeal, ...meals];
+      const updatedMeals = editingId
+        ? meals.map((m) => (m.id === editingId ? newMeal : m))
+        : [newMeal, ...meals];
 
-      setMeals(nextMeals);
-      resetComposer();
-      await persistEntry({ meals: nextMeals });
-    } catch (error) {
-      console.error(error);
-      setAiHint({
-        tone: "error",
-        title: "Network issue",
-        message: "Could not reach the nutritionist. Try again.",
-      });
-    } finally {
-      setAnalyzingMeal(false);
-    }
-  };
+      setMeals(updatedMeals);
+      setMealForm(MEAL_FORM_DEFAULT);
+      setEditingId(null);
 
-  const handleProfileSave = async (
-    draft: Omit<DietProfile, "proteinTarget">
-  ) => {
-    if (!userKey) return;
-    const proteinTarget = calcProteinTarget(draft.weightKg, draft.goal);
-    setProfileSaving(true);
-    setEntryError(null);
-
-    try {
-      const res = await fetch("/api/diet-entry/profile", {
+      await fetch("/api/diet-entry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userKey,
-          profile: { ...draft, proteinTarget },
+          dateKey,
+          meals: updatedMeals,
+          proteinGoal,
         }),
       });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || "Could not save profile");
-      }
-
-      const nextProfile = { ...draft, proteinTarget };
-      setProfile(nextProfile);
-      setProteinGoal(proteinTarget);
-      setView("dashboard");
-    } catch (error) {
-      console.error(error);
-      setEntryError(
-        error instanceof Error ? error.message : "Profile save failed"
-      );
+    } catch (e) {
+      setAiHint({
+        tone: "error",
+        title: "Network Error",
+        message: "Couldn't reach the AI chef.",
+      });
     } finally {
-      setProfileSaving(false);
+      setAnalyzing(false);
     }
   };
 
-  if (profileLoading || view === "loading") {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <Loader2 className="size-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (view === "setup" || !profile) {
-    return (
-      <section className="container mx-auto max-w-lg space-y-8 px-4 py-8">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-3 text-center"
-        >
-          <Badge variant="outline" className="uppercase tracking-widest">
-            Onboarding
-          </Badge>
-          <h1 className="text-4xl font-black tracking-tight text-foreground">
-            Nutrition Goals
-          </h1>
-          <p className="text-muted-foreground">
-            Set your targets. We&apos;ll tailor the AI coach to your needs.
-          </p>
-        </motion.div>
-        <ProfileStep
-          initialProfile={profile}
-          saving={profileSaving}
-          onSave={handleProfileSave}
-        />
-        {entryError && (
-          <p className="text-center text-sm font-medium text-red-600">
-            {entryError}
-          </p>
-        )}
-      </section>
-    );
-  }
-
-  return (
-    <div className="relative min-h-screen overflow-hidden bg-linear-to-b from-background via-background to-background">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.16),transparent_55%)]" />
-      <div className="container mx-auto max-w-5xl space-y-6 px-4 pb-24 pt-6 md:space-y-8">
-        <DashboardHeader
-          name={userProfile?.name || "Athlete"}
-          greeting={GOAL_COPY[profile.goal].greeting}
-          streakDays={Math.max(1, meals.length)}
-          todayLabel="Today"
-          dateDisplay={selectedDate.toISOString()}
-          focus={GOAL_COPY[profile.goal].badge}
-          planName={GOAL_COPY[profile.goal].title}
-          onOpenSettings={() => setView("setup")}
-        />
-        {entryError && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-3xl border border-red-200/70 bg-red-50/80 px-5 py-4 text-sm font-semibold text-red-700 shadow-lg"
-          >
-            {entryError}
-          </motion.div>
-        )}
-
-        <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="space-y-6">
-            <MealComposer
-              mealForm={mealForm}
-              aiHint={aiHint}
-              analyzingMeal={analyzingMeal}
-              onMealTypeChange={(mealType) =>
-                setMealForm((prev) => ({ ...prev, mealType }))
-              }
-              onDescriptionChange={(value) =>
-                setMealForm((prev) => ({ ...prev, description: value }))
-              }
-              onSubmit={handleMealSubmit}
-              isEditing={Boolean(editingMealId)}
-              onCancelEdit={resetComposer}
-              selectedDate={selectedDate}
-              prettyDate={prettyDate}
-              onSelectDate={handleDateSelect}
-              onSelectToday={goToToday}
-              viewingToday={viewingToday}
-            />
-
-            <DailySnapshotCard
-              macros={macros}
-              meals={meals}
-              prettyDate={prettyDate}
-              viewingToday={viewingToday}
-            />
-
-            <MealTimeline
-              meals={meals}
-              entryLoading={entryLoading}
-              onEdit={handleMealEdit}
-              onDelete={handleMealDelete}
-              expandedMealId={expandedMealId}
-              onToggle={(id) =>
-                setExpandedMealId((prev) => (prev === id ? null : id))
-              }
-              dayLabel={prettyDate}
-              isToday={viewingToday}
-            />
-          </div>
-
-          <div className="space-y-6">
-            <MacroPanel
-              macros={macros}
-              targets={{ protein: proteinGoal, carbs: carbGoal, fat: fatGoal }}
-              calorieGoal={calorieGoal}
-              proteinGoal={proteinGoal}
-            />
-            <CoachCard
-              profile={profile}
-              proteinGoal={proteinGoal}
-              prettyDate={prettyDate}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProfileStep({
-  initialProfile,
-  saving,
-  onSave,
-}: {
-  initialProfile: DietProfile | null;
-  saving: boolean;
-  onSave: (payload: Omit<DietProfile, "proteinTarget">) => Promise<void>;
-}) {
-  const prefersFeet = (initialProfile?.heightText ?? "")
-    .toLowerCase()
-    .includes("ft");
-  const [goal, setGoal] = useState<ProfileGoal>(
-    initialProfile?.goal ?? "muscle_gain"
-  );
-  const [weight, setWeight] = useState(
-    initialProfile?.weightKg?.toString() ?? "70"
-  );
-  const [heightUnit, setHeightUnit] = useState<"cm" | "ft">(
-    prefersFeet ? "ft" : "cm"
-  );
-  const [heightCm, setHeightCm] = useState(
-    initialProfile?.heightCm?.toString() ?? "170"
-  );
-  const [heightFt, setHeightFt] = useState(
-    prefersFeet ? extractFeetValue(initialProfile?.heightText) ?? "5.8" : "5.8"
-  );
-  const [message, setMessage] = useState<string | null>(null);
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const weightNumber = Number(weight);
-    if (Number.isNaN(weightNumber) || weightNumber <= 0) {
-      setMessage("Enter your weight in kg.");
-      return;
+  const deleteMeal = async (id: string) => {
+    const updated = meals.filter((m) => m.id !== id);
+    setMeals(updated);
+    if (editingId === id) {
+      setEditingId(null);
+      setMealForm(MEAL_FORM_DEFAULT);
     }
-
-    let heightInCm = Number(heightCm);
-    let heightDisplay = `${heightInCm} cm`;
-
-    if (heightUnit === "ft") {
-      const converted = feetStringToCm(heightFt);
-      if (!converted) {
-        setMessage("Use format 5.8 for feet.inches (5ft 8in).");
-        return;
-      }
-      heightInCm = converted;
-      heightDisplay = `${heightFt} ft`;
-    } else if (Number.isNaN(heightInCm) || heightInCm <= 0) {
-      setMessage("Enter height in centimeters.");
-      return;
-    }
-
-    setMessage(null);
-    await onSave({
-      goal,
-      weightKg: weightNumber,
-      heightCm: heightInCm,
-      heightText: heightDisplay,
+    await fetch("/api/diet-entry", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userKey, dateKey, meals: updated, proteinGoal }),
     });
   };
 
-  return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-6 rounded-3xl border border-border bg-card p-6 shadow-[10px_10px_40px_rgba(15,23,42,0.06),-10px_-10px_40px_rgba(255,255,255,0.9)]"
-    >
-      <div className="grid gap-3 sm:grid-cols-2">
-        {GOAL_OPTIONS.map((option) => (
-          <button
-            type="button"
-            key={option.value}
-            className={cn(
-              "rounded-2xl border p-4 text-left transition-all",
-              goal === option.value
-                ? "border-primary bg-primary/5 shadow"
-                : "border-transparent bg-muted/40 hover:bg-muted/60"
-            )}
-            onClick={() => setGoal(option.value)}
-          >
-            <p
-              className={cn(
-                "text-sm font-bold uppercase tracking-wider",
-                goal === option.value ? "text-primary" : "text-muted-foreground"
-              )}
-            >
-              {option.label}
-            </p>
-            <p className="text-xs text-muted-foreground">{option.blurb}</p>
-          </button>
-        ))}
-      </div>
+  const editMeal = (meal: MealEntry) => {
+    setMealForm({ mealType: meal.mealType, description: meal.description });
+    setEditingId(meal.id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <label className="space-y-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-            Weight (kg)
-          </span>
-          <Input
-            type="number"
-            value={weight}
-            min={1}
-            onChange={(event) => setWeight(event.target.value)}
-            className="h-12 rounded-xl border bg-background text-lg font-medium"
-          />
-        </label>
+  const updateWater = (delta: number) => {
+    setWaterIntake((prev) => Math.max(0, prev + delta));
+  };
 
-        <label className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              Height
-            </span>
-            <div className="flex rounded-lg bg-muted p-1">
-              {(["cm", "ft"] as const).map((unit) => (
-                <button
-                  key={unit}
-                  type="button"
-                  onClick={() => setHeightUnit(unit)}
-                  className={cn(
-                    "rounded-md px-2 py-0.5 text-[10px] font-bold uppercase",
-                    heightUnit === unit
-                      ? "bg-background text-foreground shadow"
-                      : "text-muted-foreground"
-                  )}
-                >
-                  {unit}
-                </button>
-              ))}
-            </div>
-          </div>
-          {heightUnit === "cm" ? (
-            <Input
-              type="number"
-              value={heightCm}
-              min={1}
-              onChange={(event) => setHeightCm(event.target.value)}
-              className="h-12 rounded-xl border bg-background text-lg font-medium"
-            />
-          ) : (
-            <Input
-              value={heightFt}
-              onChange={(event) => setHeightFt(event.target.value)}
-              placeholder="5.8"
-              className="h-12 rounded-xl border bg-background text-lg font-medium"
-            />
-          )}
-        </label>
-      </div>
+  // --- RENDER ---
 
-      {message && <p className="text-sm font-medium text-red-600">{message}</p>}
-
-      <Button
-        type="submit"
-        disabled={saving}
-        size="lg"
-        className="w-full rounded-xl text-base font-bold"
-      >
-        {saving ? (
-          <Loader2 className="mr-2 size-5 animate-spin" />
-        ) : (
-          "Save Profile"
-        )}
-      </Button>
-    </form>
-  );
-}
-
-type MealComposerProps = {
-  mealForm: typeof MEAL_FORM_DEFAULT;
-  aiHint: AiHint | null;
-  analyzingMeal: boolean;
-  onMealTypeChange: (mealType: MealType) => void;
-  onDescriptionChange: (value: string) => void;
-  onSubmit: () => void;
-  isEditing: boolean;
-  onCancelEdit: () => void;
-  selectedDate: Date;
-  prettyDate: string;
-  onSelectDate: (date: Date | undefined) => void;
-  onSelectToday: () => void;
-  viewingToday: boolean;
-};
-
-function MealComposer({
-  mealForm,
-  aiHint,
-  analyzingMeal,
-  onMealTypeChange,
-  onDescriptionChange,
-  onSubmit,
-  isEditing,
-  onCancelEdit,
-  selectedDate,
-  prettyDate,
-  onSelectDate,
-  onSelectToday,
-  viewingToday,
-}: MealComposerProps) {
-  const activeMealLabel =
-    MEAL_TYPES_LOOKUP[mealForm.mealType] ?? mealForm.mealType;
-  return (
-    <Card className="relative overflow-hidden rounded-3xl border border-border/40 bg-card/90 shadow-[20px_20px_60px_rgba(15,23,42,0.08),-20px_-20px_60px_rgba(255,255,255,0.9)]">
-      <CardHeader className="space-y-4 border-b border-border/40 pb-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              Smart meal logger
-            </p>
-            <p className="text-xl font-semibold text-foreground">
-              {isEditing
-                ? "Update your plate"
-                : `What fueled you on ${prettyDate}?`}
-            </p>
-          </div>
-          <DaySelector
-            selectedDate={selectedDate}
-            viewingToday={viewingToday}
-            onSelectDate={onSelectDate}
-            onSelectToday={onSelectToday}
-          />
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {MEAL_TYPES.map((item) => (
-            <button
-              key={item.value}
-              type="button"
-              onClick={() => onMealTypeChange(item.value)}
-              className={cn(
-                "rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wide",
-                mealForm.mealType === item.value
-                  ? "bg-primary text-primary-foreground shadow"
-                  : "bg-muted/60 text-muted-foreground"
-              )}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-5 p-6">
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            <span>Meal summary</span>
-            <span className="rounded-full border border-border/60 px-3 py-1 text-[10px] font-semibold">
-              {activeMealLabel}
-            </span>
-          </div>
-          <div className="relative">
-            <Textarea
-              value={mealForm.description}
-              onChange={(event) => onDescriptionChange(event.target.value)}
-              placeholder="E.g. steamed momos with chutney + mint tea"
-              className="min-h-24 rounded-3xl border border-transparent bg-muted/40 p-4 text-base font-medium text-foreground shadow-inner focus-visible:border-primary/40 focus-visible:bg-background"
-            />
-            <div className="absolute bottom-3 right-3 flex gap-2">
-              {isEditing && (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={onCancelEdit}
-                  className="h-9 rounded-full px-3 text-xs font-semibold"
-                >
-                  Cancel
-                </Button>
-              )}
-              <Button
-                size="sm"
-                onClick={onSubmit}
-                disabled={analyzingMeal}
-                className="h-9 rounded-full px-4 text-xs font-bold shadow"
-              >
-                {analyzingMeal ? (
-                  <Loader2 className="size-3 animate-spin" />
-                ) : (
-                  "Save meal"
-                )}
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <AnimatePresence mode="wait">
-          {aiHint && (
-            <HintBanner
-              key={`${aiHint.tone}-${aiHint.message}`}
-              hint={aiHint}
-            />
-          )}
-        </AnimatePresence>
-      </CardContent>
-    </Card>
-  );
-}
-
-type DaySelectorProps = {
-  selectedDate: Date;
-  viewingToday: boolean;
-  onSelectDate: (date: Date | undefined) => void;
-  onSelectToday: () => void;
-};
-
-function DaySelector({
-  selectedDate,
-  viewingToday,
-  onSelectDate,
-  onSelectToday,
-}: DaySelectorProps) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="flex items-center gap-2">
-      <Button
-        type="button"
-        variant={viewingToday ? "default" : "ghost"}
-        size="sm"
-        onClick={onSelectToday}
-        className="rounded-full px-4 text-xs font-semibold"
-      >
-        Today
-      </Button>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="h-9 w-9 rounded-full border-border/60"
-            onClick={() => setOpen((prev) => !prev)}
-          >
-            <CalendarDays className="size-4" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          className="w-auto rounded-2xl border border-border/60 bg-card p-3 shadow-lg"
-          align="end"
+  if (loading && !profile) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+        <motion.div
+          animate={{ scale: [0.95, 1, 0.95] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
         >
-          <Calendar
-            mode="single"
-            selected={selectedDate}
-            onSelect={(date) => {
-              onSelectDate(date);
-              if (date) setOpen(false);
-            }}
-            initialFocus
-          />
-        </PopoverContent>
-      </Popover>
+          <Loader2 className="size-8 animate-spin text-gray-900" />
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (view === "onboarding") {
+    return <Onboarding onSave={saveProfile} saving={loading} />;
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 pb-24 font-sans text-gray-900 selection:bg-gray-200 selection:text-black">
+      {/* 1. Clean Marquee Header - Removed yellow, now sleek black/white */}
+      <div className="overflow-hidden bg-black py-2 text-white">
+        <motion.div
+          initial={{ x: "0%" }}
+          animate={{ x: "-100%" }}
+          transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+          className="flex w-max gap-8 whitespace-nowrap text-xs font-bold uppercase tracking-widest"
+        >
+          {[1, 2, 3, 4].map((i) => (
+            <span key={i} className="flex items-center gap-4">
+              <span>{GOAL_COPY[profile!.goal].badge} ACTIVE</span>
+              <span className="opacity-30">•</span>
+              <span>STAY CONSISTENT</span>
+              <span className="opacity-30">•</span>
+              <span>TRACK YOUR MACROS</span>
+              <span className="opacity-30">•</span>
+            </span>
+          ))}
+        </motion.div>
+      </div>
+
+      <div className="mx-auto max-w-lg px-4 py-6 sm:px-6 md:max-w-4xl">
+        {/* 2. Main Header - Clean, large typography */}
+        <header className="mb-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <motion.h1
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              className="text-3xl font-black uppercase tracking-tight text-gray-900 sm:text-5xl"
+            >
+              Diet<span className="text-gray-400">OS</span>
+            </motion.h1>
+            <div className="text-sm font-medium text-gray-500">
+              Hello, {userProfile?.name || "Athlete"}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-bold shadow-sm">
+              <Flame className="size-3.5 fill-orange-500 text-orange-500" />
+              <span>3 DAY STREAK</span>
+            </div>
+            <DateNavigator
+              selectedDate={selectedDate}
+              onSelect={setSelectedDate}
+              isToday={isToday}
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setView("onboarding")}
+              className="size-9 rounded-full border border-gray-200 bg-white hover:bg-gray-100"
+            >
+              <Target className="size-4" />
+            </Button>
+          </div>
+        </header>
+
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 flex items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm font-bold text-rose-800"
+          >
+            <Frown className="size-5" /> {error}
+          </motion.div>
+        )}
+
+        <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[1.4fr_1fr]">
+          {/* LEFT COLUMN: Input & Feed */}
+          <div className="flex flex-col gap-6">
+            <MealComposer
+              form={mealForm}
+              setForm={setMealForm}
+              onSubmit={submitMeal}
+              loading={analyzing}
+              aiHint={aiHint}
+              isEditing={!!editingId}
+              onCancelEdit={() => {
+                setEditingId(null);
+                setMealForm(MEAL_FORM_DEFAULT);
+                setAiHint(null);
+              }}
+            />
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between px-1">
+                <h2 className="flex items-center gap-2 text-lg font-black uppercase tracking-tight">
+                  <Utensils className="size-4" /> Daily Feed
+                </h2>
+                <Badge
+                  variant="secondary"
+                  className="font-mono text-xs font-bold"
+                >
+                  {meals.length}
+                </Badge>
+              </div>
+
+              <div className="space-y-3">
+                <AnimatePresence mode="popLayout">
+                  {meals.length === 0 ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-gray-50 py-12 text-center"
+                    >
+                      <div className="mb-3 flex size-12 items-center justify-center rounded-full bg-white shadow-sm">
+                        <Utensils className="size-5 text-gray-400" />
+                      </div>
+                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                        No meals logged
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Add some fuel to the tank!
+                      </p>
+                    </motion.div>
+                  ) : (
+                    meals.map((meal, i) => (
+                      <MealCard
+                        key={meal.id}
+                        meal={meal}
+                        index={i}
+                        onEdit={() => editMeal(meal)}
+                        onDelete={() => deleteMeal(meal.id)}
+                      />
+                    ))
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Stats */}
+          <div className="flex flex-col gap-6">
+            <StatsHUD
+              macros={macros}
+              targets={targets}
+              calorieGoal={calorieGoal}
+            />
+
+            <HydrationStation
+              current={waterIntake}
+              target={8}
+              onUpdate={updateWater}
+            />
+
+            <CoachPanel
+              profile={profile!}
+              prettyDate={prettyDate}
+              protein={proteinGoal}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
-function HintBanner({ hint }: { hint: AiHint }) {
-  const tone = HINT_TONE_CONFIG[hint.tone];
-  const Icon = tone.Icon;
+// --- SUBCOMPONENTS ---
+
+function HydrationStation({ current, target, onUpdate }: any) {
+  const progress = Math.min(100, (current / target) * 100);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      className={cn(
-        "flex items-start gap-3 rounded-2xl border p-4 text-sm font-medium shadow-sm",
-        tone.container
-      )}
-    >
-      <span
-        className={cn(
-          "flex size-9 shrink-0 items-center justify-center rounded-full",
-          tone.accent
-        )}
-      >
-        <Icon className="size-4" />
-      </span>
-      <div className="space-y-1">
-        {hint.title && (
-          <p
-            className={cn(
-              "text-[11px] font-bold uppercase tracking-widest",
-              tone.badge
-            )}
+    <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+      <div className="p-5">
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="flex items-center gap-2 text-sm font-black uppercase tracking-wide text-gray-800">
+            <Droplets className="size-4 text-cyan-500 fill-cyan-500" />
+            Hydration
+          </h3>
+          <span className="font-mono text-sm font-bold text-gray-500">
+            {current}/{target} cups
+          </span>
+        </div>
+
+        <div className="relative mb-5 h-8 w-full overflow-hidden rounded-full bg-gray-100">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            className="relative h-full bg-cyan-400"
+          />
+        </div>
+
+        <div className="flex gap-3">
+          <Button
+            variant="outline"
+            onClick={() => onUpdate(-1)}
+            className="h-10 flex-1 rounded-xl border-gray-200 font-bold hover:bg-gray-50"
           >
-            {hint.title}
-          </p>
-        )}
-        <p className="leading-relaxed">{hint.message}</p>
+            <Minus className="size-4" />
+          </Button>
+          <Button
+            onClick={() => onUpdate(1)}
+            className="h-10 flex-1 rounded-xl border-cyan-200 bg-cyan-50 text-cyan-700 font-bold hover:bg-cyan-100 hover:text-cyan-900 border"
+          >
+            <Plus className="size-4" />
+          </Button>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
-function DailySnapshotCard({
-  meals,
-  macros,
-  prettyDate,
-  viewingToday,
+function Onboarding({
+  onSave,
+  saving,
 }: {
-  meals: MealEntry[];
-  macros: Nutrients;
-  prettyDate: string;
-  viewingToday: boolean;
+  onSave: (d: any) => void;
+  saving: boolean;
 }) {
-  const lastMeal = meals[0];
+  const [formData, setFormData] = useState({
+    goal: "muscle_gain" as ProfileGoal,
+    weightKg: 70,
+    heightCm: 175,
+  });
+
   return (
-    <Card className="rounded-3xl border border-border/40 bg-card/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.7),20px_20px_60px_rgba(15,23,42,0.08)]">
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              {viewingToday ? "Today" : prettyDate}
-            </p>
-            <CardTitle className="text-xl font-semibold">
-              What you logged
-            </CardTitle>
-          </div>
-          <div className="rounded-2xl bg-muted/50 px-3 py-2 text-right">
-            <p className="text-xs text-muted-foreground">Meals</p>
-            <p className="text-xl font-semibold text-foreground">
-              {meals.length}
-            </p>
-          </div>
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
+      <div className="w-full max-w-md rounded-3xl border border-gray-200 bg-white p-6 shadow-xl md:p-8">
+        <div className="mb-6">
+          <h2 className="text-2xl font-black uppercase tracking-tight text-gray-900">
+            Setup Profile
+          </h2>
+          <p className="text-sm font-medium text-gray-500">
+            Configure your parameters.
+          </p>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid gap-3 sm:grid-cols-3">
-          {[
-            { label: "Protein", value: `${macros.protein}g` },
-            { label: "Carbs", value: `${macros.carbs}g` },
-            { label: "Fat", value: `${macros.fat}g` },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl border border-border/40 bg-background/60 p-3 text-center shadow-sm"
-            >
-              <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-                {stat.label}
-              </p>
-              <p className="text-lg font-semibold text-foreground">
-                {stat.value}
-              </p>
+
+        <div className="space-y-6">
+          <div className="grid grid-cols-2 gap-3">
+            {GOAL_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => setFormData((p) => ({ ...p, goal: opt.value }))}
+                className={cn(
+                  "flex flex-col gap-1 rounded-2xl border p-3 text-left transition-all",
+                  formData.goal === opt.value
+                    ? "border-gray-900 bg-gray-900 text-white"
+                    : "border-gray-200 bg-white text-gray-900 hover:border-gray-300"
+                )}
+              >
+                <span className="text-xs font-black uppercase">
+                  {opt.label}
+                </span>
+                <span
+                  className={cn(
+                    "text-[10px] font-medium",
+                    formData.goal === opt.value
+                      ? "text-gray-400"
+                      : "text-gray-500"
+                  )}
+                >
+                  {opt.blurb}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
+                Weight (KG)
+              </label>
+              <Input
+                type="number"
+                value={formData.weightKg}
+                onChange={(e) =>
+                  setFormData((p) => ({
+                    ...p,
+                    weightKg: Number(e.target.value),
+                  }))
+                }
+                className="h-12 rounded-xl border-gray-200 text-lg font-bold"
+              />
             </div>
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
+                Height (CM)
+              </label>
+              <Input
+                type="number"
+                value={formData.heightCm}
+                onChange={(e) =>
+                  setFormData((p) => ({
+                    ...p,
+                    heightCm: Number(e.target.value),
+                  }))
+                }
+                className="h-12 rounded-xl border-gray-200 text-lg font-bold"
+              />
+            </div>
+          </div>
+
+          <Button
+            onClick={() => onSave(formData)}
+            disabled={saving}
+            className="h-14 w-full rounded-2xl bg-gray-900 text-lg font-bold text-white hover:bg-black"
+          >
+            {saving ? <Loader2 className="animate-spin" /> : "Start Tracking"}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MealComposer({
+  form,
+  setForm,
+  onSubmit,
+  loading,
+  aiHint,
+  isEditing,
+  onCancelEdit,
+}: any) {
+  const hintConfig =
+    aiHint && HINT_TONE_CONFIG[aiHint.tone as keyof typeof HINT_TONE_CONFIG];
+  const HintIcon = hintConfig?.Icon || Info;
+
+  return (
+    <div className="relative z-10 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg shadow-gray-200/50">
+      <div className="border-b border-gray-100 bg-gray-50/50 px-5 py-3">
+        <div className="flex items-center justify-between">
+          <div className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+            {isEditing ? "EDITING ENTRY" : "NEW ENTRY"}
+          </div>
+          {isEditing && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onCancelEdit}
+              className="h-6 px-2 text-[10px] font-bold uppercase text-rose-500 hover:bg-rose-50 hover:text-rose-600"
+            >
+              Cancel Edit
+            </Button>
+          )}
+        </div>
+      </div>
+
+      <div className="p-5">
+        {/* Quick Add Bar - Mobile optimized scroll */}
+        <div className="no-scrollbar mb-4 flex gap-2 overflow-x-auto pb-1">
+          {QUICK_ADDS.map((qa) => (
+            <button
+              key={qa.label}
+              onClick={() =>
+                setForm((p: any) => ({
+                  ...p,
+                  description:
+                    qa.label + (p.description ? ` + ${p.description}` : ""),
+                }))
+              }
+              className="flex shrink-0 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-bold shadow-sm transition-colors hover:border-gray-300 active:bg-gray-50"
+            >
+              <span>{qa.emoji}</span>
+              <span>{qa.label}</span>
+            </button>
           ))}
         </div>
-        {lastMeal ? (
-          <div className="rounded-2xl border border-border/40 bg-muted/30 p-4">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              Last meal
-            </p>
-            <p className="text-base font-semibold text-foreground">
-              {lastMeal.description}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Logged at {formatMealTime(lastMeal.createdAt)}
-            </p>
-          </div>
-        ) : (
-          <p className="text-sm text-muted-foreground">
-            No meals logged yet. Add one above to see your snapshot.
-          </p>
-        )}
-      </CardContent>
-    </Card>
-  );
-}
 
-type MealTimelineProps = {
-  meals: MealEntry[];
-  entryLoading: boolean;
-  onEdit: (meal: MealEntry) => void;
-  onDelete: (mealId: string) => void;
-  expandedMealId: string | null;
-  onToggle: (mealId: string) => void;
-  dayLabel: string;
-  isToday: boolean;
-};
-
-function MealTimeline({
-  meals,
-  entryLoading,
-  onEdit,
-  onDelete,
-  expandedMealId,
-  onToggle,
-  dayLabel,
-  isToday,
-}: MealTimelineProps) {
-  const title = isToday ? "Today&apos;s meals" : `Meals on ${dayLabel}`;
-  return (
-    <div className="space-y-4">
-      <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Meal log
-          </p>
-          <p className="text-lg font-semibold text-foreground">{title}</p>
-          <p className="text-xs text-muted-foreground">
-            {isToday ? "Tap a card to view macros" : "Viewing a previous day"}
-          </p>
+        <div className="mb-4 flex flex-wrap gap-2">
+          {MEAL_TYPES.map((type) => (
+            <button
+              key={type.value}
+              onClick={() =>
+                setForm((p: any) => ({ ...p, mealType: type.value }))
+              }
+              className={cn(
+                "rounded-full border px-4 py-1.5 text-[11px] font-bold uppercase transition-all",
+                form.mealType === type.value
+                  ? "border-gray-900 bg-gray-900 text-white"
+                  : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+              )}
+            >
+              {type.label}
+            </button>
+          ))}
         </div>
-        <Badge
-          variant="outline"
-          className="rounded-full border-border/60 px-3 py-1 text-[11px] font-semibold"
-        >
-          {dayLabel}
-        </Badge>
+
+        <div className="relative">
+          <textarea
+            value={form.description}
+            onChange={(e) =>
+              setForm((p: any) => ({ ...p, description: e.target.value }))
+            }
+            placeholder="e.g., 200g chicken breast, rice..."
+            className="min-h-[100px] w-full resize-none rounded-2xl border-0 bg-gray-50 p-4 text-lg font-medium text-gray-900 placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-gray-200"
+          />
+
+          <div className="mt-4 flex justify-end">
+            <Button
+              onClick={onSubmit}
+              disabled={loading || !form.description.trim()}
+              className="h-11 w-full rounded-xl bg-gray-900 font-bold text-white shadow-md hover:bg-black disabled:opacity-50 sm:w-auto sm:px-8"
+            >
+              {loading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <span className="flex items-center gap-2">
+                  Analyze Meal <Zap className="size-4" />
+                </span>
+              )}
+            </Button>
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {aiHint && hintConfig && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="overflow-hidden"
+            >
+              <div
+                className={cn(
+                  "mt-4 flex items-start gap-3 rounded-xl border p-4 text-sm font-medium",
+                  hintConfig.border,
+                  hintConfig.bg,
+                  hintConfig.text
+                )}
+              >
+                <HintIcon className="mt-0.5 size-4 shrink-0" />
+                <div>
+                  {aiHint.title && (
+                    <div className="mb-0.5 text-xs font-bold uppercase opacity-70">
+                      {aiHint.title}
+                    </div>
+                  )}
+                  {aiHint.message}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-
-      {entryLoading ? (
-        <TimelineSkeleton />
-      ) : meals.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-muted/60 bg-card/50 py-10 text-center shadow-inner">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-muted/50 px-4 py-2 text-sm text-muted-foreground">
-            <CalendarIcon className="size-4" />
-            No meals logged
-          </div>
-          <p className="text-xs text-muted-foreground">
-            {isToday
-              ? "Add your first meal above."
-              : "Pick another date or log a meal."}
-          </p>
-        </div>
-      ) : (
-        <div className="space-y-3">
-          <AnimatePresence initial={false}>
-            {meals.map((meal) => (
-              <MealCard
-                key={meal.id}
-                meal={meal}
-                expanded={expandedMealId === meal.id}
-                onToggle={() => onToggle(meal.id)}
-                onEdit={() => onEdit(meal)}
-                onDelete={() => onDelete(meal.id)}
-              />
-            ))}
-          </AnimatePresence>
-        </div>
-      )}
     </div>
   );
 }
 
 function MealCard({
   meal,
-  expanded,
-  onToggle,
   onEdit,
   onDelete,
+  index,
 }: {
   meal: MealEntry;
-  expanded: boolean;
-  onToggle: () => void;
   onEdit: () => void;
   onDelete: () => void;
+  index: number;
 }) {
-  const quality = assessMealQuality(meal);
-  const qualityStyle = QUALITY_STYLES[quality];
-  const summary = `${meal.nutrients.calories ?? 0} kcal · ${
-    meal.nutrients.protein ?? 0
-  }g protein`;
-  const pillLabel = qualityStyle.emoji
-    ? `${qualityStyle.emoji} ${qualityStyle.label}`
-    : qualityStyle.label;
+  const [expanded, setExpanded] = useState(false);
+
+  // Determine card color based on macros/type roughly
+  // This adds the "color" the user asked for in cards, but keeps it subtle
+  const isHighProtein = meal.nutrients.protein > 30;
+  const isHighCarb = meal.nutrients.carbs > 50;
+
+  let accentColor = "bg-gray-100 text-gray-600";
+  if (isHighProtein) accentColor = "bg-rose-100 text-rose-700 border-rose-200";
+  else if (isHighCarb)
+    accentColor = "bg-amber-100 text-amber-700 border-amber-200";
+  else accentColor = "bg-cyan-100 text-cyan-700 border-cyan-200";
 
   return (
     <motion.div
       layout
-      className={cn(
-        "rounded-3xl border bg-card/90 p-4 shadow-[10px_10px_40px_rgba(15,23,42,0.06),-10px_-10px_40px_rgba(255,255,255,0.9)]",
-        qualityStyle.card
-      )}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
     >
-      <button
-        type="button"
-        className="flex w-full items-start justify-between gap-4 text-left"
-        onClick={onToggle}
+      <div
+        onClick={() => setExpanded(!expanded)}
+        className="flex cursor-pointer items-center justify-between p-4"
       >
-        <div>
-          <p className="text-base font-semibold text-foreground">
-            {meal.description}
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Logged at {formatMealTime(meal.createdAt)}
-          </p>
-          <p className={cn("text-xs font-semibold", qualityStyle.accent)}>
-            {summary}
-          </p>
+        <div className="flex items-center gap-4">
+          <div
+            className={cn(
+              "flex size-12 flex-col items-center justify-center rounded-xl border text-center leading-none",
+              accentColor
+            )}
+          >
+            <span className="text-[9px] font-black uppercase opacity-70">
+              KCAL
+            </span>
+            <span className="text-sm font-black">
+              {meal.nutrients.calories}
+            </span>
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-bold uppercase tracking-wide text-gray-400">
+                {meal.mealType}
+              </span>
+              <span className="size-0.5 rounded-full bg-gray-300" />
+              <span className="text-[10px] font-bold uppercase text-gray-400">
+                {new Date(meal.createdAt).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+            </div>
+            <h3 className="line-clamp-1 text-base font-bold text-gray-900">
+              {meal.description}
+            </h3>
+          </div>
         </div>
-        <span
-          className={cn(
-            "rounded-full px-3 py-1 text-[11px] font-semibold",
-            qualityStyle.pill
+        <div className="pr-1 text-gray-400">
+          {expanded ? (
+            <ChevronUp className="size-5" />
+          ) : (
+            <ChevronDown className="size-5" />
           )}
-        >
-          {pillLabel}
-        </span>
-      </button>
+        </div>
+      </div>
 
       <AnimatePresence>
         {expanded && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden pt-4"
+            initial={{ height: 0 }}
+            animate={{ height: "auto" }}
+            exit={{ height: 0 }}
+            className="overflow-hidden border-t border-gray-100 bg-gray-50/50"
           >
-            <div className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-3">
-              <div>
-                <p className="text-xs uppercase tracking-widest">Protein</p>
-                <p className="text-base font-semibold text-foreground">
-                  {meal.nutrients.protein}g
-                </p>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-widest">Carbs</p>
-                <p className="text-base font-semibold text-foreground">
-                  {meal.nutrients.carbs}g
-                </p>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-widest">Fat</p>
-                <p className="text-base font-semibold text-foreground">
-                  {meal.nutrients.fat}g
-                </p>
-              </div>
+            <div className="grid grid-cols-3 divide-x divide-gray-100 border-b border-gray-100">
+              <MacroStat
+                label="Protein"
+                val={meal.nutrients.protein}
+                unit="g"
+              />
+              <MacroStat label="Carbs" val={meal.nutrients.carbs} unit="g" />
+              <MacroStat label="Fat" val={meal.nutrients.fat} unit="g" />
             </div>
-            {meal.notes && (
-              <p className="mt-3 text-sm text-muted-foreground">
-                Coach note: {meal.notes}
-              </p>
-            )}
-            <div className="mt-4 flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-full px-3 text-xs font-semibold"
-                onClick={onEdit}
-              >
-                <PenSquare className="mr-1 size-3.5" /> Edit
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="rounded-full px-3 text-xs font-semibold text-red-600 hover:text-red-700"
-                onClick={onDelete}
-              >
-                <Trash2 className="mr-1 size-3.5" /> Delete
-              </Button>
+            <div className="flex items-center justify-between p-3">
+              {meal.notes ? (
+                <p className="line-clamp-1 max-w-[60%] text-xs font-medium italic text-gray-500">
+                  "{meal.notes}"
+                </p>
+              ) : (
+                <span />
+              )}
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEdit();
+                  }}
+                  className="h-8 rounded-lg text-gray-500 hover:bg-white hover:text-gray-900"
+                >
+                  Edit
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete();
+                  }}
+                  className="h-8 rounded-lg text-rose-400 hover:bg-rose-50 hover:text-rose-600"
+                >
+                  <Trash2 className="size-4" />
+                </Button>
+              </div>
             </div>
           </motion.div>
         )}
@@ -1332,320 +1021,224 @@ function MealCard({
   );
 }
 
-function TimelineSkeleton() {
-  return (
-    <div className="space-y-3">
-      {[...Array(3)].map((_, index) => (
-        <div
-          key={index}
-          className="animate-pulse rounded-3xl border border-border/40 bg-card/60 p-4"
-        >
-          <div className="h-4 w-1/2 rounded-full bg-muted/60" />
-          <div className="mt-2 h-3 w-1/3 rounded-full bg-muted/40" />
-        </div>
-      ))}
-    </div>
-  );
-}
+function StatsHUD({ macros, targets, calorieGoal }: any) {
+  const calPercent = Math.min(100, (macros.calories / calorieGoal) * 100);
 
-type MacroPanelProps = {
-  macros: Nutrients;
-  targets: { protein: number; carbs: number; fat: number };
-  calorieGoal: number;
-  proteinGoal: number;
-};
-
-function MacroPanel({
-  macros,
-  targets,
-  calorieGoal,
-  proteinGoal,
-}: MacroPanelProps) {
-  const macroBreakdown = [
-    {
-      label: "Protein",
-      value: macros.protein,
-      goal: proteinGoal,
-      color: "text-rose-500",
-      bar: "bg-rose-500",
-    },
-    {
-      label: "Carbs",
-      value: macros.carbs,
-      goal: targets.carbs,
-      color: "text-amber-500",
-      bar: "bg-amber-500",
-    },
-    {
-      label: "Fat",
-      value: macros.fat,
-      goal: targets.fat,
-      color: "text-emerald-500",
-      bar: "bg-emerald-500",
-    },
-  ];
-  const calorieBadgeLabel = calorieGoal
-    ? `${macros.calories} / ${calorieGoal} kcal`
-    : `${macros.calories} kcal logged`;
   return (
-    <Card className="rounded-3xl border border-border/60 bg-card/80 shadow-xl">
-      <CardHeader className="px-6 pt-6">
-        <div className="flex items-start justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              Daily macros
-            </p>
-            <CardTitle className="text-xl font-bold text-foreground">
-              Fuel overview
-            </CardTitle>
+    <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+      <div className="border-b border-gray-100 bg-gray-50/50 p-4">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-black uppercase tracking-widest text-gray-400">
+            Daily Summary
+          </span>
+          <div className="flex items-center gap-1.5 rounded-full bg-white px-2 py-0.5 shadow-sm">
+            <div className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
+            <span className="text-[10px] font-bold text-gray-600">Live</span>
           </div>
-          <Badge
-            variant="outline"
-            className="rounded-full border-primary/30 px-3 py-1 text-[11px] font-semibold"
-          >
-            {calorieBadgeLabel}
-          </Badge>
         </div>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-6 px-6 pb-6 md:flex-row md:items-center">
-        <CalorieRadial value={macros.calories} goal={calorieGoal} />
-        <div className="flex-1 space-y-4">
-          {macroBreakdown.map((macro) => (
-            <MacroStatRow key={macro.label} {...macro} />
-          ))}
+      </div>
+
+      <div className="p-5">
+        <div className="mb-6">
+          <div className="mb-2 flex items-end justify-between">
+            <div>
+              <span className="text-4xl font-black text-gray-900">
+                {macros.calories}
+              </span>
+              <span className="text-sm font-bold text-gray-400">
+                {" "}
+                / {calorieGoal}
+              </span>
+            </div>
+            <div className="text-[10px] font-bold uppercase text-gray-400">
+              Calories
+            </div>
+          </div>
+          <div className="h-3 w-full overflow-hidden rounded-full bg-gray-100">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${calPercent}%` }}
+              className="h-full bg-gray-900"
+            />
+          </div>
         </div>
-      </CardContent>
-    </Card>
-  );
-}
 
-function CalorieRadial({ value, goal }: { value: number; goal: number }) {
-  const normalizedGoal = goal || Math.max(value, 1);
-  const pct = Math.min(1, value / normalizedGoal);
-  const radius = 56;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference * (1 - pct);
-
-  return (
-    <div className="relative flex items-center justify-center">
-      <svg width="150" height="150" className="-rotate-90">
-        <circle
-          cx="75"
-          cy="75"
-          r={radius}
-          strokeWidth="14"
-          className="text-muted"
-          stroke="currentColor"
-          fill="transparent"
-          opacity={0.2}
-        />
-        <motion.circle
-          cx="75"
-          cy="75"
-          r={radius}
-          strokeWidth="14"
-          strokeLinecap="round"
-          className="text-primary"
-          stroke="currentColor"
-          fill="transparent"
-          strokeDasharray={circumference}
-          animate={{ strokeDashoffset: offset }}
-          initial={{ strokeDashoffset: circumference }}
-        />
-      </svg>
-      <div className="absolute text-center">
-        <p className="text-sm font-semibold text-muted-foreground">Calories</p>
-        <p className="text-2xl font-bold text-foreground">{value}</p>
-        <p className="text-xs text-muted-foreground">
-          {(pct * 100).toFixed(0)}% of goal
-        </p>
+        <div className="space-y-4">
+          <MacroBar
+            label="Protein"
+            val={macros.protein}
+            max={targets.protein}
+            color="bg-rose-500"
+          />
+          <MacroBar
+            label="Carbs"
+            val={macros.carbs}
+            max={targets.carbs}
+            color="bg-amber-400"
+          />
+          <MacroBar
+            label="Fat"
+            val={macros.fat}
+            max={targets.fat}
+            color="bg-cyan-500"
+          />
+        </div>
       </div>
     </div>
   );
 }
 
-function MacroStatRow({
-  label,
-  value,
-  goal,
-  color,
-  bar,
-}: {
-  label: string;
-  value: number;
-  goal: number;
-  color: string;
-  bar: string;
-}) {
-  const safeGoal = goal || 1;
-  const percent = Math.min(100, (value / safeGoal) * 100);
+function MacroBar({ label, val, max, color }: any) {
+  const pct = Math.min(100, (val / max) * 100);
   return (
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
-        <span className={color}>{label}</span>
-        <span className="text-foreground">
-          {value} / {goal}g
+    <div>
+      <div className="mb-1.5 flex justify-between text-[11px] font-bold uppercase tracking-wide">
+        <span className="text-gray-900">{label}</span>
+        <span className="text-gray-400">
+          {val} / {max}g
         </span>
       </div>
-      <div className="h-2 w-full rounded-full bg-muted/60">
+      <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
         <motion.div
           initial={{ width: 0 }}
-          animate={{ width: `${percent}%` }}
-          className={cn("h-full rounded-full", bar)}
+          animate={{ width: `${pct}%` }}
+          className={cn("h-full rounded-full", color)}
         />
       </div>
     </div>
   );
 }
 
-type CoachCardProps = {
-  profile: DietProfile;
-  proteinGoal: number;
-  prettyDate: string;
-};
-
-function CoachCard({ profile, proteinGoal, prettyDate }: CoachCardProps) {
-  const copy = GOAL_COPY[profile.goal];
+function CoachPanel({ profile, prettyDate, protein }: any) {
+  const copy = GOAL_COPY[profile.goal as ProfileGoal];
   return (
-    <Card className="rounded-3xl border border-border/40 bg-card/90 shadow-[20px_20px_60px_rgba(15,23,42,0.08),-20px_-20px_60px_rgba(255,255,255,0.9)]">
-      <CardContent className="space-y-5 p-6">
-        <div className="flex items-center justify-between">
-          <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-            <Sparkles className="size-3.5" /> Coach tip
-          </div>
-          <span className="text-xs font-semibold text-muted-foreground">
-            {prettyDate}
-          </span>
+    <div className="rounded-3xl border border-violet-100 bg-violet-50/50 p-5">
+      <div className="mb-3 flex items-center gap-3">
+        <div className="flex size-8 items-center justify-center rounded-full bg-white text-violet-600 shadow-sm">
+          <Trophy className="size-4" />
         </div>
         <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-            {copy.badge}
-          </p>
-          <p className="text-2xl font-semibold text-foreground">{copy.title}</p>
-          <p className="text-sm text-muted-foreground">{copy.goal}</p>
+          <div className="text-xs font-black uppercase text-violet-900">
+            Coach Insight
+          </div>
         </div>
-        <p className="text-sm leading-relaxed text-foreground">
-          {copy.message(prettyDate, proteinGoal)}
-        </p>
-        <div className="space-y-2">
-          {copy.tips.map((tip) => (
-            <div
-              key={tip}
-              className="flex items-center gap-2 rounded-2xl border border-border/40 bg-background/80 px-3 py-2 text-sm text-foreground shadow-sm"
-            >
-              <CheckCircle2 className="size-4 text-primary" />
-              <span>{tip}</span>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+      <p className="mb-4 text-sm font-medium leading-relaxed text-violet-900">
+        "{copy.message(prettyDate, protein)}"
+      </p>
+      <div className="flex flex-wrap gap-2">
+        {copy.tips.map((tip: string) => (
+          <span
+            key={tip}
+            className="rounded-lg border border-violet-100 bg-white px-2.5 py-1 text-[10px] font-bold text-violet-700"
+          >
+            {tip}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
-function assessMealQuality(meal: MealEntry): MealQuality {
-  const calories = meal.nutrients.calories ?? 0;
-  const protein = meal.nutrients.protein ?? 0;
-  const fat = meal.nutrients.fat ?? 0;
-  if (calories > 700 || fat > 35) {
-    return "concern";
-  }
-  if (protein >= 25 && fat <= 25 && calories <= 650) {
-    return "prime";
-  }
-  return "balanced";
+function DateNavigator({ selectedDate, onSelect, isToday }: any) {
+  return (
+    <div className="flex items-center">
+      <Popover>
+        <PopoverTrigger asChild>
+          <button className="flex h-9 items-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 shadow-sm hover:bg-gray-50">
+            <CalendarDays className="size-3.5" />
+            <span className="uppercase">
+              {isToday
+                ? "Today"
+                : selectedDate.toLocaleDateString(undefined, {
+                    month: "short",
+                    day: "numeric",
+                  })}
+            </span>
+          </button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto rounded-xl border-gray-200 p-0 shadow-lg">
+          <Calendar
+            mode="single"
+            selected={selectedDate}
+            onSelect={(d) => d && onSelect(d)}
+          />
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
 }
 
-function getDateKey(date: Date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
+const MacroStat = ({ label, val, unit }: any) => (
+  <div className="py-2 text-center">
+    <div className="mb-0.5 text-[9px] font-black uppercase text-gray-400">
+      {label}
+    </div>
+    <div className="text-sm font-black text-gray-900">
+      {val}
+      {unit}
+    </div>
+  </div>
+);
 
-function formatDate(dateKey: string) {
-  const [year, month, day] = dateKey.split("-").map(Number);
-  const value = new Date(year, (month ?? 1) - 1, day);
-  return value.toLocaleDateString("en-US", {
+// --- UTILS ---
+
+function startOfDay(d: Date) {
+  const copy = new Date(d);
+  copy.setHours(0, 0, 0, 0);
+  return copy;
+}
+function getDateKey(d: Date) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(d.getDate()).padStart(2, "0")}`;
+}
+function formatDate(key: string) {
+  const [y, m, d] = key.split("-").map(Number);
+  const date = new Date(y, m - 1, d);
+  return date.toLocaleDateString("en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",
   });
 }
-
-function startOfDay(value: Date) {
-  const copy = new Date(value);
-  copy.setHours(0, 0, 0, 0);
-  return copy;
-}
-
-function formatMealTime(value: string) {
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return "--:--";
-  return parsed.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-  });
-}
-
 function ensureUserKey() {
   if (typeof window === "undefined") return null;
-  const existing = window.localStorage.getItem(STORAGE_KEY);
-  if (existing) return existing;
-  const generated = createClientId();
-  window.localStorage.setItem(STORAGE_KEY, generated);
-  return generated;
-}
-
-function createClientId() {
-  if (typeof crypto !== "undefined") {
-    if (typeof crypto.randomUUID === "function") {
-      return crypto.randomUUID();
-    }
-    if (crypto.getRandomValues) {
-      const bytes = crypto.getRandomValues(new Uint8Array(16));
-      return Array.from(bytes, (b) => b.toString(16).padStart(2, "0"))
-        .join("")
-        .slice(0, 32);
-    }
+  let key = window.localStorage.getItem(STORAGE_KEY);
+  if (!key) {
+    key = safeGenerateId();
+    window.localStorage.setItem(STORAGE_KEY, key);
   }
-  return `gb-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+  return key;
 }
-
-function calcProteinTarget(weightKg: number, goal: ProfileGoal) {
-  const multipliers: Record<ProfileGoal, number> = {
+function safeGenerateId() {
+  if (
+    typeof crypto !== "undefined" &&
+    typeof crypto.randomUUID === "function"
+  ) {
+    return crypto.randomUUID();
+  }
+  return (
+    "id-" + Date.now().toString(36) + Math.random().toString(36).substring(2)
+  );
+}
+function calcProteinTarget(w: number, g: string) {
+  const factors: any = {
     weight_loss: 1.6,
     weight_gain: 1.8,
-    muscle_gain: 2,
-    muscle_loss: 1.7,
+    muscle_gain: 2.0,
+    muscle_loss: 1.8,
   };
-  return Math.round(weightKg * multipliers[goal]);
+  return Math.round(w * (factors[g] || 1.6));
 }
-
-function estimateCalorieTarget(profile: DietProfile) {
-  const base = profile.weightKg * 31;
-  const adjustments: Record<ProfileGoal, number> = {
-    weight_loss: -350,
-    weight_gain: 350,
+function estimateCalorieTarget(p: DietProfile) {
+  const base = p.weightKg * 30; // Rough BMR estimate
+  const mods: any = {
+    weight_loss: -400,
+    weight_gain: 400,
     muscle_gain: 250,
-    muscle_loss: -150,
+    muscle_loss: -200,
   };
-  return Math.max(1400, Math.round(base + (adjustments[profile.goal] ?? 0)));
-}
-
-function feetStringToCm(value: string) {
-  if (!value) return null;
-  const sanitized = value.replace(/[^0-9.]/g, "");
-  if (!sanitized) return null;
-  const [feetPart, inchPart] = sanitized.split(".");
-  const feet = Number(feetPart);
-  const inches = inchPart ? Number(inchPart.padEnd(2, "0").slice(0, 2)) : 0;
-  if (Number.isNaN(feet) || feet <= 0 || Number.isNaN(inches)) return null;
-  return Math.round((feet * 12 + inches) * 2.54);
-}
-
-function extractFeetValue(heightText?: string | null) {
-  if (!heightText) return null;
-  const match = heightText.match(/[0-9]+(?:\.[0-9]+)?/);
-  return match ? match[0] : null;
+  return Math.max(1200, Math.round(base + (mods[p.goal] || 0)));
 }
