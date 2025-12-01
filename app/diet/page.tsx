@@ -11,9 +11,11 @@ import {
   Flame,
   Frown,
   Info,
+  InfoIcon,
   Loader2,
   Minus,
   Plus,
+  Sparkles,
   Target,
   Trash2,
   Trophy,
@@ -116,36 +118,52 @@ const MEAL_FORM_DEFAULT = {
 };
 
 const QUICK_ADDS = [
-  { emoji: "☕", label: "Black Coffee" },
-  { emoji: "🍌", label: "Banana" },
-  { emoji: "🥤", label: "Protein Shake" },
-  { emoji: "🥚", label: "2 Boiled Eggs" },
+  {
+    emoji: "☕",
+    label: "Black Coffee",
+    color: "bg-amber-100 border-amber-300 text-amber-900",
+  },
+  {
+    emoji: "🍌",
+    label: "Banana",
+    color: "bg-yellow-100 border-yellow-300 text-yellow-900",
+  },
+  {
+    emoji: "🥤",
+    label: "Protein Shake",
+    color: "bg-blue-100 border-blue-300 text-blue-900",
+  },
+  {
+    emoji: "🥚",
+    label: "2 Boiled Eggs",
+    color: "bg-orange-100 border-orange-300 text-orange-900",
+  },
 ];
 
 const HINT_TONE_CONFIG = {
   info: {
     Icon: Info,
-    bg: "bg-blue-50",
-    border: "border-blue-200",
-    text: "text-blue-800",
+    bg: "bg-blue-100",
+    border: "border-blue-500",
+    text: "text-blue-900",
   },
   success: {
     Icon: Check,
-    bg: "bg-emerald-50",
-    border: "border-emerald-200",
-    text: "text-emerald-800",
+    bg: "bg-emerald-100",
+    border: "border-emerald-500",
+    text: "text-emerald-900",
   },
   warning: {
     Icon: Info,
-    bg: "bg-amber-50",
-    border: "border-amber-200",
-    text: "text-amber-800",
+    bg: "bg-amber-100",
+    border: "border-amber-500",
+    text: "text-amber-900",
   },
   error: {
     Icon: Frown,
-    bg: "bg-rose-50",
-    border: "border-rose-200",
-    text: "text-rose-800",
+    bg: "bg-rose-100",
+    border: "border-rose-500",
+    text: "text-rose-900",
   },
 };
 
@@ -281,10 +299,7 @@ export default function DietPage() {
           );
           const mData = await mRes.json();
           setMeals(Array.isArray(mData.meals) ? mData.meals : []);
-
-          // Initialize water intake (simulated for demo as it's not in schema yet)
           setWaterIntake(0);
-
           setView("dashboard");
         } else {
           setView("onboarding");
@@ -428,12 +443,12 @@ export default function DietPage() {
 
   if (loading && !profile) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="flex min-h-screen items-center justify-center ">
         <motion.div
           animate={{ scale: [0.95, 1, 0.95] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
-          <Loader2 className="size-8 animate-spin text-gray-900" />
+          <Loader2 className="size-8 animate-spin text-black" />
         </motion.div>
       </div>
     );
@@ -444,78 +459,56 @@ export default function DietPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24 font-sans text-gray-900 selection:bg-gray-200 selection:text-black">
-      {/* 1. Clean Marquee Header - Removed yellow, now sleek black/white */}
-      <div className="overflow-hidden bg-black py-2 text-white">
-        <motion.div
-          initial={{ x: "0%" }}
-          animate={{ x: "-100%" }}
-          transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-          className="flex w-max gap-8 whitespace-nowrap text-xs font-bold uppercase tracking-widest"
-        >
-          {[1, 2, 3, 4].map((i) => (
-            <span key={i} className="flex items-center gap-4">
-              <span>{GOAL_COPY[profile!.goal].badge} ACTIVE</span>
-              <span className="opacity-30">•</span>
-              <span>STAY CONSISTENT</span>
-              <span className="opacity-30">•</span>
-              <span>TRACK YOUR MACROS</span>
-              <span className="opacity-30">•</span>
-            </span>
-          ))}
-        </motion.div>
+    <div className="min-h-screen  pb-24 font-sans text-gray-900 selection:bg-indigo-100 selection:text-indigo-900">
+      {/* 1. NEW TOP SECTION (Replaces Old Header) */}
+      <div className="mb-3 pt-8">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <div className="flex flex-col gap-4">
+            {/* Greeting & Date */}
+            <div className="flex items-start justify-between">
+              <div>
+                <motion.h1
+                  initial={{ y: 5, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  className="text-3xl font-black uppercase italic tracking-tighter text-black sm:text-5xl"
+                >
+                  Stay <span className="text-emerald-500">Healthy.</span>
+                </motion.h1>
+                <p className="font-bold text-gray-400 text-sm mt-1">
+                  {userProfile?.name || "Ready to crush it?"}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setView("onboarding")}
+                  className="size-10 rounded-xl border-2 border-black bg-white hover:bg-gray-100 hover:shadow-[2px_2px_0px_black]"
+                >
+                  <InfoIcon className="size-5" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="mx-auto max-w-lg px-4 py-6 sm:px-6 md:max-w-4xl">
-        {/* 2. Main Header - Clean, large typography */}
-        <header className="mb-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            <motion.h1
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              className="text-3xl font-black uppercase tracking-tight text-gray-900 sm:text-5xl"
-            >
-              Diet<span className="text-gray-400">OS</span>
-            </motion.h1>
-            <div className="text-sm font-medium text-gray-500">
-              Hello, {userProfile?.name || "Athlete"}
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-bold shadow-sm">
-              <Flame className="size-3.5 fill-orange-500 text-orange-500" />
-              <span>3 DAY STREAK</span>
-            </div>
-            <DateNavigator
-              selectedDate={selectedDate}
-              onSelect={setSelectedDate}
-              isToday={isToday}
-            />
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setView("onboarding")}
-              className="size-9 rounded-full border border-gray-200 bg-white hover:bg-gray-100"
-            >
-              <Target className="size-4" />
-            </Button>
-          </div>
-        </header>
-
+      <div className="mx-auto max-w-lg px-4 sm:px-6 md:max-w-4xl">
         {error && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 flex items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm font-bold text-rose-800"
+            className="mb-6 flex items-center gap-2 rounded-xl border-2 border-black bg-red-100 p-4 text-sm font-bold text-red-900 shadow-[4px_4px_0px_black]"
           >
             <Frown className="size-5" /> {error}
           </motion.div>
         )}
 
-        <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[1.4fr_1fr]">
+        <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[1.4fr_1fr]">
           {/* LEFT COLUMN: Input & Feed */}
           <div className="flex flex-col gap-6">
+            {/* Meal Composer */}
             <MealComposer
               form={mealForm}
               setForm={setMealForm}
@@ -530,35 +523,42 @@ export default function DietPage() {
               }}
             />
 
+            {/* Feed Section */}
             <div className="space-y-4">
               <div className="flex items-center justify-between px-1">
-                <h2 className="flex items-center gap-2 text-lg font-black uppercase tracking-tight">
-                  <Utensils className="size-4" /> Daily Feed
-                </h2>
-                <Badge
-                  variant="secondary"
-                  className="font-mono text-xs font-bold"
-                >
-                  {meals.length}
-                </Badge>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-xl font-black uppercase tracking-tight text-black">
+                    Today&apos;s Feed
+                  </h2>
+                  <Badge className="border-2 border-black bg-indigo-500 font-mono text-xs font-bold text-white shadow-[2px_2px_0px_black]">
+                    {meals.length} ENTRIES
+                  </Badge>
+                </div>
+                <div>
+                  <DateNavigator
+                    selectedDate={selectedDate}
+                    onSelect={setSelectedDate}
+                    isToday={isToday}
+                  />
+                </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <AnimatePresence mode="popLayout">
                   {meals.length === 0 ? (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-gray-50 py-12 text-center"
+                      className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-300 bg-white py-12 text-center"
                     >
-                      <div className="mb-3 flex size-12 items-center justify-center rounded-full bg-white shadow-sm">
-                        <Utensils className="size-5 text-gray-400" />
+                      <div className="mb-3 flex size-14 items-center justify-center rounded-full bg-gray-50 border-2 border-gray-100">
+                        <Utensils className="size-6 text-gray-400" />
                       </div>
-                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400">
-                        No meals logged
+                      <p className="text-sm font-black uppercase tracking-wider text-gray-400">
+                        Plate Empty
                       </p>
-                      <p className="text-xs text-gray-500">
-                        Add some fuel to the tank!
+                      <p className="text-xs font-bold text-gray-400">
+                        Log your first meal above
                       </p>
                     </motion.div>
                   ) : (
@@ -577,20 +577,23 @@ export default function DietPage() {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Stats */}
+          {/* RIGHT COLUMN: Stats & Coach */}
           <div className="flex flex-col gap-6">
+            {/* Stats HUD */}
             <StatsHUD
               macros={macros}
               targets={targets}
               calorieGoal={calorieGoal}
             />
 
+            {/* Hydration */}
             <HydrationStation
               current={waterIntake}
               target={8}
               onUpdate={updateWater}
             />
 
+            {/* Coach Panel - NEW COLORFUL DESIGN */}
             <CoachPanel
               profile={profile!}
               prettyDate={prettyDate}
@@ -609,39 +612,47 @@ function HydrationStation({ current, target, onUpdate }: any) {
   const progress = Math.min(100, (current / target) * 100);
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+    <div className="relative overflow-hidden rounded-2xl border-2 border-black bg-white shadow-[4px_4px_0px_black]">
       <div className="p-5">
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="flex items-center gap-2 text-sm font-black uppercase tracking-wide text-gray-800">
-            <Droplets className="size-4 text-cyan-500 fill-cyan-500" />
+          <h3 className="flex items-center gap-2 text-sm font-black uppercase tracking-wide text-gray-900">
+            <Droplets className="size-5 fill-cyan-400 text-cyan-500" />
             Hydration
           </h3>
-          <span className="font-mono text-sm font-bold text-gray-500">
-            {current}/{target} cups
+          <span className="rounded-md bg-cyan-100 px-2 py-1 font-mono text-xs font-bold text-cyan-800">
+            {current}/{target}
           </span>
         </div>
 
-        <div className="relative mb-5 h-8 w-full overflow-hidden rounded-full bg-gray-100">
+        <div className="relative mb-5 h-8 w-full overflow-hidden rounded-xl border-2 border-black bg-gray-50">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             className="relative h-full bg-cyan-400"
-          />
+          >
+            <div
+              className="absolute inset-0 bg-white/20"
+              style={{
+                backgroundImage:
+                  "linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent)",
+                backgroundSize: "1rem 1rem",
+              }}
+            />
+          </motion.div>
         </div>
 
         <div className="flex gap-3">
           <Button
-            variant="outline"
             onClick={() => onUpdate(-1)}
-            className="h-10 flex-1 rounded-xl border-gray-200 font-bold hover:bg-gray-50"
+            className="h-10 flex-1 rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_black] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_black] active:translate-y-[2px] active:shadow-none"
           >
-            <Minus className="size-4" />
+            <Minus className="size-5" />
           </Button>
           <Button
             onClick={() => onUpdate(1)}
-            className="h-10 flex-1 rounded-xl border-cyan-200 bg-cyan-50 text-cyan-700 font-bold hover:bg-cyan-100 hover:text-cyan-900 border"
+            className="h-10 flex-1 rounded-xl border-2 border-black bg-cyan-400 text-black shadow-[2px_2px_0px_black] hover:bg-cyan-300 hover:translate-y-[1px] hover:shadow-[1px_1px_0px_black] active:translate-y-[2px] active:shadow-none"
           >
-            <Plus className="size-4" />
+            <Plus className="size-5" />
           </Button>
         </div>
       </div>
@@ -656,20 +667,42 @@ function Onboarding({
   onSave: (d: any) => void;
   saving: boolean;
 }) {
-  const [formData, setFormData] = useState({
-    goal: "muscle_gain" as ProfileGoal,
-    weightKg: 70,
-    heightCm: 175,
-  });
+  // 1. IMPROVED DEFAULTS (Empty strings so placeholders show)
+  const [weight, setWeight] = useState("");
+  const [heightVal, setHeightVal] = useState("");
+  const [heightUnit, setHeightUnit] = useState<"cm" | "ft">("cm");
+  const [goal, setGoal] = useState<ProfileGoal>("muscle_gain");
+
+  const handleSubmit = () => {
+    let h = Number(heightVal);
+    const w = Number(weight);
+
+    if (!w || !h) return;
+
+    // 2. PARSE FEET.INCH IF NEEDED
+    if (heightUnit === "ft") {
+      // "5.8" -> 5 feet 8 inches
+      const [ft, inch] = heightVal.split(".").map(Number);
+      const inches = ft * 12 + (inch || 0);
+      h = Math.round(inches * 2.54);
+    }
+
+    onSave({
+      goal,
+      weightKg: w,
+      heightCm: h,
+      heightText: heightUnit === "ft" ? `${heightVal} ft` : `${h} cm`,
+    });
+  };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-md rounded-3xl border border-gray-200 bg-white p-6 shadow-xl md:p-8">
+    <div className="flex h-full items-center justify-center  p-4">
+      <div className="w-full max-w-md rounded-3xl border-2 border-black bg-gray-100 p-6 shadow-[8px_8px_0px_black] md:p-8">
         <div className="mb-6">
-          <h2 className="text-2xl font-black uppercase tracking-tight text-gray-900">
+          <h2 className="text-3xl font-black uppercase tracking-tight text-gray-900">
             Setup Profile
           </h2>
-          <p className="text-sm font-medium text-gray-500">
+          <p className="text-sm font-bold text-gray-500">
             Configure your parameters.
           </p>
         </div>
@@ -679,12 +712,12 @@ function Onboarding({
             {GOAL_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
-                onClick={() => setFormData((p) => ({ ...p, goal: opt.value }))}
+                onClick={() => setGoal(opt.value)}
                 className={cn(
-                  "flex flex-col gap-1 rounded-2xl border p-3 text-left transition-all",
-                  formData.goal === opt.value
-                    ? "border-gray-900 bg-gray-900 text-white"
-                    : "border-gray-200 bg-white text-gray-900 hover:border-gray-300"
+                  "flex flex-col gap-1 rounded-xl border-2 p-3 text-left transition-all",
+                  goal === opt.value
+                    ? "border-black bg-black text-white shadow-[2px_2px_0px_gray]"
+                    : "border-gray-200 bg-white text-gray-900 hover:border-black"
                 )}
               >
                 <span className="text-xs font-black uppercase">
@@ -692,10 +725,8 @@ function Onboarding({
                 </span>
                 <span
                   className={cn(
-                    "text-[10px] font-medium",
-                    formData.goal === opt.value
-                      ? "text-gray-400"
-                      : "text-gray-500"
+                    "text-[10px] font-bold",
+                    goal === opt.value ? "text-gray-400" : "text-gray-500"
                   )}
                 >
                   {opt.blurb}
@@ -706,43 +737,63 @@ function Onboarding({
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
+              <label className="text-[10px] font-black uppercase tracking-wider text-gray-500">
                 Weight (KG)
               </label>
               <Input
                 type="number"
-                value={formData.weightKg}
-                onChange={(e) =>
-                  setFormData((p) => ({
-                    ...p,
-                    weightKg: Number(e.target.value),
-                  }))
-                }
-                className="h-12 rounded-xl border-gray-200 text-lg font-bold"
+                placeholder="e.g. 70"
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                className="h-12 rounded-xl border-2 border-black text-lg font-bold shadow-[2px_2px_0px_rgba(0,0,0,0.1)] focus-visible:ring-0"
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
-                Height (CM)
-              </label>
+              <div className="flex items-center justify-between">
+                <label className="text-[10px] font-black uppercase tracking-wider text-gray-500">
+                  Height
+                </label>
+                <div className="flex gap-1">
+                  <button
+                    onClick={() => setHeightUnit("cm")}
+                    className={cn(
+                      "text-[10px] font-bold px-1.5 rounded",
+                      heightUnit === "cm"
+                        ? "bg-black text-white"
+                        : "bg-gray-200"
+                    )}
+                  >
+                    CM
+                  </button>
+                  <button
+                    onClick={() => setHeightUnit("ft")}
+                    className={cn(
+                      "text-[10px] font-bold px-1.5 rounded",
+                      heightUnit === "ft"
+                        ? "bg-black text-white"
+                        : "bg-gray-200"
+                    )}
+                  >
+                    FT
+                  </button>
+                </div>
+              </div>
               <Input
                 type="number"
-                value={formData.heightCm}
-                onChange={(e) =>
-                  setFormData((p) => ({
-                    ...p,
-                    heightCm: Number(e.target.value),
-                  }))
+                placeholder={
+                  heightUnit === "ft" ? "e.g. 5.8" : "e.g. 175"
                 }
-                className="h-12 rounded-xl border-gray-200 text-lg font-bold"
+                value={heightVal}
+                onChange={(e) => setHeightVal(e.target.value)}
+                className="h-12 rounded-xl border-2 border-black text-lg font-bold shadow-[2px_2px_0px_rgba(0,0,0,0.1)] focus-visible:ring-0"
               />
             </div>
           </div>
 
           <Button
-            onClick={() => onSave(formData)}
+            onClick={handleSubmit}
             disabled={saving}
-            className="h-14 w-full rounded-2xl bg-gray-900 text-lg font-bold text-white hover:bg-black"
+            className="h-14 w-full rounded-xl border-2 border-black bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-600 text-lg font-black uppercase text-white shadow-[4px_4px_0px_black] transition-all hover:translate-y-[2px] hover:from-emerald-500 hover:via-cyan-600 hover:to-blue-700 hover:shadow-[2px_2px_0px_black] active:translate-y-1 active:shadow-none disabled:opacity-70"
           >
             {saving ? <Loader2 className="animate-spin" /> : "Start Tracking"}
           </Button>
@@ -766,27 +817,32 @@ function MealComposer({
   const HintIcon = hintConfig?.Icon || Info;
 
   return (
-    <div className="relative z-10 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg shadow-gray-200/50">
-      <div className="border-b border-gray-100 bg-gray-50/50 px-5 py-3">
+    <div className="relative z-10 overflow-hidden rounded-3xl border-2 border-black bg-white shadow-[6px_6px_0px_black]">
+      <div className="border-b-2 border-black bg-gray-50 px-5 py-3">
         <div className="flex items-center justify-between">
-          <div className="text-[10px] font-black uppercase tracking-widest text-gray-400">
-            {isEditing ? "EDITING ENTRY" : "NEW ENTRY"}
+          <div className="flex items-center gap-2">
+            <div className="size-2.5 rounded-full border border-black bg-red-400" />
+            <div className="size-2.5 rounded-full border border-black bg-yellow-400" />
+            <div className="size-2.5 rounded-full border border-black bg-green-400" />
+            <span className="ml-2 text-[10px] font-black uppercase tracking-widest text-gray-500">
+              {isEditing ? "EDIT_MODE" : "NEW_ENTRY"}
+            </span>
           </div>
           {isEditing && (
             <Button
               variant="ghost"
               size="sm"
               onClick={onCancelEdit}
-              className="h-6 px-2 text-[10px] font-bold uppercase text-rose-500 hover:bg-rose-50 hover:text-rose-600"
+              className="h-6 px-2 text-[10px] font-bold uppercase text-rose-500 hover:bg-rose-50"
             >
-              Cancel Edit
+              Cancel
             </Button>
           )}
         </div>
       </div>
 
       <div className="p-5">
-        {/* Quick Add Bar - Mobile optimized scroll */}
+        {/* Quick Add Bar */}
         <div className="no-scrollbar mb-4 flex gap-2 overflow-x-auto pb-1">
           {QUICK_ADDS.map((qa) => (
             <button
@@ -798,7 +854,10 @@ function MealComposer({
                     qa.label + (p.description ? ` + ${p.description}` : ""),
                 }))
               }
-              className="flex shrink-0 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-bold shadow-sm transition-colors hover:border-gray-300 active:bg-gray-50"
+              className={cn(
+                "flex shrink-0 items-center gap-1.5 rounded-lg border-2 border-black px-3 py-2 text-xs font-bold shadow-[2px_2px_0px_black] transition-all hover:translate-y-[1px] hover:shadow-[1px_1px_0px_black] active:translate-y-[2px] active:shadow-none",
+                qa.color
+              )}
             >
               <span>{qa.emoji}</span>
               <span>{qa.label}</span>
@@ -814,10 +873,10 @@ function MealComposer({
                 setForm((p: any) => ({ ...p, mealType: type.value }))
               }
               className={cn(
-                "rounded-full border px-4 py-1.5 text-[11px] font-bold uppercase transition-all",
+                "rounded-lg border-2 border-black px-4 py-1.5 text-[11px] font-black uppercase transition-all",
                 form.mealType === type.value
-                  ? "border-gray-900 bg-gray-900 text-white"
-                  : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                  ? "bg-black text-white shadow-[2px_2px_0px_gray]"
+                  : "bg-white text-gray-600 hover:bg-gray-50 shadow-[2px_2px_0px_black] active:shadow-none active:translate-y-[2px]"
               )}
             >
               {type.label}
@@ -831,20 +890,20 @@ function MealComposer({
             onChange={(e) =>
               setForm((p: any) => ({ ...p, description: e.target.value }))
             }
-            placeholder="e.g., 200g chicken breast, rice..."
-            className="min-h-[100px] w-full resize-none rounded-2xl border-0 bg-gray-50 p-4 text-lg font-medium text-gray-900 placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-gray-200"
+            placeholder="Describe your meal (e.g., 200g chicken, rice)..."
+            className="min-h-[100px] w-full resize-none rounded-xl border-2 border-black bg-gray-50 p-4 text-lg font-bold text-gray-900 placeholder:text-gray-400 focus:bg-white focus:outline-hidden focus:ring-0 focus:shadow-[inset_2px_2px_4px_rgba(0,0,0,0.1)]"
           />
 
           <div className="mt-4 flex justify-end">
             <Button
               onClick={onSubmit}
               disabled={loading || !form.description.trim()}
-              className="h-11 w-full rounded-xl bg-gray-900 font-bold text-white shadow-md hover:bg-black disabled:opacity-50 sm:w-auto sm:px-8"
+              className="h-12 w-full rounded-xl border-2 border-black bg-lime-400 font-black text-black shadow-[4px_4px_0px_black] hover:bg-lime-300 hover:translate-y-[2px] hover:shadow-[2px_2px_0px_black] active:translate-y-1 active:shadow-none disabled:opacity-50 sm:w-auto sm:px-8"
             >
               {loading ? (
                 <Loader2 className="animate-spin" />
               ) : (
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-2 text-sm uppercase">
                   Analyze Meal <Zap className="size-4" />
                 </span>
               )}
@@ -862,8 +921,7 @@ function MealComposer({
             >
               <div
                 className={cn(
-                  "mt-4 flex items-start gap-3 rounded-xl border p-4 text-sm font-medium",
-                  hintConfig.border,
+                  "mt-4 flex items-start gap-3 rounded-xl border-2 border-black p-4 text-sm font-bold shadow-[4px_4px_0px_black]",
                   hintConfig.bg,
                   hintConfig.text
                 )}
@@ -871,7 +929,7 @@ function MealComposer({
                 <HintIcon className="mt-0.5 size-4 shrink-0" />
                 <div>
                   {aiHint.title && (
-                    <div className="mb-0.5 text-xs font-bold uppercase opacity-70">
+                    <div className="mb-0.5 text-xs font-black uppercase opacity-70">
                       {aiHint.title}
                     </div>
                   )}
@@ -900,15 +958,22 @@ function MealCard({
   const [expanded, setExpanded] = useState(false);
 
   // Determine card color based on macros/type roughly
-  // This adds the "color" the user asked for in cards, but keeps it subtle
   const isHighProtein = meal.nutrients.protein > 30;
   const isHighCarb = meal.nutrients.carbs > 50;
 
-  let accentColor = "bg-gray-100 text-gray-600";
-  if (isHighProtein) accentColor = "bg-rose-100 text-rose-700 border-rose-200";
-  else if (isHighCarb)
-    accentColor = "bg-amber-100 text-amber-700 border-amber-200";
-  else accentColor = "bg-cyan-100 text-cyan-700 border-cyan-200";
+  let accentColor = "bg-white";
+  let badgeColor = "bg-gray-100 text-gray-800 border-gray-200";
+
+  if (isHighProtein) {
+    accentColor = "bg-rose-50";
+    badgeColor = "bg-rose-100 text-rose-800 border-rose-200";
+  } else if (isHighCarb) {
+    accentColor = "bg-amber-50";
+    badgeColor = "bg-amber-100 text-amber-800 border-amber-200";
+  } else {
+    accentColor = "bg-sky-50";
+    badgeColor = "bg-sky-100 text-sky-800 border-sky-200";
+  }
 
   return (
     <motion.div
@@ -917,7 +982,10 @@ function MealCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+      className={cn(
+        "overflow-hidden rounded-2xl border-2 border-black shadow-[4px_4px_0px_black] transition-transform active:translate-y-[2px] active:shadow-[2px_2px_0px_black]",
+        accentColor
+      )}
     >
       <div
         onClick={() => setExpanded(!expanded)}
@@ -926,40 +994,46 @@ function MealCard({
         <div className="flex items-center gap-4">
           <div
             className={cn(
-              "flex size-12 flex-col items-center justify-center rounded-xl border text-center leading-none",
-              accentColor
+              "flex size-14 flex-col items-center justify-center rounded-xl border-2 text-center leading-none shadow-sm",
+              badgeColor
+                .replace("bg-", "bg-white ")
+                .replace("text-", "text-black ")
             )}
           >
-            <span className="text-[9px] font-black uppercase opacity-70">
+            <span className="text-[9px] font-black uppercase opacity-60">
               KCAL
             </span>
-            <span className="text-sm font-black">
+            <span className="text-lg font-black">
               {meal.nutrients.calories}
             </span>
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wide text-gray-400">
+          <div className="flex-1">
+            <div className="mb-1 flex items-center gap-2">
+              <Badge
+                variant="outline"
+                className="border-2 border-black bg-white px-1.5 py-0 text-[9px] font-black uppercase text-black"
+              >
                 {meal.mealType}
-              </span>
-              <span className="size-0.5 rounded-full bg-gray-300" />
-              <span className="text-[10px] font-bold uppercase text-gray-400">
-                {new Date(meal.createdAt).toLocaleTimeString([], {
-                  hour: "2-digit",
+              </Badge>
+              {/* 3. CORRECT TIME FORMAT (5:30 PM) */}
+              <span className="text-[10px] font-bold uppercase text-gray-500">
+                {new Date(meal.createdAt).toLocaleTimeString("en-US", {
+                  hour: "numeric",
                   minute: "2-digit",
+                  hour12: true,
                 })}
               </span>
             </div>
-            <h3 className="line-clamp-1 text-base font-bold text-gray-900">
+            <h3 className="line-clamp-2 text-lg font-black leading-snug text-black">
               {meal.description}
             </h3>
           </div>
         </div>
-        <div className="pr-1 text-gray-400">
+        <div className="pr-1 text-black">
           {expanded ? (
-            <ChevronUp className="size-5" />
+            <ChevronUp className="size-6" />
           ) : (
-            <ChevronDown className="size-5" />
+            <ChevronDown className="size-6" />
           )}
         </div>
       </div>
@@ -970,9 +1044,9 @@ function MealCard({
             initial={{ height: 0 }}
             animate={{ height: "auto" }}
             exit={{ height: 0 }}
-            className="overflow-hidden border-t border-gray-100 bg-gray-50/50"
+            className="overflow-hidden border-t-2 border-black bg-white"
           >
-            <div className="grid grid-cols-3 divide-x divide-gray-100 border-b border-gray-100">
+            <div className="grid grid-cols-3 divide-x-2 divide-black border-b-2 border-black">
               <MacroStat
                 label="Protein"
                 val={meal.nutrients.protein}
@@ -983,7 +1057,7 @@ function MealCard({
             </div>
             <div className="flex items-center justify-between p-3">
               {meal.notes ? (
-                <p className="line-clamp-1 max-w-[60%] text-xs font-medium italic text-gray-500">
+                <p className="line-clamp-2 max-w-[60%] text-xs font-bold text-gray-500 bg-gray-100 p-1.5 rounded-md border border-gray-200">
                   "{meal.notes}"
                 </p>
               ) : (
@@ -997,18 +1071,17 @@ function MealCard({
                     e.stopPropagation();
                     onEdit();
                   }}
-                  className="h-8 rounded-lg text-gray-500 hover:bg-white hover:text-gray-900"
+                  className="h-8 rounded-lg border-2 border-black bg-white text-xs font-bold hover:bg-gray-100"
                 >
                   Edit
                 </Button>
                 <Button
                   size="sm"
-                  variant="ghost"
                   onClick={(e) => {
                     e.stopPropagation();
                     onDelete();
                   }}
-                  className="h-8 rounded-lg text-rose-400 hover:bg-rose-50 hover:text-rose-600"
+                  className="h-8 rounded-lg border-2 border-black bg-rose-400 text-black hover:bg-rose-500"
                 >
                   <Trash2 className="size-4" />
                 </Button>
@@ -1025,15 +1098,15 @@ function StatsHUD({ macros, targets, calorieGoal }: any) {
   const calPercent = Math.min(100, (macros.calories / calorieGoal) * 100);
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
-      <div className="border-b border-gray-100 bg-gray-50/50 p-4">
+    <div className="overflow-hidden rounded-2xl border-2 border-black bg-white shadow-[4px_4px_0px_black]">
+      <div className="border-b-2 border-black bg-black p-4 text-white">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-black uppercase tracking-widest text-gray-400">
-            Daily Summary
+          <span className="text-xs font-black uppercase tracking-widest">
+            Daily Stats
           </span>
-          <div className="flex items-center gap-1.5 rounded-full bg-white px-2 py-0.5 shadow-sm">
-            <div className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
-            <span className="text-[10px] font-bold text-gray-600">Live</span>
+          <div className="flex items-center gap-1.5 rounded-full bg-white px-2 py-0.5">
+            <div className="size-1.5 animate-pulse rounded-full bg-red-500" />
+            <span className="text-[10px] font-bold text-black">LIVE</span>
           </div>
         </div>
       </div>
@@ -1042,10 +1115,10 @@ function StatsHUD({ macros, targets, calorieGoal }: any) {
         <div className="mb-6">
           <div className="mb-2 flex items-end justify-between">
             <div>
-              <span className="text-4xl font-black text-gray-900">
+              <span className="text-4xl font-black text-black">
                 {macros.calories}
               </span>
-              <span className="text-sm font-bold text-gray-400">
+              <span className="text-sm font-bold text-gray-500">
                 {" "}
                 / {calorieGoal}
               </span>
@@ -1054,11 +1127,11 @@ function StatsHUD({ macros, targets, calorieGoal }: any) {
               Calories
             </div>
           </div>
-          <div className="h-3 w-full overflow-hidden rounded-full bg-gray-100">
+          <div className="h-4 w-full overflow-hidden rounded-full border-2 border-black bg-gray-100">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${calPercent}%` }}
-              className="h-full bg-gray-900"
+              className="h-full bg-gradient-to-r from-gray-800 to-black"
             />
           </div>
         </div>
@@ -1092,17 +1165,17 @@ function MacroBar({ label, val, max, color }: any) {
   const pct = Math.min(100, (val / max) * 100);
   return (
     <div>
-      <div className="mb-1.5 flex justify-between text-[11px] font-bold uppercase tracking-wide">
+      <div className="mb-1.5 flex justify-between text-[11px] font-black uppercase tracking-wide">
         <span className="text-gray-900">{label}</span>
-        <span className="text-gray-400">
+        <span className="text-gray-500">
           {val} / {max}g
         </span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
+      <div className="h-3 w-full overflow-hidden rounded-full border-2 border-black bg-gray-50">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${pct}%` }}
-          className={cn("h-full rounded-full", color)}
+          className={cn("h-full border-r-2 border-black", color)}
         />
       </div>
     </div>
@@ -1111,30 +1184,44 @@ function MacroBar({ label, val, max, color }: any) {
 
 function CoachPanel({ profile, prettyDate, protein }: any) {
   const copy = GOAL_COPY[profile.goal as ProfileGoal];
+  // 4. NEW VIBRANT CARD DESIGN (Not yellow)
   return (
-    <div className="rounded-3xl border border-violet-100 bg-violet-50/50 p-5">
-      <div className="mb-3 flex items-center gap-3">
-        <div className="flex size-8 items-center justify-center rounded-full bg-white text-violet-600 shadow-sm">
-          <Trophy className="size-4" />
-        </div>
-        <div>
-          <div className="text-xs font-black uppercase text-violet-900">
-            Coach Insight
+    <div className="relative overflow-hidden rounded-2xl border-2 border-black bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 p-6 text-white shadow-[4px_4px_0px_black]">
+      {/* Abstract Shapes */}
+      <div className="absolute -right-4 -top-4 size-24 rotate-12 rounded-xl border-4 border-white/20 bg-white/10" />
+      <div className="absolute -bottom-8 -left-8 size-32 rounded-full border-4 border-white/20 bg-white/5" />
+
+      <div className="relative z-10">
+        <div className="mb-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="flex size-10 items-center justify-center rounded-xl border-2 border-white/30 bg-white/20 shadow-sm backdrop-blur-md">
+              <Sparkles className="size-5 text-yellow-300 fill-yellow-300" />
+            </div>
+            <div>
+              <span className="block text-xs font-black uppercase tracking-widest text-white/90">
+                Coach Insight
+              </span>
+              <span className="block text-[10px] font-bold text-white/60">
+                AI POWERED
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <p className="mb-4 text-sm font-medium leading-relaxed text-violet-900">
-        "{copy.message(prettyDate, protein)}"
-      </p>
-      <div className="flex flex-wrap gap-2">
-        {copy.tips.map((tip: string) => (
-          <span
-            key={tip}
-            className="rounded-lg border border-violet-100 bg-white px-2.5 py-1 text-[10px] font-bold text-violet-700"
-          >
-            {tip}
-          </span>
-        ))}
+
+        <p className="mb-5 text-xl font-black leading-tight tracking-tight text-white drop-shadow-md">
+          "{copy.message(prettyDate, protein)}"
+        </p>
+
+        <div className="flex flex-wrap gap-2">
+          {copy.tips.map((tip: string) => (
+            <span
+              key={tip}
+              className="rounded-lg border border-white/30 bg-black/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm backdrop-blur-sm"
+            >
+              {tip}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -1145,8 +1232,8 @@ function DateNavigator({ selectedDate, onSelect, isToday }: any) {
     <div className="flex items-center">
       <Popover>
         <PopoverTrigger asChild>
-          <button className="flex h-9 items-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 shadow-sm hover:bg-gray-50">
-            <CalendarDays className="size-3.5" />
+          <Button  className="flex h-10 items-center gap-2 rounded-xl border-2 border-black bg-white px-3 text-xs font-bold text-black shadow-[2px_2px_0px_black] hover:bg-gray-50 active:translate-y-[2px] active:shadow-none">
+            <CalendarDays className="size-4" />
             <span className="uppercase">
               {isToday
                 ? "Today"
@@ -1155,9 +1242,9 @@ function DateNavigator({ selectedDate, onSelect, isToday }: any) {
                     day: "numeric",
                   })}
             </span>
-          </button>
+          </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto rounded-xl border-gray-200 p-0 shadow-lg">
+        <PopoverContent className="w-auto rounded-xl border-2 border-black p-0 shadow-[4px_4px_0px_black]">
           <Calendar
             mode="single"
             selected={selectedDate}
@@ -1171,7 +1258,7 @@ function DateNavigator({ selectedDate, onSelect, isToday }: any) {
 
 const MacroStat = ({ label, val, unit }: any) => (
   <div className="py-2 text-center">
-    <div className="mb-0.5 text-[9px] font-black uppercase text-gray-400">
+    <div className="mb-0.5 text-[9px] font-black uppercase text-gray-500">
       {label}
     </div>
     <div className="text-sm font-black text-gray-900">
