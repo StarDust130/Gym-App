@@ -1184,46 +1184,139 @@ function MacroBar({ label, val, max, color }: any) {
 
 function CoachPanel({ profile, prettyDate, protein }: any) {
   const copy = GOAL_COPY[profile.goal as ProfileGoal];
-  // 4. NEW VIBRANT CARD DESIGN (Not yellow)
+
   return (
-    <div className="relative overflow-hidden rounded-2xl border-2 border-black bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 p-6 text-white shadow-[4px_4px_0px_black]">
-      {/* Abstract Shapes */}
-      <div className="absolute -right-4 -top-4 size-24 rotate-12 rounded-xl border-4 border-white/20 bg-white/10" />
-      <div className="absolute -bottom-8 -left-8 size-32 rounded-full border-4 border-white/20 bg-white/5" />
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative overflow-hidden rounded-3xl border-2 border-black bg-white p-6 shadow-[6px_6px_0px_black]"
+    >
+      {/* Animated decorative shapes */}
+      <motion.div
+        animate={{
+          rotate: [0, 360],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        className="absolute -right-8 -top-8 size-32 rounded-full bg-linear-to-br from-lime-300 to-emerald-400 opacity-20 blur-2xl"
+      />
+      <motion.div
+        animate={{
+          rotate: [360, 0],
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        className="absolute -bottom-6 -left-6 size-28 rounded-full bg-linear-to-br from-cyan-300 to-blue-400 opacity-20 blur-2xl"
+      />
 
       <div className="relative z-10">
-        <div className="mb-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="flex size-10 items-center justify-center rounded-xl border-2 border-white/30 bg-white/20 shadow-sm backdrop-blur-md">
-              <Sparkles className="size-5 text-yellow-300 fill-yellow-300" />
-            </div>
-            <div>
-              <span className="block text-xs font-black uppercase tracking-widest text-white/90">
-                Coach Insight
-              </span>
-              <span className="block text-[10px] font-bold text-white/60">
-                AI POWERED
+        {/* Header with icon */}
+        <motion.div
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mb-5 flex items-start gap-3"
+        >
+          <motion.div
+            animate={{
+              rotate: [0, 5, -5, 0],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="flex size-12 shrink-0 items-center justify-center rounded-2xl border-2 border-black bg-linear-to-br from-yellow-300 to-amber-400 shadow-[3px_3px_0px_black]"
+          >
+            <Sparkles className="size-6 text-black" />
+          </motion.div>
+          <div className="flex-1">
+            <h3 className="text-sm font-black uppercase tracking-wider text-black">
+              Coach Insight
+            </h3>
+            <div className="mt-1 flex items-center gap-2">
+              <motion.div
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [1, 0.5, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="size-2 rounded-full bg-lime-500 shadow-[0_0_8px_rgba(132,204,22,0.6)]"
+              />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500">
+                AI Powered
               </span>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <p className="mb-5 text-xl font-black leading-tight tracking-tight text-white drop-shadow-md">
-          "{copy.message(prettyDate, protein)}"
-        </p>
+        {/* Message */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mb-4 rounded-2xl border-2 border-black bg-linear-to-br from-slate-50 to-gray-100 p-4 shadow-[inset_2px_2px_4px_rgba(0,0,0,0.1)]"
+        >
+          <p className="text-lg font-black leading-snug tracking-tight text-gray-900">
+            "{copy.message(prettyDate, protein)}"
+          </p>
+        </motion.div>
 
+        {/* Tips Grid */}
         <div className="flex flex-wrap gap-2">
-          {copy.tips.map((tip: string) => (
-            <span
+          {copy.tips.map((tip: string, idx: number) => (
+            <motion.span
               key={tip}
-              className="rounded-lg border border-white/30 bg-black/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm backdrop-blur-sm"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{
+                delay: 0.4 + idx * 0.1,
+                type: "spring",
+                stiffness: 200,
+              }}
+              whileHover={{ scale: 1.05, y: -2 }}
+              className={cn(
+                "rounded-xl border-2 border-black px-4 py-2 text-[11px] font-bold uppercase tracking-wide shadow-[3px_3px_0px_black] transition-transform cursor-default",
+                idx % 3 === 0 &&
+                  "bg-linear-to-br from-pink-300 to-rose-300 text-rose-900",
+                idx % 3 === 1 &&
+                  "bg-linear-to-br from-cyan-300 to-blue-300 text-blue-900",
+                idx % 3 === 2 &&
+                  "bg-linear-to-br from-amber-300 to-yellow-300 text-amber-900"
+              )}
             >
               {tip}
-            </span>
+            </motion.span>
           ))}
         </div>
+
+        {/* Mobile-optimized action hint */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mt-5 flex items-center gap-2 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-3"
+        >
+          <Target className="size-4 text-gray-400" />
+          <p className="text-xs font-bold text-gray-600">
+            Track your meals to stay on target
+          </p>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
