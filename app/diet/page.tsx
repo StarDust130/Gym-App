@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {  useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   CalendarDays,
@@ -8,7 +8,6 @@ import {
   ChevronDown,
   ChevronUp,
   Droplets,
-  Flame,
   Frown,
   Info,
   InfoIcon,
@@ -18,7 +17,6 @@ import {
   Sparkles,
   Target,
   Trash2,
-  Trophy,
   Utensils,
   Zap,
 } from "lucide-react";
