@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Dumbbell, Salad, Sparkles } from "lucide-react";
+import { Dumbbell, Salad } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -46,17 +47,16 @@ export function TopNav() {
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:px-6">
         <Link href="/" className="group flex items-center gap-3">
-          <span className="flex size-11 items-center justify-center rounded-2xl border border-border/60 bg-linear-to-br from-primary/15 via-transparent to-primary/5 text-primary shadow-[4px_4px_0_var(--border)] transition group-hover:scale-105">
-            <Sparkles className="size-4" />
-          </span>
-          <div>
-            <p className="text-[0.55rem] font-semibold uppercase tracking-[0.4em] text-muted-foreground">
-              Gym Buddy
-            </p>
-            <p className="text-sm font-semibold leading-none">
-              Fuel &amp; Flow
-            </p>
+          <div className="relative size-10 overflow-hidden rounded-xl border border-border/60 shadow-[2px_2px_0_var(--border)] transition group-hover:scale-105">
+            <Image
+              src="/icon.png"
+              alt="Logo"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
+          <span className="text-lg font-bold tracking-tight">Gym Buddy</span>
         </Link>
         <div className="flex items-center gap-1.5 rounded-2xl border border-border/60 bg-card/80 p-1.5 shadow-[4px_4px_0_var(--border)]">
           {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
