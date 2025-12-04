@@ -21,7 +21,7 @@ export type WorkoutPlan = {
 };
 
 export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
-  planName: "Fitness Passion Gym (Beginner – Muscle Gain Version)",
+  planName: "Fitness Passion (Beginner)",
 
   schedule: {
     Monday: "Lower Body",
