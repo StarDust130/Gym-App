@@ -37,64 +37,149 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // ----------------------------------------------------------
     // LOWER BODY
     // ----------------------------------------------------------
-    "Lower Body": [
-      {
-        id: "lb-1",
-        name: "Own body Squats / Dumbbell Squats",
-        reps: "8–12",
-        sets: "3–4",
-        note: "Choose weight where last 2 reps are hard. Slow and controlled.",
-      },
-
-      {
-        id: "lb-2",
-        name: "Static Lunges / DB Lunges",
-        reps: "8–12 each leg",
-        sets: "3",
-        note: "Use dumbbells when bodyweight becomes easy.",
-      },
-
-      {
-        id: "lb-3",
-        name: "Leg Press / Leg Extension",
-        reps: "10–12",
-        sets: "3–4",
-        note: "Start moderate weight. Increase weekly.",
-      },
-
-      {
-        id: "lb-4",
-        name: "Leg Curl",
-        reps: "10–12",
-        sets: "3",
-        note: "Hold the contraction for 1 second.",
-      },
-
-      {
-        id: "lb-5",
-        name: "Standing Calf Raise",
-        reps: "12–15",
-        sets: "3",
-        note: "Slow reps. Full stretch at bottom.",
-      },
-
-      {
-        id: "lb-6",
-        name: "Seated Calf Raise",
-        reps: "12–15",
-        sets: "3",
-        note: "Pause at top to activate soleus muscle.",
-      },
-
-      {
-        id: "lb-7",
-        name: "Lower Body Stretch",
-        reps: "N/A",
-        sets: "1",
-        note: "Hold each stretch 30 seconds.",
-      },
+"Lower Body": [
+  {
+    id: "lb-1",
+    name: "Own body Squats / Squats DB",
+    reps: "8–12",
+    sets: "3–4",
+    note: "Use heavier dumbbells now. Last 2 reps must feel hard.",
+    image: [
+      "https://www.inspireusafoundation.org/file/2021/06/bodyweight-squat.gif",
+      "https://www.wikihow.com/images/thumb/b/b1/Do-Free-Squats-Step-11-Version-2.jpg/aid3265293-v4-728px-Do-Free-Squats-Step-11-Version-2.jpg.webp",
+      "https://www.inspireusafoundation.org/file/2021/10/dumbbell-sumo-squat.gif",
+      "https://fitnessprogramer.com/wp-content/uploads/2023/09/Dumbbell-Squat.gif"
     ],
+    video: [
+      "https://www.youtube.com/embed/-5LhNSMBrEs",
+      "https://youtube.com/embed/lRYBbchqxtI"
+    ],
+    impact: [
+      "Builds thigh and glute strength.",
+      "Improves balance and core stability.",
+      "Boosts lower-body power."
+    ],
+    impactImage: "https://www.inspireusafoundation.org/file/2021/06/bodyweight-squat.gif"
+  },
 
+  {
+    id: "lb-2",
+    name: "Own body static Lunges / Lunges static DB",
+    reps: "8–12 (🍗)",
+    sets: "3",
+    note: "Use dumbbells now. Step back, keep chest up.",
+    image: [
+      "https://www.inspireusafoundation.org/file/2023/07/bodyweight-forward-lunge.gif",
+      "https://c.tenor.com/wTulE6li6AEAAAAd/tenor.gif"
+    ],
+    video: [
+      "https://youtube.com/embed/38xlLGfguz4",
+      "https://youtube.com/embed/HIM0GrawvAU"
+    ],
+    impact: [
+      "Strengthens quads, glutes, and hamstrings.",
+      "Builds single-leg stability.",
+      "Helps fix left-right imbalance."
+    ],
+    impactImage: "https://www.inspireusafoundation.org/file/2023/07/bodyweight-forward-lunge.gif"
+  },
+
+  {
+    id: "lb-3",
+    name: "Leg press / Leg extension",
+    reps: "10–12",
+    sets: "3–4",
+    note: "Increase weight weekly. Use weight where 10 reps are tough.",
+    image: [
+      "https://fitnessprogramer.com/wp-content/uploads/2015/11/Leg-Press.gif",
+      "https://fitnessprogramer.com/wp-content/uploads/2021/02/LEG-EXTENSION.gif"
+    ],
+    video: [
+      "https://youtube.com/embed/pCLf-OeSMtQ",
+      "https://youtube.com/embed/iQ92TuvBqRo"
+    ],
+    impact: [
+      "Builds quadriceps quickly.",
+      "Adds size to thighs.",
+      "Improves knee stability."
+    ],
+    impactImage: "https://fitnessprogramer.com/wp-content/uploads/2015/11/Leg-Press.gif"
+  },
+
+  {
+    id: "lb-4",
+    name: "Leg curl",
+    reps: "10–12",
+    sets: "3",
+    note: "Hold for 1 second at the top to activate hamstrings.",
+    image: [
+      "https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif"
+    ],
+    video: ["https://youtube.com/embed/_lgE0gPvbik"],
+    impact: [
+      "Strengthens hamstrings.",
+      "Balances quad-dominant legs.",
+      "Protects the knee joint."
+    ],
+    impactImage: "https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif"
+  },
+
+  {
+    id: "lb-5",
+    name: "Standing calf",
+    reps: "12–15",
+    sets: "3",
+    note: "Slow reps. Full stretch. Add dumbbells.",
+    image: [
+      "https://liftmanual.com/wp-content/uploads/2023/04/bodyweight-standing-calf-raise.jpg",
+      "https://liftmanual.com/wp-content/uploads/2023/04/dumbbell-standing-calf-raise.jpg"
+    ],
+    video: ["https://youtube.com/embed/wdOkFomQNp8"],
+    impact: [
+      "Adds size to calves.",
+      "Improves ankle strength.",
+      "Helps in running and balance."
+    ],
+    impactImage: "https://liftmanual.com/wp-content/uploads/2023/04/bodyweight-standing-calf-raise.jpg"
+  },
+
+  {
+    id: "lb-6",
+    name: "Seated calf",
+    reps: "12–15",
+    sets: "3",
+    note: "Targets deep calf muscles. Pause at top.",
+    image: [
+      "https://burnfit.io/wp-content/uploads/2023/11/SEAT_CALF_RAISE.gif"
+    ],
+    video: ["https://youtube.com/embed/S2yhz3klwdU"],
+    impact: [
+      "Builds thick lower calves.",
+      "Improves explosive leg power.",
+      "Completes full calf development."
+    ],
+    impactImage: "https://burnfit.io/wp-content/uploads/2023/11/SEAT_CALF_RAISE.gif"
+  },
+
+  {
+    id: "lb-7",
+    name: "Lower body stretch",
+    reps: "N/A",
+    sets: "1",
+    note: "Hold each stretch for 30 seconds.",
+    image: [
+      "https://liftmanual.com/wp-content/uploads/2023/04/standing-quadriceps-stretch.jpg",
+      "https://www.vissco.com/wp-content/uploads/animation/sub/supine-piriformis-stretch.gif"
+    ],
+    video: [],
+    impact: [
+      "Reduces soreness.",
+      "Improves flexibility.",
+      "Helps recovery and mobility."
+    ],
+    impactImage: "https://liftmanual.com/wp-content/uploads/2023/04/standing-quadriceps-stretch.jpg"
+  }
+],
     // ----------------------------------------------------------
     // UPPER BODY
     // ----------------------------------------------------------
