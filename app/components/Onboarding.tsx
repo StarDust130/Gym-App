@@ -24,7 +24,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   };
 
   // ⭐ FINISH WITH BEGINNER PLAN
-  const startBeginnerPlan = () => {
+  const startIntermediatePlan = () => {
     localStorage.setItem("workoutPlan", JSON.stringify(MOCK_WORKOUT_PLAN));
     onComplete({ name: name.trim(), plan: MOCK_WORKOUT_PLAN });
   };
@@ -108,19 +108,19 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                       Step 2 of 2
                     </p>
                     <h2 className="text-2xl font-semibold">
-                      Start with Beginner Plan
+                      Start with Intermediate Plan
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      Skip uploads — begin directly with the predefined beginner schedule.
+                      Skip uploads — begin directly with the predefined Intermediate schedule.
                     </p>
                   </div>
 
-                  {/* ⭐ Start with Beginner Plan button */}
+                  {/* ⭐ Start with Intermediate Plan button */}
                   <Button
                     className="w-full border-2 border-border bg-primary text-primary-foreground shadow-[4px_4px_0_var(--border)] hover:bg-primary/90"
-                    onClick={startBeginnerPlan}
+                    onClick={startIntermediatePlan}
                   >
-                    Start Beginner Plan
+                    Start Intermediate Plan
                   </Button>
 
                   <div className="flex gap-2 text-sm">
