@@ -201,6 +201,16 @@ function migratePersistedState(
     base.planSource = "default";
     base.planVersion = WORKOUT_PLAN_VERSION;
   }
+// 🔥 FORCE RESET OLD DEFAULT SAVED AS CUSTOM
+if (
+  base.planSource === "custom" &&
+  base.workoutPlan?.planName === "Fitness Passion Gym (Beginner)"
+) {
+  base.workoutPlan = MOCK_WORKOUT_PLAN;
+  base.planSource = "default";
+  base.planVersion = WORKOUT_PLAN_VERSION;
+  base.completedExercises = [];
+}
 
   if (base.userProfile && !base.planSource && base.workoutPlan) {
     if (looksLikeDefaultPlan(base.workoutPlan)) {
@@ -232,22 +242,11 @@ function shouldAttachDefaultPlan(state: WorkoutStoreState): boolean {
 
 function looksLikeDefaultPlan(plan: WorkoutPlan | null): boolean {
   if (!plan) return false;
-  if (plan === MOCK_WORKOUT_PLAN) return true;
-  if (plan.planName === MOCK_WORKOUT_PLAN.planName) return true;
 
-  const exercises = Object.values(plan.workouts ?? {}).flatMap((list) =>
-    list.map((exercise) => exercise.id)
-  );
-  if (!exercises.length) return false;
-
-  let overlap = 0;
-  exercises.forEach((id) => {
-    if (DEFAULT_EXERCISE_IDS.has(id)) {
-      overlap += 1;
-    }
-  });
-  return overlap >= DEFAULT_PLAN_MATCH_THRESHOLD;
+  // 🔥 ONLY trust planName match for default
+  return plan.planName === MOCK_WORKOUT_PLAN.planName;
 }
+
 
 function resolvePlanSelection(plan: WorkoutPlan): {
   plan: WorkoutPlan;
