@@ -499,7 +499,7 @@ schedule: {
     sets: "3",
     note: "Main compound lift. Keep neutral spine.",
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Squat.gif"
+      "https://media.tenor.com/pdMmsiutWkcAAAAM/gym.gif"
     ],
     video: ["https://www.youtube.com/embed/ultWZbUMPL8"],
     impact: [
@@ -508,7 +508,7 @@ schedule: {
       "Boosts total-body power"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/squat-muscles-worked.png"
+      "https://www.inspireusafoundation.org/file/2021/03/full-squat-side-view.gif"
   },
 
   {
@@ -518,7 +518,7 @@ schedule: {
     sets: "2",
     note: "Week alternate",
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Lunge.gif"
+      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Lunge.gif","https://www.inspireusafoundation.org/file/2023/07/reverse-deficit-lunge.gif"
     ],
     video: ["https://www.youtube.com/embed/QOVaHwm-Q6U"],
     impact: [
@@ -527,7 +527,7 @@ schedule: {
       "Targets glutes and quads"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/lunge-muscles-worked.png"
+      "https://www.garagegymreviews.com/wp-content/uploads/2023/01/lunge-muscles.jpg"
   },
 
   {
@@ -550,7 +550,7 @@ schedule: {
       "Improves knee stability"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/leg-press-muscles-worked.png"
+      "https://cdn.shopify.com/s/files/1/0618/9462/3460/files/Leg-Press-min-800x800.png"
   },
 
   {
@@ -560,7 +560,7 @@ schedule: {
     sets: "3",
     note: "Pause at top",
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Hip-Thrust.gif"
+      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Hip-Thrust.gif","https://media.tenor.com/YYb0P0Kdr84AAAAM/hip-thrust.gif"
     ],
     video: ["https://www.youtube.com/embed/LM8XHLYJoYs"],
     impact: [
@@ -569,7 +569,7 @@ schedule: {
       "Supports squat and deadlift strength"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/hip-thrust-muscles-worked.png"
+      "https://www.meridian-fitness.co.uk/wp-content/uploads/2025/04/Hip-thrust-muscles-worked.webp"
   },
 
   {
@@ -579,7 +579,7 @@ schedule: {
     sets: "3",
     note: "Full stretch at bottom",
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Standing-Calf-Raise.gif"
+      "https://www.inspireusafoundation.org/file/2022/11/standing-calf-raise.gif"
     ],
     video: ["https://www.youtube.com/embed/-M4-G8p8fmc"],
     impact: [
@@ -588,7 +588,7 @@ schedule: {
       "Enhances running and jumping ability"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/calf-raise-muscles-worked.png"
+      "https://chunkfitness.com/sites/default/files/standing-calf-raises-machine.jpg"
   },
 
   {
@@ -598,7 +598,7 @@ schedule: {
     sets: "4",
     note: "Slow tempo",
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Calf-Raise.gif"
+      "https://www.inspireusafoundation.org/file/2022/11/seated-calf-raise.gif"
     ],
     video: ["https://www.youtube.com/embed/Yh6wS_C0Eaw"],
     impact: [
@@ -607,7 +607,7 @@ schedule: {
       "Supports squat stability"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/seated-calf-muscles.png"
+      "https://blog.myarsenalstrength.com/hs-fs/hubfs/IMG_1714.jpg"
   },
 
   {
@@ -617,7 +617,7 @@ schedule: {
     sets: "2",
     note: "Controlled negatives",
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif"
+      "https://media.tenor.com/ZElx6PviDq0AAAAM/gym.gif"
     ],
     video: ["https://www.youtube.com/embed/_lgE0gPvbik"],
     impact: [
@@ -626,7 +626,7 @@ schedule: {
       "Balances quad dominance"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/leg-curl-muscles-worked.png"
+      "https://cdn.shopify.com/s/files/1/0564/2607/0148/files/leg_curls_msucles.png?v=1707809130"
   },
 
   {
@@ -645,7 +645,7 @@ schedule: {
       "Enhances core stability"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/overhead-press-muscles-worked.png"
+      "https://kinxlearning.com/cdn/shop/files/seated_pess_db_1000x.jpg?v=1690581184"
   },
 
   {
@@ -655,7 +655,7 @@ schedule: {
     sets: "2",
     note: "No swinging",
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lateral-Raise.gif"
+      "https://media.tenor.com/-OavRqpxSaEAAAAM/eleva%C3%A7%C3%A3o-lateral.gif","https://i.pinimg.com/originals/f1/61/4d/f1614d1e8e4bc45b75e682533dd7c940.gif","https://www.inspireusafoundation.org/file/2023/07/lateral-raise-machine.gif"
     ],
     video: ["https://www.youtube.com/embed/3VcKaXpzqRo"],
     impact: [
@@ -664,7 +664,7 @@ schedule: {
       "Targets medial delts"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/lateral-raise-muscles.png"
+      "https://media.istockphoto.com/id/538051060/photo/3d-male-figure-doing-dumbbell-standing-lateral-raise.jpg?s=1024x1024&w=is&k=20&c=c8B_VMXVI4Qb_wswhyRUWf1-TsWQaBbkuH-hx8zlX0E="
   },
 
   {
@@ -683,7 +683,7 @@ schedule: {
       "Corrects posture imbalance"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/face-pull-muscles-worked.png"
+      "https://burnfit.io/wp-content/uploads/2023/11/FACE_PULL.gif"
   },
 
   {
@@ -693,7 +693,7 @@ schedule: {
     sets: "2",
     note: "Light weight only",
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/External-Rotation.gif"
+      "https://gymvisual.com/img/p/2/7/3/2/6/27326.gif"
     ],
     video: ["https://www.youtube.com/embed/Nhq49UJefwI"],
     impact: [
@@ -702,7 +702,7 @@ schedule: {
       "Improves joint stability"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/rotator-cuff-muscles.png"
+      "https://liveleantv.s3.amazonaws.com/wp-content/uploads/2023/05/18090614/muscle-diagram-shoulders.png"
   },
 
   {
@@ -712,7 +712,7 @@ schedule: {
     sets: "2",
     note: "Do not skip",
     image: [
-      "https://www.inspireusafoundation.org/file/2021/06/standing-quadriceps-stretch.gif"
+      "https://cdn-prod.medicalnewstoday.com/content/images/articles/326/326799/a-gif-of-the-knee-hug.gif","https://i.pinimg.com/originals/20/82/af/2082afc1a5fdc5cedb46526b6b5822ad.gif","https://fitnessprogramer.com/wp-content/uploads/2021/05/Standing-Hamstring-Stretch.gif","https://www.inspireusafoundation.org/file/2023/08/hip-swirls.gif","https://fitnessprogramer.com/wp-content/uploads/2021/02/Butterfly-Stretch.gif","https://cdn-prod.medicalnewstoday.com/content/images/articles/326/326799/a-gif-of-childs-pose.gif","https://cdn.shopify.com/s/files/1/0109/0663/2256/files/Woman_doing_downward_dog_yoga_pose_1_480x480.gif?v=1692590848","https://media.post.rvohealth.io/wp-content/uploads/sites/2/2021/02/Shoulder-roll.gif","https://images.squarespace-cdn.com/content/v1/5d31ed671abe780001b2964d/1620947533438-0RF8Y1OXN4KDEMIIKC36/Briohny+Smyth+doing+a+side-body+extension+stretch","https://media.post.rvohealth.io/wp-content/uploads/sites/3/2024/01/Childs-Pose.gif"
     ],
     video: ["https://www.youtube.com/embed/sTxC3J3gQEU"],
     impact: [
@@ -721,7 +721,7 @@ schedule: {
       "Enhances recovery"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/leg-stretch-muscles.png"
+      "https://nadin4eblog.wordpress.com/wp-content/uploads/2016/03/stretching-12.png?w=640"
   }
 ],
 "Cardio & Crunches": [
