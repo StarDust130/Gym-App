@@ -737,16 +737,16 @@ schedule: {
       "Do not pull neck — core should initiate movement."
     ],
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Sit-ups.gif"
+      "https://www.inspireusafoundation.org/decline-sit-up/"
     ],
-    video: ["https://www.youtube.com/embed/qXpYgvQ6_m4"],
+    video: ["https://youtube.com/shorts/D_6tXVmq_nM?si=pAgBMJOqOalMLlKM"],
     impact: [
       "Targets upper abdominal muscles",
       "Improves core endurance",
       "Builds foundational ab strength"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/sit-up-muscles-worked.png"
+      "https://www.pinterest.com/pin/sit-up-anatomy--373235887845586885/"
   },
 
   {
@@ -761,16 +761,16 @@ schedule: {
       "Control the negative — don’t swing."
     ],
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Reverse-Crunch.gif"
+      "https://www.liftingitalia.com/?a=75265667021500","https://burnfit.io/en/library/reverse-crunch/"
     ],
-    video: ["https://www.youtube.com/embed/hyv14e2QDq0"],
+    video: ["https://www.pinterest.com/pin/abdominals-decline-reverse-crunch--2744449763698107/"],
     impact: [
       "Targets lower abdominal region",
       "Reduces lower belly fat appearance",
       "Improves pelvic control"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/reverse-crunch-muscles.png"
+      "https://youtube.com/shorts/XN7l5P8qXBA?si=KvxWNqfaC20qyVGG"
   },
 
   {
@@ -785,16 +785,18 @@ schedule: {
       "Stop before lower back arches."
     ],
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Raise.gif"
+      "https://liftmanual.com/leg-raise-hip-lift/"
     ],
-    video: ["https://www.youtube.com/embed/FijNSgahpz0"],
+    video: ["https://youtube.com/shorts/wt1zvu84oGo?si=dEN2OkvNO6MBSIuc",
+      "https://youtube.com/shorts/Gw_3oAQyHXA?si=h5DjcI64oI10JkpX"
+    ],
     impact: [
       "Builds lower abs",
       "Strengthens hip flexors",
       "Improves core stability"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/leg-raise-muscles-worked.png"
+      "https://lifefitindia.com/hanging-leg-raise/?srsltid=AfmBOorR8UA4QXWxmprlhcRLCE0PZqiimiPs07Km-POB8KmMOI0Ewvhy"
   },
 
   {
@@ -809,16 +811,16 @@ schedule: {
       "Maintain constant tension on abs."
     ],
     image: [
-      "https://homeworkouts.org/wp-content/uploads/anim-bicycle-crunches.gif"
+      "https://kr.pinterest.com/pin/717550153168191153/","https://newlife.com.cy/en/bicycle-crunch/","https://tenor.com/search/cycling-crunch-gifs",
     ],
-    video: ["https://www.youtube.com/embed/9FGilxCbdz8"],
+    video: ["https://www.youtube.com/embed/9FGilxCbdz8","https://youtube.com/shorts/uHHJOP68o6k?si=Vdq5vfxnUBekBKCq","https://youtube.com/shorts/H12jbLNNo8o?si=cCNjKLlky6fOgXR4"],
     impact: [
       "Engages entire core",
       "Improves coordination",
       "Increases calorie burn"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/bicycle-crunch-muscles.png"
+      "https://www.strengthlog.com/stationary-bike/"
   },
 
   {
@@ -833,16 +835,16 @@ schedule: {
       "Repeat on right side with control."
     ],
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/05/Russian-Twist.gif"
+      "https://ar.pinterest.com/pin/184788390950338119/"
     ],
-    video: ["https://www.youtube.com/embed/iFQV6q4xRXM"],
+    video: ["https://www.youtube.com/embed/iFQV6q4xRXM","https://youtube.com/shorts/C3RauLi8FNw?si=kq99Ybx5wHBOjB6u"],
     impact: [
       "Targets oblique muscles",
       "Improves rotational strength",
       "Helps shape waistline"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/russian-twist-muscles.png"
+      "https://www.shutterstock.com/video/clip-3717811381-dumbbell-military-press-russian-twist-legs-floor"
   },
 
   {
@@ -857,7 +859,7 @@ schedule: {
       "Breathe steadily — don’t hold breath."
     ],
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Plank.gif"
+      "https://www.inspireusafoundation.org/planks/"
     ],
     video: ["https://www.youtube.com/embed/xe2MXatLTUw"],
     impact: [
@@ -866,7 +868,7 @@ schedule: {
       "Enhances spinal stability"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/plank-muscles-worked.png"
+      "https://www.liftingitalia.com/?a=68117130031500"
   },
 
   {
@@ -881,7 +883,7 @@ schedule: {
       "Avoid leaning forward or backward."
     ],
     image: [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/05/Dumbbell-Side-Bend.gif"
+      "https://burnfit.io/en/library/cable-side-bend/"
     ],
     video: ["https://www.youtube.com/embed/44DazvtgpGE"],
     impact: [
@@ -890,7 +892,7 @@ schedule: {
       "Supports spinal balance"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/side-bend-muscles.png"
+      "https://fitliferegime.com/how-to-do-cable-side-bend-its-benefits/?srsltid=AfmBOoqQckCWke_f43Gw6trkFST1puCc0ftVphG0EUt5PaHWEHc7-Xk2"
   },
 
   {
@@ -905,7 +907,7 @@ schedule: {
       "Reverse back with control."
     ],
     image: [
-      "https://media.tenor.com/F6X1N2zWn1cAAAAC/inchworm-exercise.gif"
+      "https://www.dgmindia.in/index.php?shop/interattrition/dioxane14613215466.html","https://www.shutterstock.com/image-vector/girl-doing-caterpillar-walk-exercise-fitness-1999709960"
     ],
     video: ["https://www.youtube.com/embed/w2vZ0k6JX1o"],
     impact: [
@@ -914,7 +916,7 @@ schedule: {
       "Acts as active recovery"
     ],
     impactImage:
-      "https://www.inspireusafoundation.org/file/2021/06/inchworm-muscles.png"
+      "https://www.shutterstock.com/image-vector/woman-doing-inchworm-walking-exercise-fitness-2054345171"
   }
 ],
 
