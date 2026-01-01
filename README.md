@@ -11,6 +11,7 @@ A mobile-first Next.js experience that turns any beginner PDF into a vibrant, an
 
 ### Architecture
 
+
 - `app/page.tsx` only decides between onboarding and dashboard states via `useWorkoutStore`.
 - `app/lib/data.ts` hosts the mock AI JSON; swap with a real API response without touching UI code.
 - `app/lib/hooks.ts` owns localStorage hydration, streak resets, and the `toggleComplete` checklist logic.
