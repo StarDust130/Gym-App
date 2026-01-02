@@ -101,7 +101,8 @@ export function StatsGrid(props: StatsGridProps) {
     }
   });
 
-  const { isActive, startTimestamp, timeLeft, remainingAtLastStart } = timerState;
+  const { isActive, startTimestamp, timeLeft, remainingAtLastStart } =
+    timerState;
 
   // OLD UI STATES
   const [endTime, setEndTime] = useState<string | null>(null);
@@ -115,9 +116,7 @@ export function StatsGrid(props: StatsGridProps) {
 
   const dailyEmoji = useMemo(() => {
     const today = new Date().toDateString();
-    const seed = today
-      .split("")
-      .reduce((acc, c) => acc + c.charCodeAt(0), 0);
+    const seed = today.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
     return emojis[seed % emojis.length];
   }, []);
 
@@ -381,14 +380,11 @@ export function StatsGrid(props: StatsGridProps) {
 
                     <span className="text-[10px] font-medium opacity-80 mt-0.5">
                       {startTimestamp
-                        ? new Date(startTimestamp).toLocaleTimeString(
-                            "en-US",
-                            {
-                              hour: "numeric",
-                              minute: "2-digit",
-                              hour12: true,
-                            }
-                          )
+                        ? new Date(startTimestamp).toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "2-digit",
+                            hour12: true,
+                          })
                         : null}{" "}
                       - {endTime}
                     </span>
