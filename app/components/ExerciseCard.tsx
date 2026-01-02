@@ -145,7 +145,7 @@ export function ExerciseCard({
                       key={i}
                       ref={(el) => (videoRefs.current[i] = el)}
                       src={`${v}?enablejsapi=1&mute=1`}
-                      className="aspect-[9/16] w-56 rounded-xl border"
+                      className="aspect-9/16 w-56 rounded-xl border"
                       allowFullScreen
                     />
                   ))}
