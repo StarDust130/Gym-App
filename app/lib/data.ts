@@ -185,7 +185,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         category: "Biceps",
         note: "#8 BICEPS START. Arms fresh. Rotate wrist fully for peak.",
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Curl.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2022/06/Seated-dumbbell-alternating-curl.gif",
         ],
         video: ["https://youtube.com/embed/MKWBV29S6c0?si=gdG5ELu4hftkT5li"],
         impact: [
