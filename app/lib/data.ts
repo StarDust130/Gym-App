@@ -300,68 +300,139 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     "Cardio & Crunches": [
       {
         id: "abs-1",
-        name: "Sit up (on board)",
+        name: "Sit Up (On Board)",
         reps: "20-15",
         sets: "3 sets",
         category: "Abs",
-        note: null,
-      }, // [cite: 23]
+        note: "Slow and controlled movement",
+        tips: [
+          "Do not pull neck",
+          "Exhale while coming up",
+          "Keep core engaged",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Sit-ups.gif",
+        ],
+        video: ["https://youtube.com/embed/qXpYgvQ6_m4?si=KLX2_AzMHyfQwCHv"],
+        impact: ["Upper abs", "Core endurance"],
+      },
       {
         id: "abs-2",
-        name: "Reverse crunch",
+        name: "Reverse Crunch",
         reps: "20-15",
         sets: "2 sets",
         category: "Abs",
-        note: null,
-      }, // [cite: 23]
+        note: "Lift hips off the floor",
+        tips: ["Do not swing legs", "Control the negative"],
+        image: ["https://burnfit.io/wp-content/uploads/2023/11/REV_CRUNCH.gif"],
+        video: ["https://youtube.com/embed/ZyE4r7wiI6w?si=Nd4VqezMhql13e7M"],
+        impact: ["Lower abs", "Pelvic control"],
+      },
       {
         id: "abs-3",
-        name: "Leg raise",
+        name: "Leg Raise",
         reps: "20-15",
         sets: "3 sets",
         category: "Abs",
-        note: null,
-      }, // [cite: 23]
+        note: "Lower back pressed to floor",
+        tips: ["Do not arch lower back", "Lower legs slowly"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Raise.gif",
+          "https://ccuuubmtdurkmbeufybi.supabase.co/storage/v1/object/public/animations/0826.gif",
+        ],
+        video: ["https://youtube.com/embed/XQc0WHO90Lk?si=xf8AsOrWQ6x_ueJm"],
+        impact: ["Lower abs", "Hip flexors"],
+      },
       {
         id: "abs-4",
-        name: "Double leg cycling",
+        name: "Double Leg Cycling",
         reps: "20-15",
         sets: "2 sets",
         category: "Abs",
-        note: null,
-      }, // [cite: 23]
+        note: "Controlled cycling motion",
+        tips: ["Keep abs tight", "Avoid fast kicking"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bicycle-Crunch.gif",
+        ],
+        video: ["https://www.youtube.com/embed/Iwyvozckjak"],
+        impact: ["Lower abs", "Coordination"],
+      },
       {
         id: "abs-5",
-        name: "Russian twists (legs on floor)",
+        name: "Russian Twists (Legs on Floor)",
         reps: "20-15",
         sets: "2 sets",
         category: "Abs",
-        note: null,
-      }, // [cite: 23]
+        note: "Rotation from core",
+        tips: ["Move shoulder to shoulder", "Do not rush reps"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Russian-Twist.gif",
+        ],
+        video: ["https://www.youtube.com/embed/wkD8rjkodUI"],
+        impact: ["Obliques", "Rotational strength"],
+      },
       {
         id: "abs-6",
         name: "Planks",
-        reps: "20-15",
+        reps: "Hold",
         sets: "2 sets",
         category: "Abs",
-        note: null,
-      }, // [cite: 23]
+        note: "Hold till failure",
+        tips: ["Straight line from head to heel", "Squeeze glutes"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Plank.gif",
+        ],
+        video: ["https://www.youtube.com/embed/pSHjTRCQxIw"],
+        impact: ["Core stability", "Isometric strength"],
+      },
       {
         id: "abs-7",
-        name: "Side bend with Cables",
+        name: "Side Bend with Cables",
         reps: "20-15",
         sets: "3 sets",
         category: "Abs",
-        note: null,
-      }, // [cite: 23]
+        note: "One side at a time",
+        tips: ["Stretch fully", "Slow controlled bend"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Side-Bend.gif",
+        ],
+        video: ["https://www.youtube.com/embed/0oZK4eX4wJY"],
+        impact: ["Obliques", "Core balance"],
+      },
       {
         id: "abs-8",
         name: "Caterpillar",
         reps: "20-15",
         sets: "2 sets",
         category: "Abs",
-        note: null,
-      }, // [cite: 23]
+        note: "Dynamic core movement",
+        tips: ["Keep legs straight", "Move smoothly"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Inchworm.gif",
+        ],
+        video: ["https://www.youtube.com/embed/1J8mP6pGJwA"],
+        impact: ["Full core", "Mobility"],
+      },
+
+      // ✅ LIGHT CARDIO (AFTER ABS)
+      {
+        id: "lc-1",
+        name: "Light Cardio (Treadmill / Cycling)",
+        reps: "5–10 mins",
+        sets: "1",
+        category: "Light Cardio",
+        note: "Do after completing all abs exercises",
+        tips: [
+          "Low intensity only",
+          "Maintain steady breathing",
+          "No sprinting",
+        ],
+        image: [
+          "https://media.tenor.com/D_8hL4i_6k8AAAAM/treadmill-running.gif",
+        ],
+        video: ["https://www.youtube.com/embed/6GgQ7u1d1iQ"],
+        impact: ["Fat burning", "Active recovery", "Improves blood flow"],
+      },
     ],
 
     // ===========================================
@@ -527,7 +598,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "1 set",
         category: "Cardio",
         note: "Low Intensity",
-      }, // [cite: 23]
+      },
       {
         id: "stretch-1",
         name: "Passive Stretch",
@@ -535,7 +606,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "1 set",
         category: "Mobility",
         note: null,
-      }, // [cite: 23]
+      },
     ],
 
     // ===========================================
@@ -785,6 +856,20 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
 // =========================
 // VERSIONING (REQUIRED EXPORT)
 // =========================
+
+export const CATEGORY_ORDER = [
+  "Abs",
+  "Light Cardio",
+  "Cardio",
+  "Stretching",
+  "Mobility",
+  "Chest",
+  "Triceps",
+  "Back",
+  "Biceps",
+  "Legs",
+  "Shoulder",
+];
 
 export const WORKOUT_PLAN_VERSION = hashWorkoutPlan(MOCK_WORKOUT_PLAN);
 
