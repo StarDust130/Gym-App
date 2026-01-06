@@ -585,9 +585,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         note: "#1 TRICEPS MASS. Heavy compound.",
         tips: ["Elbows close to body", "Full lockout", "Chest upright"],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Assisted-Dip.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2022/11/Asisted-Triceps-Dips.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Close-Grip-Bench-Press.gif",
         ],
-        video: ["https://www.youtube.com/embed/2z8JmcrW-As"],
+        video: [
+          "https://youtube.com/embed/LH9iZNaO7oU?si=t-NMoDG_7o-emsMD",
+          "https://youtube.com/embed/6zWoAllRufg?si=96IU372uz0YczAye",
+        ],
         impact: [
           "Builds triceps mass",
           "Improves pressing strength",
@@ -601,11 +605,12 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: "2nd Week variation.",
+        note: "2nd Week variation. (3rd Floor)",
         tips: ["Control negative", "No shoulder shrug", "Full depth"],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Band-Assisted-Dip.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Triceps-Dips.gif",
         ],
+        video: ["https://youtube.com/embed/pz3dH1K9UkI?si=r-TKEn6HqJSXf4Zf"],
         impact: ["Triceps strength", "Joint friendly", "Better depth"],
       },
 
@@ -618,9 +623,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         note: "#2 TRICEPS ISOLATION.",
         tips: ["Elbows fixed", "Spread rope at bottom", "Pause 1 sec"],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Push-Down.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif",
         ],
-        video: ["https://www.youtube.com/embed/vB5OHsJ3EME"],
+        video: ["https://youtube.com/embed/1FjkhpZsaxc?si=UeI7YtnLqsvk9JP4"],
         impact: ["Triceps definition", "Better arm shape", "Peak contraction"],
       },
 
@@ -633,9 +638,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         note: "1st Week long head focus.",
         tips: ["Stretch fully overhead", "Elbows locked in", "Slow tempo"],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Overhead-Triceps-Extension.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/04/Cable-Rope-Overhead-Triceps-Extension.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Skull-Crusher.gif",
         ],
-        video: ["https://www.youtube.com/embed/_gsUck-7M74"],
+        video: [
+          "https://youtube.com/embed/b5le--KkyH0?si=Yvs4Hcf3f9-rR47q",
+          "https://youtube.com/embed/iuYB_fLp26Q?si=5AD_YDcGVENz63Ue",
+        ],
         impact: ["Long head growth", "Bigger triceps look", "Arm thickness"],
       },
 
@@ -648,7 +657,12 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         note: "2nd Week finisher.",
         tips: ["Straight arm at top", "No swinging", "Light weight only"],
         image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Dumbbell-Triceps-Extension.gif",
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Kickback.gif",
+        ],
+        video: [
+          "https://youtube.com/embed/b_r_LW4HEcM?si=8qDyOj_fIkS_geLH",
+          "https://youtube.com/embed/WhBxKbe1-NU?si=NpaX0rxAYl3yoo_I",
         ],
         impact: ["Triceps detail", "Muscle separation", "End workout pump"],
       },
@@ -662,8 +676,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         note: "Final burnout.",
         tips: ["Control machine path", "Squeeze at bottom", "No locking"],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Machine-Dip.gif",
+          "https://burnfit.io/wp-content/uploads/2023/11/SEAT_DIPS_MC.gif",
         ],
+        video: ["https://youtube.com/embed/QYktfOJRyfU?si=Cc3VxjqA6ZTuvjaH"],
         impact: ["Triceps pump", "Joint-safe finisher", "Volume overload"],
       },
     ],
