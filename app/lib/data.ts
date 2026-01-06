@@ -439,151 +439,232 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // WEDNESDAY: CHEST & TRICEPS
     // ===========================================
     "Chest & Triceps": [
-      // CHEST [cite: 2]
+      // =========================
+      // CHEST
+      // =========================
       {
         id: "ch-1",
         name: "Flat DB",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 sets",
         category: "Chest",
-        note: null,
+        note: "#1 CHEST START. Do first when strongest. Control descent.",
+        tips: [
+          "Lower dumbbells slowly (2–3 sec)",
+          "Do not lock elbows",
+          "Keep shoulder blades tight",
+        ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press.gif",
         ],
-      },
-      {
-        id: "ch-2",
-        name: "Incline DB",
-        reps: "15-12",
-        sets: "3 sets",
-        category: "Chest",
-        note: null,
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif",
-        ],
-      },
-      {
-        id: "ch-3",
-        name: "Decline DB",
-        reps: "15-12",
-        sets: "3 sets",
-        category: "Chest",
-        note: null,
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Decline-Dumbbell-Press.gif",
-        ],
-      },
-      {
-        id: "ch-4",
-        name: "Pec dec fly",
-        reps: "15-12",
-        sets: "3 sets",
-        category: "Chest",
-        note: "1st Week",
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pec-Deck-Fly.gif",
-        ],
-      },
-      {
-        id: "ch-5",
-        name: "Cable crossover / Vertical pec fly",
-        reps: "15-12",
-        sets: "3 sets",
-        category: "Chest",
-        note: "2nd Week",
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Crossover.gif",
-        ],
-      },
-      {
-        id: "ch-6",
-        name: "Pushups (Knee)",
-        reps: "15-12",
-        sets: "3 sets",
-        category: "Chest",
-        note: "Optional",
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Kneeling-Push-up.gif",
-        ],
-      },
-      {
-        id: "ch-7",
-        name: "Pushups (Regular)",
-        reps: "15-12",
-        sets: "3 sets",
-        category: "Chest",
-        note: "Optional",
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Push-Up.gif",
+        video: ["https://youtube.com/embed/WbCEvFA0NJs?si=Dfojxgl3MGzpgFk2"],
+        impact: [
+          "Builds chest mass",
+          "Improves pressing strength",
+          "Base chest exercise",
         ],
       },
 
-      // TRICEPS [cite: 2]
+      {
+        id: "ch-2",
+        name: "Incline DB",
+        reps: "10-12",
+        sets: "3 sets",
+        category: "Chest",
+        note: "#2 UPPER CHEST focus. Bench ~30° only.",
+        tips: [
+          "Do not go too steep",
+          "Press up and slightly inward",
+          "Feel stretch at bottom",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif",
+        ],
+        video: ["https://youtube.com/embed/8fXfwG4ftaQ?si=A0zwKBil2ghFddlw"],
+        impact: [
+          "Upper chest thickness",
+          "Better chest shape",
+          "Improves shoulder stability",
+        ],
+      },
+
+      {
+        id: "ch-3",
+        name: "Decline DB",
+        reps: "10-12",
+        sets: "3 sets",
+        category: "Chest",
+        note: "#3 LOWER CHEST. Optional if fatigue high.",
+        tips: [
+          "Do not bounce at bottom",
+          "Keep wrists straight",
+          "Control weight fully",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Decline-Dumbbell-Press.gif",
+        ],
+        video: ["https://youtube.com/embed/vVwnsVzw2G0?si=Sg9dVdbv3EWwTQac"],
+        impact: [
+          "Lower chest development",
+          "Improves chest fullness",
+          "Helps push strength",
+        ],
+      },
+
+      {
+        id: "ch-4",
+        name: "Pec dec fly",
+        reps: "10-12",
+        sets: "3 sets",
+        category: "Chest",
+        note: "1st Week isolation. Stretch chest fully.",
+        tips: [
+          "Do not slam weights",
+          "Pause 1 sec at squeeze",
+          "Elbows slightly bent",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pec-Deck-Fly.gif",
+        ],
+        video: ["https://youtube.com/embed/a9vQ_hwIksU?si=DpNsvvttIQMkvLt7"],
+        impact: [
+          "Chest separation",
+          "Improves muscle control",
+          "Better chest definition",
+        ],
+      },
+
+      {
+        id: "ch-5",
+        name: "Cable crossover / Vertical pec fly",
+        reps: "10-12",
+        sets: "3 sets",
+        category: "Chest",
+        note: "2nd Week. Constant tension.",
+        tips: [
+          "Cross hands slightly at bottom",
+          "Slow negative",
+          "Do not use momentum",
+        ],
+        image: [
+          "https://www.inspireusafoundation.org/file/2024/02/cable-standing-crossover.gif",
+        ],
+        video: ["https://youtube.com/embed/y4RJDSOBEl8?si=2egsqIPAxVxLFfZU"],
+        impact: [
+          "Chest lines & cuts",
+          "Improves inner chest",
+          "Finishing movement",
+        ],
+      },
+
+      {
+        id: "ch-6",
+        name: "Pushups (Knee) / (Regular)",
+        reps: "10-12",
+        sets: "3 sets",
+
+        category: "Chest",
+        video: ["https://youtube.com/embed/4Bc1tPaYkOo?si=Vdk3grrXTvaK0cqn"],
+        note: "Optional burnout. Beginners.",
+        tips: ["Keep body straight", "Elbows ~45° angle", "Slow tempo"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Push-Up.gif",
+        ],
+        impact: ["Chest endurance", "Improves control", "Good finisher"],
+      },
+
+      // =========================
+      // TRICEPS
+      // =========================
       {
         id: "tr-1",
-        name: "Bar dips weight assisted 1st W / close grip bench press",
-        reps: "15-12",
+        name: "Bar dips weight assisted / Close grip bench",
+        reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: "Week Dependent",
+        note: "#1 TRICEPS MASS. Heavy compound.",
+        tips: ["Elbows close to body", "Full lockout", "Chest upright"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/06/Assisted-Dip.gif",
         ],
+        video: ["https://www.youtube.com/embed/2z8JmcrW-As"],
+        impact: [
+          "Builds triceps mass",
+          "Improves pressing strength",
+          "Compound power",
+        ],
       },
+
       {
         id: "tr-2",
         name: "Bar dips resistance band assisted",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: "2nd Week",
+        note: "2nd Week variation.",
+        tips: ["Control negative", "No shoulder shrug", "Full depth"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Band-Assisted-Dip.gif",
         ],
+        impact: ["Triceps strength", "Joint friendly", "Better depth"],
       },
+
       {
         id: "tr-3",
         name: "Triceps push down cable/rope",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: null,
+        note: "#2 TRICEPS ISOLATION.",
+        tips: ["Elbows fixed", "Spread rope at bottom", "Pause 1 sec"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Push-Down.gif",
         ],
+        video: ["https://www.youtube.com/embed/vB5OHsJ3EME"],
+        impact: ["Triceps definition", "Better arm shape", "Peak contraction"],
       },
+
       {
         id: "tr-4",
         name: "Cable overhead triceps extension / Skull crusher DB",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: "1st Week Option",
+        note: "1st Week long head focus.",
+        tips: ["Stretch fully overhead", "Elbows locked in", "Slow tempo"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Overhead-Triceps-Extension.gif",
         ],
+        video: ["https://www.youtube.com/embed/_gsUck-7M74"],
+        impact: ["Long head growth", "Bigger triceps look", "Arm thickness"],
       },
+
       {
         id: "tr-5",
         name: "Triceps extension DB / Kickback DB",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: "2nd Week Option",
+        note: "2nd Week finisher.",
+        tips: ["Straight arm at top", "No swinging", "Light weight only"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Kickback.gif",
         ],
+        impact: ["Triceps detail", "Muscle separation", "End workout pump"],
       },
+
       {
         id: "tr-6",
         name: "Triceps press M/C",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: null,
+        note: "Final burnout.",
+        tips: ["Control machine path", "Squeeze at bottom", "No locking"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Machine-Dip.gif",
         ],
+        impact: ["Triceps pump", "Joint-safe finisher", "Volume overload"],
       },
     ],
 
@@ -616,7 +697,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-1",
         name: "Squats",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 Main Sets",
         category: "Legs",
         note: null,
@@ -627,7 +708,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-2",
         name: "Lunges forward",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
         note: "1st Week",
@@ -638,7 +719,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-3",
         name: "Reverse lunges",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
         note: "2nd Week",
@@ -649,7 +730,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-4",
         name: "Leg press",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
         note: "1st Week",
@@ -660,7 +741,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-5",
         name: "Leg extension",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
         note: "2nd Week",
@@ -671,7 +752,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-6",
         name: "Hip thrust",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 Sets",
         category: "Legs",
         note: "Optional",
@@ -682,7 +763,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-7",
         name: "Standing calf",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 Sets",
         category: "Legs",
         note: null,
@@ -693,7 +774,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-8",
         name: "Seated calf",
-        reps: "15-12",
+        reps: "10-12",
         sets: "4 Sets",
         category: "Legs",
         note: null,
@@ -704,7 +785,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-9",
         name: "Leg curl",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
         note: null,
@@ -740,7 +821,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-1",
         name: "Overhead press DB",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 Main Sets",
         category: "Shoulder",
         note: "1st Week",
@@ -751,7 +832,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-2",
         name: "Overhead press BB",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 Main Sets",
         category: "Shoulder",
         note: "2nd Week",
@@ -762,7 +843,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-3",
         name: "Lateral raise DB",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
         note: "1st Week",
@@ -773,7 +854,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-4",
         name: "Lateral raise M/C",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
         note: "2nd Week",
@@ -784,7 +865,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-5",
         name: "Reverse fly M/C / Facepull",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
         note: null,
@@ -795,7 +876,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-6",
         name: "External rotation DB",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
         note: null,
