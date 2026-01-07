@@ -694,6 +694,11 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         sets: "1 set",
         category: "Cardio",
         note: "Low Intensity",
+        image: [
+          "https://media.tenor.com/eXlIRe28PVgAAAAm/bubu-dudu-bubu.webp",
+          "https://media.tenor.com/HXbs_-Rwqj4AAAAm/train-trainer.webp",
+          "https://media.tenor.com/lEy7Yw63vQUAAAAM/beast-mode-cardio.gif",
+        ],
       },
       {
         id: "stretch-1",
@@ -701,6 +706,12 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "After workout",
         sets: "1 set",
         category: "Mobility",
+        image: [
+          "https://media.tenor.com/xxSokJ0BzywAAAAm/pengu-pudgy.webp",
+          "https://media.tenor.com/eihh-gRPONwAAAAm/cat-txuuuuu.webp",
+          "https://media.tenor.com/KgHAxJ53lRYAAAAm/get-it-hump-day.webp",
+          "https://media.tenor.com/RaXSN6iRKDIAAAAm/yoga-self-cuddle.webp",
+        ],
         note: null,
       },
     ],
