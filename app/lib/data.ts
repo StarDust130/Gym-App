@@ -845,9 +845,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         note: "Targets soleus muscle.",
         tips: ["Short ROM", "Constant tension"],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Lever-Seated-Calf-Raise.gif",
         ],
-        video: ["https://www.youtube.com/embed/JbyjNymZOt0"],
+        video: ["https://youtube.com/embed/pHm6LFuGGbs?si=GsNTPSIgvDZmK4De"],
         impact: ["Soleus", "Lower calves"],
       },
 
@@ -860,7 +860,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         note: "Hamstring isolation.",
         tips: ["Slow eccentric", "Do not lift hips"],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Curl.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif",
         ],
         video: ["https://youtube.com/embed/_lgE0gPvbik?si=WNsOc1jeRc9R42QC"],
         impact: ["Hamstrings"],
