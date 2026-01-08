@@ -195,7 +195,7 @@ export const ExerciseCard = ({
                     isActive={tab === "Images"}
                     onClick={() => handleTabChange("Images")}
                     icon={ImageIcon}
-                    label="Guide"
+                    label="Image"
                   />
                   <TabButton
                     isActive={tab === "Videos"}
@@ -279,7 +279,7 @@ export const ExerciseCard = ({
                         src={currentMediaList[mediaIndex]}
                         className="h-full w-full object-contain bg-white"
                         onLoad={() => setIsMediaLoading(false)}
-                        alt="Guide"
+                        alt="Image"
                       />
                     )}
 
