@@ -198,7 +198,7 @@ export function WorkoutList({
               >
                 <div className="bg-[#FFD27D] border-[3px] border-black rounded-[40px] p-10 shadow-[8px_8px_0px_0px_#000] flex flex-col items-center justify-center text-center relative overflow-hidden">
                   {/* Decorative background elements */}
-                  <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay"></div>
+                 
                   <motion.div
                     animate={{
                       rotate: [0, -10, 10, -10, 0],

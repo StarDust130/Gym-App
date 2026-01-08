@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronDown,
@@ -10,6 +10,8 @@ import {
   Zap,
   Activity,
   Dumbbell,
+  ChevronLeft, // Added
+  ChevronRight, // Added
 } from "lucide-react";
 import { WorkoutExercise } from "../lib/data";
 import { cn } from "@/lib/utils";
@@ -30,13 +32,42 @@ export const ExerciseCard = ({
   const [tab, setTab] = useState<TabType>("Images");
   const [isMediaLoading, setIsMediaLoading] = useState(true);
 
-  // Shorts (9:16) for Video, Standard (4:3) for Images/Impact
-  const mediaAspectRatio = tab === "Videos" ? "aspect-[9/16]" : "aspect-[4/3]";
+  // --- ADDED: Carousel State ---
+  const [mediaIndex, setMediaIndex] = useState(0);
+
+  // --- ADDED: Carousel Logic ---
+  const currentMediaList = useMemo(() => {
+    if (tab === "Images") return exercise.image || [];
+    if (tab === "Videos") return exercise.video || [];
+    return [];
+  }, [tab, exercise]);
+
+  const hasMultiple = currentMediaList.length > 1;
+  const isFirstItem = mediaIndex === 0;
+  const isLastItem = mediaIndex === currentMediaList.length - 1;
+
+  const nextMedia = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isLastItem || !hasMultiple) return;
+    setIsMediaLoading(true);
+    setMediaIndex((prev) => prev + 1);
+  };
+
+  const prevMedia = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isFirstItem || !hasMultiple) return;
+    setIsMediaLoading(true);
+    setMediaIndex((prev) => prev - 1);
+  };
 
   const handleTabChange = (t: TabType) => {
     setTab(t);
+    setMediaIndex(0); // Reset index when tab changes
     if (t !== "Impact") setIsMediaLoading(true);
   };
+
+  // Shorts (9:16) for Video, Standard (4:3) for Images/Impact
+  const mediaAspectRatio = tab === "Videos" ? "aspect-[9/16]" : "aspect-[4/3]";
 
   return (
     <motion.div
@@ -91,10 +122,18 @@ export const ExerciseCard = ({
           >
             {exercise.name}
           </h3>
-          <div className="flex gap-2 mt-1">
-            <Badge text={`${exercise.sets} SETS`} color="bg-neutral-100" />
-            <Badge text={`${exercise.reps} REPS`} color="bg-[#FFE27A]" />
-          </div>
+
+          {/* --- ADDED: Crushed It Text --- */}
+          {isCompleted ? (
+            <span className="mt-1 text-[10px] font-black uppercase text-[#FF5555] tracking-widest animate-pulse">
+              🔥 You Crushed It!
+            </span>
+          ) : (
+            <div className="flex gap-2 mt-1">
+              <Badge text={`${exercise.sets} SETS`} color="bg-neutral-100" />
+              <Badge text={`${exercise.reps} REPS`} color="bg-[#FFE27A]" />
+            </div>
+          )}
         </div>
 
         {/* ARROW TOGGLE */}
@@ -176,36 +215,87 @@ export const ExerciseCard = ({
                 <motion.div
                   layout
                   className={cn(
-                    "relative w-full overflow-hidden rounded-xl border-[3px] border-black bg-black",
+                    "group/media relative w-full overflow-hidden rounded-xl border-[3px] border-black bg-black",
                     mediaAspectRatio
                   )}
                 >
+                  {/* --- ADDED: Carousel Controls --- */}
+                  {tab !== "Impact" && !isMediaLoading && hasMultiple && (
+                    <>
+                      {/* Left Arrow */}
+                      {!isFirstItem && (
+                        <button
+                          onClick={prevMedia}
+                          className="absolute left-2 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white border-2 border-black p-1.5 shadow-[2px_2px_0px_0px_#000] active:scale-90 transition-transform hover:scale-110"
+                        >
+                          <ChevronLeft className="h-4 w-4 stroke-[3]" />
+                        </button>
+                      )}
+
+                      {/* Right Arrow */}
+                      {!isLastItem && (
+                        <button
+                          onClick={nextMedia}
+                          className="absolute right-2 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white border-2 border-black p-1.5 shadow-[2px_2px_0px_0px_#000] active:scale-90 transition-transform hover:scale-110"
+                        >
+                          <ChevronRight className="h-4 w-4 stroke-[3]" />
+                        </button>
+                      )}
+
+                      {/* Dots */}
+                      <div className="absolute bottom-3 left-0 right-0 z-30 flex justify-center gap-1.5">
+                        {currentMediaList.map((_, idx) => (
+                          <div
+                            key={idx}
+                            className={cn(
+                              "h-1.5 rounded-full transition-all border border-black shadow-sm",
+                              idx === mediaIndex
+                                ? "w-4 bg-[#B8FF9F]"
+                                : "w-1.5 bg-white"
+                            )}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+
                   {isMediaLoading && tab !== "Impact" && (
                     <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-neutral-900 text-white">
                       <MediaLoader />
                       <span className="mt-2 text-[10px] font-black uppercase tracking-widest animate-pulse text-[#B8FF9F]">
-                        Loading Data...
+                        Loading Asset...
                       </span>
                     </div>
                   )}
 
-                  {tab === "Images" && exercise.image && (
-                    <img
-                      src={exercise.image[0]}
-                      className="h-full w-full object-contain bg-white"
-                      onLoad={() => setIsMediaLoading(false)}
-                      alt="Workout Guide"
-                    />
-                  )}
+                  {/* MEDIA CONTENT */}
+                  <AnimatePresence mode="wait">
+                    {tab === "Images" && currentMediaList.length > 0 && (
+                      <motion.img
+                        key={currentMediaList[mediaIndex]}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        src={currentMediaList[mediaIndex]}
+                        className="h-full w-full object-contain bg-white"
+                        onLoad={() => setIsMediaLoading(false)}
+                        alt="Guide"
+                      />
+                    )}
 
-                  {tab === "Videos" && exercise.video && (
-                    <iframe
-                      src={exercise.video[0]}
-                      className="h-full w-full"
-                      allow="autoplay; encrypted-media"
-                      onLoad={() => setIsMediaLoading(false)}
-                    />
-                  )}
+                    {tab === "Videos" && currentMediaList.length > 0 && (
+                      <motion.iframe
+                        key={currentMediaList[mediaIndex]}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        src={currentMediaList[mediaIndex]}
+                        className="h-full w-full"
+                        allow="autoplay; encrypted-media"
+                        onLoad={() => setIsMediaLoading(false)}
+                      />
+                    )}
+                  </AnimatePresence>
 
                   {tab === "Impact" && (
                     <div className="h-full w-full bg-[#1a1a1a] p-4 overflow-y-auto custom-scrollbar">
