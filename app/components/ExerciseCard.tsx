@@ -68,6 +68,7 @@ export const ExerciseCard = ({
 
   // Shorts (9:16) for Video, Standard (4:3) for Images/Impact
   const mediaAspectRatio = tab === "Videos" ? "aspect-[9/16]" : "aspect-[4/3]";
+  const isImpact = tab === "Impact";
 
   return (
     <motion.div
@@ -116,7 +117,8 @@ export const ExerciseCard = ({
         <div className="flex flex-1 flex-col justify-center min-w-0">
           <h3
             className={cn(
-              "font-black text-base uppercase tracking-tight text-black truncate",
+              "font-black text-base uppercase tracking-tight text-black",
+              isOpen ? "whitespace-normal wrap-break-word" : "truncate",
               isCompleted && "line-through text-neutral-400"
             )}
           >
@@ -215,7 +217,10 @@ export const ExerciseCard = ({
                 <motion.div
                   layout
                   className={cn(
-                    "group/media relative w-full overflow-hidden rounded-xl border-[3px] border-black bg-black",
+                    "group/media relative w-full overflow-hidden rounded-xl border-[3px] border-black",
+                    isImpact
+                      ? "bg-gradient-to-br from-white via-neutral-50 to-neutral-200"
+                      : "bg-black",
                     mediaAspectRatio
                   )}
                 >
@@ -297,11 +302,11 @@ export const ExerciseCard = ({
                     )}
                   </AnimatePresence>
 
-                  {tab === "Impact" && (
-                    <div className="h-full w-full bg-[#1a1a1a] p-4 overflow-y-auto custom-scrollbar">
-                      <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/20">
-                        <Activity className="w-4 h-4 text-[#B8FF9F]" />
-                        <h4 className="text-xs font-black uppercase text-white tracking-widest">
+                  {isImpact && (
+                    <div className="h-full w-full p-4 overflow-y-auto custom-scrollbar">
+                      <div className="flex items-center gap-2 mb-3 pb-2 border-b border-neutral-200">
+                        <Activity className="w-4 h-4 text-emerald-600" />
+                        <h4 className="text-xs font-black uppercase text-neutral-800 tracking-widest">
                           Muscle Impact
                         </h4>
                       </div>
@@ -313,10 +318,10 @@ export const ExerciseCard = ({
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ delay: i * 0.05 }}
                             key={i}
-                            className="flex items-center gap-3 rounded-md bg-white/5 p-2 border border-white/10"
+                            className="flex items-center gap-3 rounded-md bg-white/80 p-2 border border-neutral-200 shadow-sm"
                           >
-                            <div className="h-2 w-2 rounded-full bg-[#B8FF9F] shadow-[0_0_8px_#B8FF9F]" />
-                            <span className="text-xs font-bold text-neutral-200 uppercase tracking-wide">
+                            <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_6px_#34d399]" />
+                            <span className="text-xs font-bold text-neutral-800 uppercase tracking-wide">
                               {imp}
                             </span>
                           </motion.div>
