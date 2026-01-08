@@ -720,195 +720,281 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // FRIDAY: LEGS & SHOULDER
     // ===========================================
     "Legs & Shoulder": [
+      /* ================= LEGS ================= */
+
       {
         id: "leg-1",
-        name: "Squats",
-        reps: "10-12",
+        name: "Barbell Squat",
+        reps: "15-12",
         sets: "3 Main Sets",
         category: "Legs",
-        note: null,
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Squat.gif",
+        note: "#1 COMPOUND. Do first while fresh. Focus on depth and control. #DO (Hack Squat then move to Barbell Squat later).",
+        tips: [
+          "Brace core before descent",
+          "Push knees out",
+          "Drive up through mid-foot",
         ],
-      },
-      {
-        id: "leg-2",
-        name: "Lunges forward",
-        reps: "10-12",
-        sets: "2 Sets",
-        category: "Legs",
-        note: "1st Week",
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Lunge.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/BARBELL-SQUAT.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Sled-Hack-Squat.gif",
         ],
-      },
-      {
-        id: "leg-3",
-        name: "Reverse lunges",
-        reps: "10-12",
-        sets: "2 Sets",
-        category: "Legs",
-        note: "2nd Week",
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Reverse-Lunge.gif",
+        video: [
+          "https://youtube.com/embed/iKCJCydYYrE?si=TJB4U56YNpkLPxyz",
+          "https://youtube.com/embed/vaU2FSmUhNc?si=UR2nOpm8tbGDFGIm",
         ],
-      },
-      {
-        id: "leg-4",
-        name: "Leg press",
-        reps: "10-12",
-        sets: "2 Sets",
-        category: "Legs",
-        note: "1st Week",
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Press.gif",
-        ],
-      },
-      {
-        id: "leg-5",
-        name: "Leg extension",
-        reps: "10-12",
-        sets: "2 Sets",
-        category: "Legs",
-        note: "2nd Week",
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Extension.gif",
-        ],
-      },
-      {
-        id: "leg-6",
-        name: "Hip thrust",
-        reps: "10-12",
-        sets: "3 Sets",
-        category: "Legs",
-        note: "Optional",
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Hip-Thrust.gif",
-        ],
-      },
-      {
-        id: "leg-7",
-        name: "Standing calf",
-        reps: "10-12",
-        sets: "3 Sets",
-        category: "Legs",
-        note: null,
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Standing-Calf-Raise.gif",
-        ],
-      },
-      {
-        id: "leg-8",
-        name: "Seated calf",
-        reps: "10-12",
-        sets: "4 Sets",
-        category: "Legs",
-        note: null,
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Calf-Raise.gif",
-        ],
-      },
-      {
-        id: "leg-9",
-        name: "Leg curl",
-        reps: "10-12",
-        sets: "2 Sets",
-        category: "Legs",
-        note: null,
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Curl.gif",
-        ],
-      },
-      {
-        id: "leg-10",
-        name: "Toe raise",
-        reps: "20 sec hold",
-        sets: "1",
-        category: "Legs",
-        note: null,
-      },
-      {
-        id: "leg-11",
-        name: "Lower body stretch",
-        reps: "20 sec hold",
-        sets: "1",
-        category: "Mobility",
-        note: null,
-      },
-      {
-        id: "leg-12",
-        name: "Whole body compound stretch",
-        reps: "21 sec hold",
-        sets: "1",
-        category: "Mobility",
-        note: null,
+        impact: ["Quads", "Glutes", "Overall leg strength"],
       },
 
       {
+        id: "leg-2",
+        name: "Forward Lunges",
+        reps: "15-12",
+        sets: "2 Sets",
+        category: "Legs",
+        note: "1st Week. Step forward, stay balanced.",
+        tips: ["Long step", "Back knee soft touch", "Upright torso"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Lunge.gif",
+        ],
+        video: ["https://www.youtube.com/embed/QOVaHwm-Q6U"],
+        impact: ["Quads", "Glutes", "Balance"],
+      },
+
+      {
+        id: "leg-3",
+        name: "Reverse Lunges",
+        reps: "15-12",
+        sets: "2 Sets",
+        category: "Legs",
+        note: "2nd Week. Easier on knees than forward lunges.",
+        tips: ["Step back slowly", "Front knee stable"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Reverse-Lunge.gif",
+        ],
+        video: ["https://www.youtube.com/embed/rvqLVxYqEvo"],
+        impact: ["Glutes", "Hamstrings"],
+      },
+
+      {
+        id: "leg-4",
+        name: "Leg Press",
+        reps: "15-12",
+        sets: "2 Sets",
+        category: "Legs",
+        note: "1st Week. Controlled reps, full depth.",
+        tips: ["Do not lock knees", "Feet shoulder-width"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2015/11/Leg-Press.gif",
+        ],
+        video: ["https://youtube.com/embed/EotSw18oR9w?si=sWRVUvAy84KwsBfk"],
+        impact: ["Quads", "Overall leg volume"],
+      },
+
+      {
+        id: "leg-5",
+        name: "Leg Extension",
+        reps: "15-12",
+        sets: "2 Sets",
+        category: "Legs",
+        note: "2nd Week. Isolation after compounds.",
+        tips: ["Pause 1 sec at top", "Slow negatives"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/LEG-EXTENSION.gif",
+        ],
+        video: ["https://youtube.com/embed/iQ92TuvBqRo?si=rVR7-38AaxnNutf2"],
+        impact: ["Quads isolation"],
+      },
+
+      {
+        id: "leg-6",
+        name: "Hip Thrust",
+        reps: "15-12",
+        sets: "3 Sets",
+        category: "Legs",
+        note: "Optional. Add if recovery is good.",
+        tips: ["Chin tucked", "Full hip lockout"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Hip-Thrust.gif",
+        ],
+        video: ["https://youtube.com/embed/96uDbymTaHM?si=NrG3yGfbFscWYmJC"],
+        impact: ["Glutes", "Posterior chain"],
+      },
+
+      {
+        id: "leg-7",
+        name: "Standing Calf Raise",
+        reps: "15-12",
+        sets: "3 Sets",
+        category: "Legs",
+        note: "Slow reps, full stretch.",
+        tips: ["Pause at top", "Stretch at bottom"],
+        image: [
+          "https://burnfit.io/wp-content/uploads/2023/11/STD_CALF_RAISE.gif",
+          "https://training.fit/wp-content/uploads/2020/03/wadenheben-stehend-geraet.png",
+        ],
+        video: ["https://youtube.com/embed/baEXLy09Ncc?si=UnOyS8ClYxZFdyCg"],
+        impact: ["Gastrocnemius"],
+      },
+
+      {
+        id: "leg-8",
+        name: "Seated Calf Raise",
+        reps: "15-12",
+        sets: "4 Sets",
+        category: "Legs",
+        note: "Targets soleus muscle.",
+        tips: ["Short ROM", "Constant tension"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif",
+        ],
+        video: ["https://www.youtube.com/embed/JbyjNymZOt0"],
+        impact: ["Soleus", "Lower calves"],
+      },
+
+      {
+        id: "leg-9",
+        name: "Leg Curl",
+        reps: "15-12",
+        sets: "2 Sets",
+        category: "Legs",
+        note: "Hamstring isolation.",
+        tips: ["Slow eccentric", "Do not lift hips"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Curl.gif",
+        ],
+        video: ["https://youtube.com/embed/_lgE0gPvbik?si=WNsOc1jeRc9R42QC"],
+        impact: ["Hamstrings"],
+      },
+
+      {
+        id: "leg-10",
+        name: "Toe Raise",
+        reps: "20 sec hold",
+        sets: "1",
+        category: "Legs",
+        note: "Foot & ankle strength.",
+        tips: ["Barefoot if possible"],
+        image: [
+          "https://intowellness.in/wp-content/uploads/2024/10/Tibia_Dorsal_Flexion_Machine.jpg",
+        ],
+        video: ["https://youtube.com/embed/0LSazUIfThI?si=JximLVaseWHczWPy"],
+        impact: ["Tibialis anterior"],
+      },
+
+      /* ================= SHOULDER ================= */
+
+      {
         id: "sh-1",
-        name: "Overhead press DB",
-        reps: "10-12",
+        name: "Dumbbell Overhead Press",
+        reps: "15-12",
         sets: "3 Main Sets",
         category: "Shoulder",
-        note: "1st Week",
+        note: "1st Week. Start shoulders with DB.",
+        tips: ["Neutral grip", "No lower back arch"],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Shoulder-Press.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2023/09/Standing-Dumbbell-Overhead-Press.gif",
         ],
+        video: ["https://youtube.com/embed/k6tzKisR3NY?si=-tEppXweec01YWDR"],
+        impact: ["Front delts", "Shoulder strength"],
       },
+
       {
         id: "sh-2",
-        name: "Overhead press BB",
-        reps: "10-12",
+        name: "Barbell Overhead Press",
+        reps: "15-12",
         sets: "3 Main Sets",
         category: "Shoulder",
-        note: "2nd Week",
+        note: "2nd Week. Heavier than DB.",
+        tips: ["Glutes tight", "Bar path straight"],
         image: [
+          "https://media.tenor.com/CV1FfGVNpdcAAAAM/desenvolvimento-militar.gif",
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Shoulder-Press.gif",
         ],
+        video: ["https://youtube.com/embed/zoN5EH50Dro?si=nuOkAiQrBV4Altd0"],
+        impact: ["Delts", "Upper body power"],
       },
+
       {
         id: "sh-3",
-        name: "Lateral raise DB",
-        reps: "10-12",
+        name: "Dumbbell Lateral Raise",
+        reps: "15-12",
         sets: "2 Sets",
         category: "Shoulder",
-        note: "1st Week",
+        note: "1st Week. Strict form.",
+        tips: ["Lift to shoulder height", "Small bend in elbow"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Lateral-Raise.gif",
         ],
+        video: ["https://youtube.com/embed/Kl3LEzQ5Zqs?si=NivM87vJOi1scVss"],
+        impact: ["Side delts"],
       },
+
       {
         id: "sh-4",
-        name: "Lateral raise M/C",
-        reps: "10-12",
+        name: "Machine Lateral Raise",
+        reps: "15-12",
         sets: "2 Sets",
         category: "Shoulder",
-        note: "2nd Week",
+        note: "2nd Week. Constant tension.",
+        tips: ["Slow reps", "No jerking"],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Machine-Lateral-Raise.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/09/Lever-Lateral-Raise.gif",
         ],
+        video: ["https://youtube.com/embed/uEBut4ea6as?si=TSd8w65D_5fS_DTA"],
+        impact: ["Side delts"],
       },
+
       {
         id: "sh-5",
-        name: "Reverse fly M/C / Facepull",
-        reps: "10-12",
+        name: "Reverse Pec Deck / Face Pull",
+        reps: "15-12",
         sets: "2 Sets",
         category: "Shoulder",
-        note: null,
+        note: "Rear delts & posture.",
+        tips: ["Pull elbows wide", "Pause at squeeze"],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Reverse-Pec-Deck-Fly.gif",
+          "https://burnfit.io/wp-content/uploads/2023/11/REV_PEC_DECK_MC.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Face-Pull.gif",
         ],
+        video: [
+          "https://youtube.com/embed/7tgx6QHB0-A?si=wHmrlabC4mzM-ciZ",
+          "https://youtube.com/embed/IeOqdw9WI90?si=qaY_IerfJjQXkfmO",
+        ],
+        impact: ["Rear delts", "Upper back"],
       },
+
       {
         id: "sh-6",
-        name: "External rotation DB",
-        reps: "10-12",
+        name: "External Rotation Dumbbell",
+        reps: "15-12",
         sets: "2 Sets",
         category: "Shoulder",
-        note: null,
+        note: "Rotator cuff health. Go light.",
+        tips: ["Very light weight", "Slow control"],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-External-Rotation.gif",
+          "https://liftmanual.com/wp-content/uploads/2023/04/dumbbell-seated-external-rotation.jpg",
+          "https://gymvisual.com/img/p/2/7/3/2/6/27326.gif",
         ],
+        impact: ["Shoulder stability"],
+      },
+
+      /* ================= STRETCH ================= */
+
+      {
+        id: "mob-1",
+        name: "Lower Body Stretch",
+        reps: "20 sec hold",
+        sets: "1",
+        category: "Mobility",
+        note: "Post workout only.",
+      },
+      {
+        id: "mob-2",
+        name: "Full Body Compound Stretch",
+        reps: "21 sec hold",
+        sets: "1",
+        category: "Mobility",
+        note: "End session cooldown.",
       },
     ],
 
