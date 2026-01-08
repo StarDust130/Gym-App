@@ -725,7 +725,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-1",
         name: "Barbell Squat",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 Main Sets",
         category: "Legs",
         note: "#1 COMPOUND. Do first while fresh. Focus on depth and control. #DO (Hack Squat then move to Barbell Squat later).",
@@ -748,7 +748,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-2",
         name: "Forward Lunges",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
         note: "1st Week. Step forward, stay balanced.",
@@ -763,7 +763,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-3",
         name: "Reverse Lunges",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
         note: "2nd Week. Easier on knees than forward lunges.",
@@ -778,7 +778,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-4",
         name: "Leg Press",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
         note: "1st Week. Controlled reps, full depth.",
@@ -793,7 +793,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-5",
         name: "Leg Extension",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
         note: "2nd Week. Isolation after compounds.",
@@ -808,7 +808,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-6",
         name: "Hip Thrust",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 Sets",
         category: "Legs",
         note: "Optional. Add if recovery is good.",
@@ -823,7 +823,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-7",
         name: "Standing Calf Raise",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 Sets",
         category: "Legs",
         note: "Slow reps, full stretch.",
@@ -839,7 +839,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-8",
         name: "Seated Calf Raise",
-        reps: "15-12",
+        reps: "10-12",
         sets: "4 Sets",
         category: "Legs",
         note: "Targets soleus muscle.",
@@ -854,7 +854,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "leg-9",
         name: "Leg Curl",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
         note: "Hamstring isolation.",
@@ -886,7 +886,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-1",
         name: "Dumbbell Overhead Press",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 Main Sets",
         category: "Shoulder",
         note: "1st Week. Start shoulders with DB.",
@@ -901,7 +901,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-2",
         name: "Barbell Overhead Press",
-        reps: "15-12",
+        reps: "10-12",
         sets: "3 Main Sets",
         category: "Shoulder",
         note: "2nd Week. Heavier than DB.",
@@ -917,7 +917,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-3",
         name: "Dumbbell Lateral Raise",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
         note: "1st Week. Strict form.",
@@ -932,7 +932,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-4",
         name: "Machine Lateral Raise",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
         note: "2nd Week. Constant tension.",
@@ -947,7 +947,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-5",
         name: "Reverse Pec Deck / Face Pull",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
         note: "Rear delts & posture.",
@@ -966,7 +966,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "sh-6",
         name: "External Rotation Dumbbell",
-        reps: "15-12",
+        reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
         note: "Rotator cuff health. Go light.",
