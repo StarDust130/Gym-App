@@ -977,25 +977,6 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         ],
         impact: ["Shoulder stability"],
       },
-
-      /* ================= STRETCH ================= */
-
-      {
-        id: "mob-1",
-        name: "Lower Body Stretch",
-        reps: "20 sec hold",
-        sets: "1",
-        category: "Mobility",
-        note: "Post workout only.",
-      },
-      {
-        id: "mob-2",
-        name: "Full Body Compound Stretch",
-        reps: "21 sec hold",
-        sets: "1",
-        category: "Mobility",
-        note: "End session cooldown.",
-      },
     ],
 
     // ===========================================
