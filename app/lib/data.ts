@@ -40,13 +40,19 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // ===========================================
     "Back , Biceps & Forearms": [
       /* ================= BACK ================= */
+
       {
         id: "bk-1",
         name: "Bent-Over Barbell Row / Bench-Supported Row",
         reps: "10-12",
         sets: "3 sets",
         category: "Back",
-        note: "#1 BACK START (MAX POWER). Do this first when strongest. Week 1: Bent-over row (heavy). Week 2: Bench-supported row (strict). ONLY ONE.",
+        note: "🔥 START HERE. Strongest exercise for back. Do ONLY ONE version.\nWeek 1: Bent-over row (heavy).\nWeek 2: Bench-supported row (strict).",
+        tips: [
+          "Chest up, back straight",
+          "Pull bar toward lower ribs",
+          "Do not jerk the weight",
+        ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Bent-Over-Row.gif",
           "https://www.strengthlog.com/wp-content/uploads/2024/11/chest-supported-dumbbell-row.gif",
@@ -55,11 +61,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://www.youtube.com/embed/vT2GjY_Umpw",
           "https://www.youtube.com/embed/czoQ_ncuqqI",
         ],
-        impact: [
-          "Makes back thicker",
-          "Builds pulling strength",
-          "Improves posture",
-        ],
+        impact: ["Thick back", "Big pulling power", "Better posture"],
       },
 
       {
@@ -68,17 +70,17 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 sets",
         category: "Back",
-        note: "#2 BACK. Heavy but strict. Chest-supported so lower back can rest. Pull elbows toward hips.",
-        tips: ["a.k.a. Barbell Row Grip"],
+        note: "💪 SECOND BACK MOVE. Slightly lighter than first. Focus on lats.",
+        tips: [
+          "Reverse grip = palms facing up",
+          "Elbows close to body",
+          "Squeeze lats at top",
+        ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/04/Reverse-Grip-Barbell-Row.gif",
         ],
         video: ["https://youtube.com/embed/7SzAgsAVzMo?si=EfIrocw9W0RaOd46"],
-        impact: [
-          "Builds lower lats",
-          "Adds thickness to middle back",
-          "Improves back detail",
-        ],
+        impact: ["Lower lats", "Back thickness", "Stronger rows"],
       },
 
       {
@@ -87,20 +89,17 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 sets",
         category: "Back",
-        note: "#3 BACK MID. Machine work to keep tension high without stressing spine.",
+        note: "🧠 MACHINE ROW. Keeps tension without stressing lower back.",
         tips: [
-          "a.k.a. Seated Cable Row",
-          "also ask what is Low Machine Row 😭",
+          "Sit tall, chest up",
+          "Pull handle to stomach",
+          "Slow return (important)",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Cable-Row.gif",
         ],
         video: ["https://www.youtube.com/embed/UCXxvVItLoM"],
-        impact: [
-          "Fills middle back",
-          "Improves back thickness",
-          "Helps rows get stronger",
-        ],
+        impact: ["Middle back", "Row strength", "Better control"],
       },
 
       {
@@ -109,16 +108,17 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 sets",
         category: "Back",
-        note: "#4 BACK WIDTH. Vertical pull after rows. Stretch fully, pull elbows down.",
+        note: "📐 WIDTH BUILDER. After rows. Stretch fully at top.",
+        tips: [
+          "Pull elbows down, not hands",
+          "Do not lean back too much",
+          "Pause 1 sec at bottom",
+        ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lat-Pulldown.gif",
         ],
         video: ["https://www.youtube.com/embed/CAwf7n6Luuc"],
-        impact: [
-          "Makes back wider",
-          "Improves V-shape",
-          "Helps pull-up strength",
-        ],
+        impact: ["Wide back", "V-shape", "Pull-up strength"],
       },
 
       {
@@ -127,16 +127,17 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 sets",
         category: "Back",
-        note: "#5 BACK ISOLATION. Feel lats working. Arms straight, slow control.",
+        note: "🎯 LAT ISOLATION. Feel stretch + squeeze.",
+        tips: [
+          "Arms almost straight",
+          "Push bar down with lats",
+          "Slow and controlled",
+        ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/05/Cable-Straight-Arm-Pulldown.gif",
         ],
         video: ["https://youtube.com/embed/hAMcfubonDc?si=WWoc3ALQo2evyDXH"],
-        impact: [
-          "Improves lat connection",
-          "Sharpens back shape",
-          "Helps mind–muscle control",
-        ],
+        impact: ["Lat connection", "Better shape", "Mind-muscle"],
       },
 
       {
@@ -145,16 +146,17 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 sets",
         category: "Back",
-        note: "#6 TRAPS. Near end. Hold top 1–2 sec. No rolling shoulders.",
+        note: "🗿 TRAPS. Near end. Hold at top.",
+        tips: [
+          "Lift shoulders straight up",
+          "Hold 1–2 sec",
+          "Do NOT roll shoulders",
+        ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Shrug.gif",
         ],
         video: ["https://youtube.com/embed/rFsSeClGnNA?si=hu_xVfvbodle-Rfy"],
-        impact: [
-          "Builds upper traps",
-          "Makes neck look thicker",
-          "Improves shoulder stability",
-        ],
+        impact: ["Big traps", "Neck thickness", "Stability"],
       },
 
       {
@@ -163,16 +165,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 sets",
         category: "Back",
-        note: "#7 BACK FINISH. Light weight only. Strengthens lower back safely.",
+        note: "🛡️ LOWER BACK SAFETY. Light weight only.",
+        tips: ["Slow movement", "Neutral spine", "Stop if pain"],
         image: [
           "https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2020/05/back-extension-frontloaded.gif?resize=600%2C600&ssl=1",
         ],
         video: ["https://youtube.com/embed/Wpreb69h2fE?si=ttyCZnQv7Xy9Y5cb"],
-        impact: [
-          "Strengthens lower back",
-          "Protects spine",
-          "Improves posture and stability",
-        ],
+        impact: ["Lower back strength", "Spine protection"],
       },
 
       /* ================= BICEPS ================= */
@@ -183,16 +182,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 sets",
         category: "Biceps",
-        note: "#8 BICEPS START. Arms fresh. Rotate wrist fully for peak.",
+        note: "💪 BICEPS START. Fresh arms = best pump.",
+        tips: ["Rotate wrist fully", "Elbows fixed", "Squeeze at top"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2022/06/Seated-dumbbell-alternating-curl.gif",
         ],
         video: ["https://youtube.com/embed/MKWBV29S6c0?si=gdG5ELu4hftkT5li"],
-        impact: [
-          "Builds biceps peak",
-          "Improves arm shape",
-          "Adds front arm size",
-        ],
+        impact: ["Biceps peak", "Better shape"],
       },
 
       {
@@ -201,16 +197,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 sets",
         category: "Biceps",
-        note: "#9 BICEPS. Adds arm thickness. Keep elbows fixed.",
+        note: "🔨 ARM THICKNESS. Hits brachialis.",
+        tips: ["Neutral grip", "Slow reps", "No swinging"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-Hammer-Curl.gif",
         ],
         video: ["https://youtube.com/embed/vm0zV_WQerE?si=gYGaao8dKT6-s3Vk"],
-        impact: [
-          "Makes arms thicker",
-          "Improves forearm strength",
-          "Helps arms look bigger",
-        ],
+        impact: ["Thicker arms", "Forearm help"],
       },
 
       {
@@ -219,7 +212,8 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 sets",
         category: "Biceps",
-        note: "#10 BICEPS ISOLATION. Strict reps only. No cheating.",
+        note: "🎯 STRICT CURL. No cheating.",
+        tips: ["Slow lift", "Full stretch", "Focus on muscle"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Concentration-Curl.gif",
           "https://www.inspireusafoundation.org/file/2022/03/ez-bar-preacher-curl.gif",
@@ -228,11 +222,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://youtube.com/embed/EjUnEEfTSEY?si=Y7arnZZDupSnpN4H",
           "https://youtube.com/embed/7ixqAPO6JvU?si=oooquM5yRSFqyLyN",
         ],
-        impact: [
-          "Improves biceps definition",
-          "Sharpens arm look",
-          "Better muscle control",
-        ],
+        impact: ["Definition", "Clean biceps"],
       },
 
       {
@@ -241,7 +231,8 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 sets",
         category: "Biceps",
-        note: "#11 BICEPS MASS. Controlled weight. No swinging.",
+        note: "🏋️ MASS BUILDER. Control the weight.",
+        tips: ["No body swing", "Elbows tight", "Slow negative"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Curl.gif",
           "https://www.inspireusafoundation.org/file/2022/12/cable-drag-curl.gif",
@@ -250,11 +241,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://youtube.com/embed/54x2WF1_Suc?si=Krs73Ki6rbcjMNkV",
           "https://youtube.com/embed/CrbTqNOlFgE?si=9P9Ho07OdqTBslMN",
         ],
-        impact: [
-          "Adds arm mass",
-          "Improves curl strength",
-          "Builds overall arm size",
-        ],
+        impact: ["Arm size", "Strength"],
       },
 
       /* ================= FOREARMS ================= */
@@ -265,15 +252,12 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 sets",
         category: "Forearm",
+        note: "🤝 GRIP POWER.",
+        tips: ["Squeeze hard", "Slow release"],
         image: [
           "https://5.imimg.com/data5/SELLER/Default/2021/9/PQ/YD/CM/12736245/gorilla-gripper-1000x1000.jpg",
         ],
-        note: "#12 FOREARMS. Grip work. Squeeze hard every rep.",
-        impact: [
-          "Improves grip strength",
-          "Strengthens fingers",
-          "Helps all pulling exercises",
-        ],
+        impact: ["Grip strength", "Better pulls"],
       },
 
       {
@@ -282,16 +266,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 sets",
         category: "Forearm",
-        note: "#13 FINAL EXERCISE. Slow reps. Full range.",
+        note: "🏁 FINAL MOVE. Burnout.",
+        tips: ["Full stretch", "Slow reps"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Wrist-Curl.gif",
         ],
         video: ["https://youtube.com/embed/M8TpHw5aYgA?si=af_0A8zrxs6aQZBN"],
-        impact: [
-          "Builds forearm size",
-          "Strengthens wrists",
-          "Makes arms look thicker",
-        ],
+        impact: ["Forearm size", "Wrist strength"],
       },
     ],
     // ===========================================
@@ -879,7 +860,8 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         note: "#10 FINISHER. Shin & ankle strength. Injury prevention.",
         tips: ["Slow controlled movement"],
         image: [
-         "https://m.media-amazon.com/images/I/61r+fVBDPrL._SX679_.jpg" , "https://intowellness.in/wp-content/uploads/2024/10/Tibia_Dorsal_Flexion_Machine.jpg",
+          "https://m.media-amazon.com/images/I/61r+fVBDPrL._SX679_.jpg",
+          "https://intowellness.in/wp-content/uploads/2024/10/Tibia_Dorsal_Flexion_Machine.jpg",
         ],
         video: ["https://youtube.com/embed/0LSazUIfThI?si=JximLVaseWHczWPy"],
         impact: ["Tibialis anterior"],
