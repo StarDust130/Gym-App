@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { ExerciseCard } from "./ExerciseCard";
-import { Check, ChevronDown, Trophy } from "lucide-react"; // Added Trophy icon
+import { Check, ChevronDown, Trophy, TrophyIcon } from "lucide-react"; // Added Trophy icon
 import { cn } from "@/lib/utils";
 import { WorkoutExercise } from "../lib/data";
 
@@ -232,25 +232,45 @@ export function WorkoutList({
 
                   <div className="relative z-10 flex items-center justify-between p-3.5">
                     {/* Left: Name */}
+                    {/* ... inside your header map ... */}
+
                     <div className="flex items-center gap-3">
                       <div
                         className={cn(
-                          "flex h-8 w-8 items-center justify-center rounded-lg border-2 border-black font-black uppercase shadow-[2px_2px_0px_0px_#000] transition-colors",
+                          "flex h-9 w-9 items-center justify-center rounded-lg border-[3px] border-black font-black uppercase shadow-[2px_2px_0px_0px_#000] transition-all duration-300",
                           isAllDone
-                            ? "bg-white text-emerald-600"
+                            ? "bg-[#FFE27A] scale-110 rotate-3" // Gold & Tilted when done
                             : "bg-black text-white"
                         )}
                       >
                         {isAllDone ? (
-                          <Check className="w-5 h-5 stroke-[4]" />
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 400,
+                              damping: 10,
+                            }}
+                          >
+                            {/* Trophy Icon with cool fill effect */}
+                            <Trophy className="w-5 h-5 text-black fill-white/40 stroke-[2.5]" />
+                          </motion.div>
                         ) : (
-                          group.category.charAt(0)
+                          // Default Letter
+                          <span className="leading-none pb-0.5">
+                            {group.category.charAt(0)}
+                          </span>
                         )}
                       </div>
+
                       <h3
                         className={cn(
-                          "text-lg font-black uppercase tracking-tighter",
-                          isAllDone ? "text-white drop-shadow-md" : "text-black"
+                          "text-lg font-black uppercase tracking-tighter transition-colors duration-300",
+                          // White text with a hard black shadow when done to pop off the green
+                          isAllDone
+                            ? "text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+                            : "text-black"
                         )}
                       >
                         {group.category}

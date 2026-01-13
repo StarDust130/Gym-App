@@ -19,6 +19,8 @@ import {
   TrendingUp,
   Edit2,
   Goal,
+  VideoOff,
+  ImageOff,
 } from "lucide-react";
 import { WorkoutExercise } from "../lib/data";
 import { cn } from "@/lib/utils";
@@ -70,12 +72,15 @@ export const ExerciseCard = ({
   const [isOpen, setIsOpen] = useState(false);
   const [tab, setTab] = useState<TabType>("Images");
 
+  // --- RECOVERY DETECTION ---
+  const isRecovery = exercise.category === "Recovery";
+
   // --- STATE ---
   const [lastLog, setLastLog] = useState<ExerciseLog | null>(null);
   const [showLogModal, setShowLogModal] = useState(false);
 
   // Media State
-  const [isMediaLoading, setIsMediaLoading] = useState(true);
+  const [isMediaLoading, setIsMediaLoading] = useState(false);
   const [mediaIndex, setMediaIndex] = useState(0);
 
   // --- LOAD DATA ---
@@ -95,13 +100,28 @@ export const ExerciseCard = ({
   const isTodayLog = lastLog?.date === new Date().toDateString();
 
   // --- MEDIA CONTROLS ---
+  // Filter out empty strings/nulls immediately
   const currentMediaList = useMemo(() => {
-    if (tab === "Images") return exercise.image || [];
-    if (tab === "Videos") return exercise.video || [];
-    return [];
+    const rawList =
+      tab === "Images"
+        ? exercise.image
+        : tab === "Videos"
+        ? exercise.video
+        : [];
+    return (rawList || []).filter((url) => url && url.trim() !== "");
   }, [tab, exercise]);
 
   const hasMultiple = currentMediaList.length > 1;
+
+  // Check for content on mount to set initial loading state properly
+  useEffect(() => {
+    if (tab !== "Impact" && currentMediaList.length > 0) {
+      setIsMediaLoading(true);
+    } else {
+      setIsMediaLoading(false);
+    }
+  }, []);
+
   const nextMedia = (e: any) => {
     e.stopPropagation();
     if (mediaIndex < currentMediaList.length - 1) {
@@ -117,10 +137,22 @@ export const ExerciseCard = ({
     }
   };
 
+  // Smarter Tab Change
   const handleTabChange = (t: TabType) => {
     setTab(t);
     setMediaIndex(0);
-    if (t !== "Impact") setIsMediaLoading(true);
+
+    // Calculate if the NEW tab has content
+    const nextList =
+      t === "Images" ? exercise.image : t === "Videos" ? exercise.video : [];
+    const hasContent =
+      (nextList || []).filter((u) => u && u.trim() !== "").length > 0;
+
+    if (t !== "Impact" && hasContent) {
+      setIsMediaLoading(true);
+    } else {
+      setIsMediaLoading(false);
+    }
   };
 
   const mediaAspectRatio = tab === "Videos" ? "aspect-[9/16]" : "aspect-[4/3]";
@@ -144,9 +176,6 @@ export const ExerciseCard = ({
         isOpen
           ? "shadow-[8px_8px_0px_0px_#000]"
           : "shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] hover:-translate-y-0.5",
-
-        // --- FIX: GRAYED OUT LOOK FOR COMPLETED ---
-        // Opacity reduced, Grayscale high, Background Gray
         isCompleted &&
           "bg-neutral-100 border-neutral-400 opacity-60 grayscale-[0.8] shadow-none hover:translate-y-0 hover:shadow-none"
       )}
@@ -162,7 +191,6 @@ export const ExerciseCard = ({
           onClick={handleCheckClick}
           className={cn(
             "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-[3px] border-black transition-colors shadow-[2px_2px_0px_0px_#000]",
-            // Red when active (to entice clicking), Gray when done
             isCompleted
               ? "bg-neutral-400 border-neutral-500 shadow-none"
               : "bg-white hover:bg-neutral-50"
@@ -192,14 +220,29 @@ export const ExerciseCard = ({
           >
             {exercise.name}
           </h3>
+          {/* BADGES: CONDITIONAL LOGIC */}
           {isCompleted ? (
             <span className="mt-1 text-[10px] z-50 font-black uppercase text-neutral-500 tracking-widest">
               🏁 Completed
             </span>
           ) : (
             <div className="flex gap-2 mt-1">
-              <Badge text={`${exercise.sets} SETS`} color="bg-neutral-100" />
-              <Badge text={`${exercise.reps} REPS`} color="bg-[#FFE27A]" />
+              {isRecovery ? (
+                // Show Note/Time for Recovery
+                <Badge
+                  text={exercise.note || "RECOVERY"}
+                  color="bg-[#B8FF9F]"
+                />
+              ) : (
+                // Show Sets/Reps for Weights
+                <>
+                  <Badge
+                    text={`${exercise.sets} SETS`}
+                    color="bg-neutral-100"
+                  />
+                  <Badge text={`${exercise.reps} REPS`} color="bg-[#FFE27A]" />
+                </>
+              )}
             </div>
           )}
         </div>
@@ -225,76 +268,78 @@ export const ExerciseCard = ({
             className="overflow-hidden bg-neutral-50"
           >
             <div className="p-3 space-y-3 border-t-[3px] border-black relative">
-              {/* --- 1. STATS CARD --- */}
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowLogModal(true);
-                }}
-                className="mt-1 group relative cursor-pointer overflow-hidden rounded-xl border-2 border-black bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-y-px hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
-              >
-                <div className="flex items-center gap-2.5 p-2.5">
-                  <div
-                    className={cn(
-                      "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-black shadow-[1px_1px_0px_0px_#000] transition-colors",
-                      isTodayLog ? "bg-[#B8FF9F]" : "bg-neutral-200"
-                    )}
-                  >
-                    {isTodayLog ? (
-                      <Check className="w-5 h-5 text-black stroke-[3]" />
-                    ) : (
-                      <TrendingUp className="w-4 h-4 text-neutral-500 stroke-[3]" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0 flex flex-col justify-center">
-                    {lastLog ? (
-                      <>
-                        <div className="flex items-baseline gap-0.5 leading-none">
-                          <span className="text-xl font-black tracking-tighter text-black">
-                            {lastLog.weight}
-                          </span>
-                          <span className="text-[9px] font-black uppercase text-neutral-400 mr-1">
-                            kg
-                          </span>
-                          <span className="text-sm font-black text-neutral-300 mr-1">
-                            /
-                          </span>
-                          <span className="text-xl font-black tracking-tighter text-black">
-                            {lastLog.reps}
-                          </span>
-                          <span className="text-[9px] font-black uppercase text-neutral-400">
-                            reps
-                          </span>
-                        </div>
-                        <span className="text-[8px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5 truncate">
-                          {isTodayLog ? "Logged Today" : "Last Session"}
-                        </span>
-                      </>
-                    ) : (
-                      <span className="text-[10px] font-black text-neutral-400 uppercase italic">
-                        Tap to add log
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-transparent hover:border-black hover:bg-neutral-100 transition-all">
-                    {lastLog ? (
-                      <Edit2 className="w-3.5 h-3.5" />
-                    ) : (
-                      <Plus className="w-4 h-4" />
-                    )}
-                  </div>
-                </div>
-                {lastLog && (
-                  <div className="flex items-center gap-2 border-t-2 border-black bg-[#8be9fa] px-3 py-1">
-                    <div className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-black bg-white">
-                      <Goal className="w-2 h-2 text-gray-900" />
+              {/* --- 1. STATS CARD (HIDDEN FOR RECOVERY) --- */}
+              {!isRecovery && (
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowLogModal(true);
+                  }}
+                  className="mt-1 group relative cursor-pointer overflow-hidden rounded-xl border-2 border-black bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-y-px hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
+                >
+                  <div className="flex items-center gap-2.5 p-2.5">
+                    <div
+                      className={cn(
+                        "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-black shadow-[1px_1px_0px_0px_#000] transition-colors",
+                        isTodayLog ? "bg-[#B8FF9F]" : "bg-neutral-200"
+                      )}
+                    >
+                      {isTodayLog ? (
+                        <Check className="w-5 h-5 text-black stroke-[3]" />
+                      ) : (
+                        <TrendingUp className="w-4 h-4 text-neutral-500 stroke-[3]" />
+                      )}
                     </div>
-                    <p className="truncate text-[9px] font-black uppercase tracking-wide text-black/90 pt-0.5">
-                      {getSmartFeedback(lastLog.reps)}
-                    </p>
+                    <div className="flex-1 min-w-0 flex flex-col justify-center">
+                      {lastLog ? (
+                        <>
+                          <div className="flex items-baseline gap-0.5 leading-none">
+                            <span className="text-xl font-black tracking-tighter text-black">
+                              {lastLog.weight}
+                            </span>
+                            <span className="text-[9px] font-black uppercase text-neutral-400 mr-1">
+                              kg
+                            </span>
+                            <span className="text-sm font-black text-neutral-300 mr-1">
+                              /
+                            </span>
+                            <span className="text-xl font-black tracking-tighter text-black">
+                              {lastLog.reps}
+                            </span>
+                            <span className="text-[9px] font-black uppercase text-neutral-400">
+                              reps
+                            </span>
+                          </div>
+                          <span className="text-[8px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5 truncate">
+                            {isTodayLog ? "Logged Today" : "Last Session"}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-[10px] font-black text-neutral-400 uppercase italic">
+                          Tap to add log
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-transparent hover:border-black hover:bg-neutral-100 transition-all">
+                      {lastLog ? (
+                        <Edit2 className="w-3.5 h-3.5" />
+                      ) : (
+                        <Plus className="w-4 h-4" />
+                      )}
+                    </div>
                   </div>
-                )}
-              </div>
+                  {lastLog && (
+                    <div className="flex items-center gap-2 border-t-2 border-black bg-[#8be9fa] px-3 py-1">
+                      <div className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-black bg-white">
+                        <Goal className="w-2 h-2 text-gray-900" />
+                      </div>
+                      <p className="truncate text-[9px] font-black uppercase tracking-wide text-black/90 pt-0.5">
+                        {getSmartFeedback(lastLog.reps)}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* --- 2. TIPS --- */}
               {(exercise.note ||
@@ -355,6 +400,7 @@ export const ExerciseCard = ({
                     mediaAspectRatio
                   )}
                 >
+                  {/* --- NAVIGATION ARROWS --- */}
                   {tab !== "Impact" && !isMediaLoading && hasMultiple && (
                     <>
                       <button
@@ -371,6 +417,8 @@ export const ExerciseCard = ({
                       </button>
                     </>
                   )}
+
+                  {/* --- LOADER --- */}
                   {isMediaLoading && tab !== "Impact" && (
                     <div className="absolute inset-0 z-20 flex items-center justify-center bg-neutral-900">
                       <MediaLoader />
@@ -378,37 +426,80 @@ export const ExerciseCard = ({
                   )}
 
                   <AnimatePresence mode="wait">
-                    {tab === "Images" && currentMediaList[mediaIndex] && (
-                      <motion.img
-                        key={mediaIndex}
-                        src={currentMediaList[mediaIndex]}
-                        className="h-full w-full object-contain bg-white"
-                        onLoad={() => setIsMediaLoading(false)}
-                      />
-                    )}
-                    {tab === "Videos" && currentMediaList[mediaIndex] && (
-                      <motion.iframe
-                        key={mediaIndex}
-                        src={currentMediaList[mediaIndex]}
-                        className="h-full w-full"
-                        onLoad={() => setIsMediaLoading(false)}
-                      />
-                    )}
+                    {/* --- IMAGES TAB --- */}
+                    {tab === "Images" &&
+                      (currentMediaList.length > 0 ? (
+                        currentMediaList[mediaIndex] && (
+                          <motion.img
+                            key={mediaIndex}
+                            src={currentMediaList[mediaIndex]}
+                            className="h-full w-full object-contain bg-white"
+                            onLoad={() => setIsMediaLoading(false)}
+                          />
+                        )
+                      ) : (
+                        // EMPTY STATE: IMAGES
+                        <div className="h-full w-full flex flex-col items-center justify-center bg-[#F5F5F5] border-[3px] border-black border-dashed rounded-xl p-8">
+                          <div className="bg-white p-4 rounded-full border-[3px] border-black shadow-[4px_4px_0px_0px_#000] mb-4 -rotate-3">
+                            <ImageOff className="w-8 h-8 text-black" />
+                          </div>
+                          <h3 className="font-black text-2xl uppercase tracking-tighter text-black">
+                            No Visuals
+                          </h3>
+                          <p className="font-bold text-neutral-400 text-xs uppercase tracking-[0.2em] mt-1">
+                            Image Data Missing
+                          </p>
+                        </div>
+                      ))}
+
+                    {/* --- VIDEOS TAB --- */}
+                    {tab === "Videos" &&
+                      (currentMediaList.length > 0 ? (
+                        currentMediaList[mediaIndex] && (
+                          <motion.iframe
+                            key={mediaIndex}
+                            src={currentMediaList[mediaIndex]}
+                            className="h-full w-full"
+                            onLoad={() => setIsMediaLoading(false)}
+                          />
+                        )
+                      ) : (
+                        // EMPTY STATE: VIDEOS
+                        <div className="h-full w-full flex flex-col items-center justify-center bg-[#F5F5F5] border-[3px] border-black border-dashed rounded-xl p-8">
+                          <div className="bg-white p-4 rounded-full border-[3px] border-black shadow-[4px_4px_0px_0px_#000] mb-4 rotate-3">
+                            <VideoOff className="w-8 h-8 text-black" />
+                          </div>
+                          <h3 className="font-black text-2xl uppercase tracking-tighter text-black">
+                            No Footage
+                          </h3>
+                          <p className="font-bold text-neutral-400 text-xs uppercase tracking-[0.2em] mt-1">
+                            Archive is empty
+                          </p>
+                        </div>
+                      ))}
                   </AnimatePresence>
-                  {tab === "Impact" && exercise.impact && (
+
+                  {/* --- IMPACT TAB --- */}
+                  {tab === "Impact" && (
                     <div className="h-full w-full bg-white p-3 space-y-1.5 overflow-y-auto">
                       <h4 className="text-[10px] font-black uppercase text-emerald-600 mb-1">
                         Target Muscles
                       </h4>
-                      {exercise.impact.map((imp, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-1.5 text-[10px] font-bold uppercase"
-                        >
-                          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                          {imp}
-                        </div>
-                      ))}
+                      {exercise.impact && exercise.impact.length > 0 ? (
+                        exercise.impact.map((imp, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center gap-1.5 text-[10px] font-bold uppercase"
+                          >
+                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                            {imp}
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-[10px] font-bold text-neutral-400 uppercase">
+                          No impact data available.
+                        </p>
+                      )}
                     </div>
                   )}
                 </motion.div>
@@ -432,7 +523,8 @@ export const ExerciseCard = ({
   );
 };
 
-// --- SUBCOMPONENTS (LogModal, Badge, TabButton - Keep same) ---
+// --- SUBCOMPONENTS ---
+
 const LogModal = ({ lastLog, onClose, onSave }: any) => {
   const [weight, setWeight] = useState(lastLog?.weight?.toString() || "");
   const [reps, setReps] = useState(lastLog?.reps?.toString() || "");
@@ -519,6 +611,7 @@ const LogModal = ({ lastLog, onClose, onSave }: any) => {
     </div>
   );
 };
+
 const Badge = ({ text, color }: { text: string; color: string }) => (
   <span
     className={cn(
@@ -529,6 +622,7 @@ const Badge = ({ text, color }: { text: string; color: string }) => (
     {text}
   </span>
 );
+
 const TabButton = ({ isActive, onClick, icon: Icon, label }: any) => (
   <button
     onClick={onClick}
