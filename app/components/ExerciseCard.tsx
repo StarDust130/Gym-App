@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import confetti from "canvas-confetti";
 import {
   ChevronDown,
   Check,
@@ -18,6 +19,7 @@ import {
   TrendingUp,
   Edit2,
   Target,
+  Goal,
 } from "lucide-react";
 import { WorkoutExercise } from "../lib/data";
 import { cn } from "@/lib/utils";
@@ -30,6 +32,84 @@ type ExerciseLog = {
   weight: number;
   reps: number;
   date: string;
+};
+
+// --- CHAOS CONFETTI LOGIC (The "Cool" Part) ---
+const triggerRandomConfetti = () => {
+  // 1. Random Number Helper
+  const random = (min: number, max: number) =>
+    Math.random() * (max - min) + min;
+
+  // 2. Random Bright Colors Palette
+  const allColors = [
+    "#FF5555", // Red
+    "#B8FF9F", // Green
+    "#FFE27A", // Yellow
+    "#000000", // Black
+    "#a29bfe", // Purple
+    "#0984e3", // Blue
+    "#fd79a8", // Pink
+    "#e17055", // Orange
+  ];
+
+  // Shuffle and pick 3-4 random colors for this specific blast
+  const shuffledColors = allColors.sort(() => 0.5 - Math.random()).slice(0, 4);
+
+  // 3. Random Shapes (Mix of shapes or just one type)
+  const availableShapes = ["square", "circle", "star"];
+  const randomShape =
+    availableShapes[Math.floor(Math.random() * availableShapes.length)];
+  // Sometimes use a mix, sometimes use just one specific shape
+  const useMix = Math.random() > 0.5;
+  const shapes = useMix
+    ? availableShapes
+    : [randomShape as "square" | "circle" | "star"];
+
+  // 4. FIRE! (Burst from 2 sides for "all over screen" feel)
+  const count = 200;
+  const defaults = {
+    origin: { y: 0.7 },
+    colors: shuffledColors,
+    shapes: shapes,
+    ticks: 200, // Stay on screen longer
+    gravity: 0.8,
+    scalar: random(0.8, 1.4), // Random size
+  };
+
+  function fire(particleRatio: number, opts: any) {
+    confetti({
+      ...defaults,
+      ...opts,
+      particleCount: Math.floor(count * particleRatio),
+    });
+  }
+
+  fire(0.25, {
+    spread: 26,
+    startVelocity: 55,
+  });
+
+  fire(0.2, {
+    spread: 60,
+  });
+
+  fire(0.35, {
+    spread: 100,
+    decay: 0.91,
+    scalar: 0.8,
+  });
+
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 25,
+    decay: 0.92,
+    scalar: 1.2,
+  });
+
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 45,
+  });
 };
 
 // --- SMART LOGIC ---
@@ -107,6 +187,16 @@ export const ExerciseCard = ({
 
   const mediaAspectRatio = tab === "Videos" ? "aspect-[9/16]" : "aspect-[4/3]";
 
+  // --- CLICK HANDLER ---
+  const handleCheckClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // Only fire confetti if we are turning it ON (not unchecking)
+    if (!isCompleted) {
+      triggerRandomConfetti(); // <--- NEW RANDOM FUNCTION
+    }
+    onToggle();
+  };
+
   return (
     <motion.div
       layout
@@ -127,10 +217,7 @@ export const ExerciseCard = ({
         {/* CHECKBOX */}
         <motion.button
           whileTap={{ scale: 0.8, rotate: -10 }}
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggle();
-          }}
+          onClick={handleCheckClick}
           className={cn(
             "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-[3px] border-black transition-colors shadow-[2px_2px_0px_0px_#000]",
             isCompleted ? "bg-[#FF5555]" : "bg-white hover:bg-neutral-50"
@@ -161,7 +248,7 @@ export const ExerciseCard = ({
             {exercise.name}
           </h3>
           {isCompleted ? (
-            <span className="mt-1 text-[10px] font-black uppercase text-[#FF5555] tracking-widest animate-pulse">
+            <span className="mt-1 text-[10px] z-50 font-black uppercase text-[#FF5555] tracking-widest animate-pulse">
               🔥 You Crushed It!
             </span>
           ) : (
@@ -257,9 +344,9 @@ export const ExerciseCard = ({
 
                 {/* Feedback Strip */}
                 {lastLog && (
-                  <div className="flex items-center gap-2 border-t-2 border-black bg-[#FFD700] px-3 py-1">
+                  <div className="flex items-center gap-2 border-t-2 border-black bg-[#8be9fa] px-3 py-1">
                     <div className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-black bg-white">
-                      <Target className="w-2 h-2 text-black" />
+                      <Goal className="w-2 h-2 text-gray-900"  />
                     </div>
                     <p className="truncate text-[9px] font-black uppercase tracking-wide text-black/90 pt-0.5">
                       {getSmartFeedback(lastLog.reps)}
@@ -474,7 +561,7 @@ const LogModal = ({ lastLog, onClose, onSave }: any) => {
             </div>
           </div>
 
-          {/* --- GROWTH TIP UI (Fixed: Emerald Green) --- */}
+          {/* --- GROWTH TIP UI --- */}
           <div className="flex items-start gap-2.5 rounded-xl border-2 border-black bg-emerald-50 p-2.5">
             <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500 border border-black shadow-[1px_1px_0px_0px_#000]">
               <TrendingUp className="h-3 w-3 text-white stroke-[3]" />
