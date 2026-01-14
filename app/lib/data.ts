@@ -28,7 +28,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     Monday: "Back , Biceps & Forearms",
     Tuesday: "Cardio & Crunches",
     Wednesday: "Chest & Triceps",
-    Thursday: "Cardio & Full Body Stretching",
+    Thursday: "Cardio Day",
     Friday: "Legs & Shoulder",
     Saturday: "CrossFit & Cardio",
     Sunday: "Rest Day",
@@ -667,33 +667,26 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // ===========================================
     // THURSDAY: CARDIO & STRETCHING
     // ===========================================
-    "Cardio & Full Body Stretching": [
+    "Cardio Day": [
       {
-        id: "cardio-1",
-        name: "Cardio (any)",
-        reps: "30 mins",
-        sets: "1 set",
-        category: "Cardio",
-        note: "Low Intensity",
-        image: [
-          "https://media.tenor.com/eXlIRe28PVgAAAAm/bubu-dudu-bubu.webp",
-          "https://media.tenor.com/HXbs_-Rwqj4AAAAm/train-trainer.webp",
-          "https://media.tenor.com/lEy7Yw63vQUAAAAM/beast-mode-cardio.gif",
-        ],
-      },
-      {
-        id: "stretch-1",
-        name: "Passive Stretch",
-        reps: "After workout",
-        sets: "1 set",
-        category: "Mobility",
-        image: [
-          "https://media.tenor.com/xxSokJ0BzywAAAAm/pengu-pudgy.webp",
-          "https://media.tenor.com/eihh-gRPONwAAAAm/cat-txuuuuu.webp",
-          "https://media.tenor.com/KgHAxJ53lRYAAAAm/get-it-hump-day.webp",
-          "https://media.tenor.com/RaXSN6iRKDIAAAAm/yoga-self-cuddle.webp",
-        ],
-        note: null,
+      id: "cardio-1",
+      name: "Cardio (any)",
+      reps: "30 mins",
+      sets: "1 set",
+      category: "Cardio",
+      note: "🚀 Steady cardio burns fat fast! Keep it moderate to melt away those pounds quickly.",
+      tips: [
+        "🏃‍♂️ Keep a steady pace – no rushing!",
+        "❤️ Stay in fat-burning zone: heart rate moderate, not too high.",
+        "💧 Drink water often to stay hydrated.",
+        "🌬️ Breathe deep and steady for better burn.",
+        "🔑 Do this daily for quick fat loss results!"
+      ],
+      image: [
+        "https://media.tenor.com/eXlIRe28PVgAAAAm/bubu-dudu-bubu.webp",
+        "https://media.tenor.com/HXbs_-Rwqj4AAAAm/train-trainer.webp",
+        "https://media.tenor.com/lEy7Yw63vQUAAAAM/beast-mode-cardio.gif",
+      ],
       },
     ],
 
