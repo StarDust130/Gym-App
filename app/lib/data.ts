@@ -674,6 +674,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       reps: "30 mins",
       sets: "1 set",
       category: "Cardio",
+      impact: ["Fat burning", "Heart health", "Endurance"],
       note: "🚀 Steady cardio burns fat fast! Keep it moderate to melt away those pounds quickly.",
       tips: [
         "🏃‍♂️ Keep a steady pace – no rushing!",
