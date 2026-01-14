@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { ExerciseCard } from "./ExerciseCard";
-import { Check, ChevronDown, Trophy, TrophyIcon } from "lucide-react"; // Added Trophy icon
+import { Check, ChevronDown, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { WorkoutExercise } from "../lib/data";
 
@@ -24,8 +24,7 @@ const STRETCHING_EXERCISE: WorkoutExercise = {
   reps: "1",
   note: "5-10 Minutes",
   image: ["https://media.tenor.com/O5OplkJRnPEAAAAM/benjammins-stretch.gif"],
-  video: [
-  ],
+  video: [],
   impact: ["Spine", "Hips", "Hamstrings", "Shoulders", "Neck"],
   tips: [
     "Hold poses for 30s",
@@ -73,29 +72,21 @@ const RestDayCard = () => (
 );
 
 const CompletionCard = () => {
-  // Logic to determine the next day message based on the current day
   const isSaturday = new Date().getDay() === 6;
   const messageSuffix = isSaturday ? "See you on Monday!" : "See you tomorrow!";
 
   return (
     <motion.div
-      // Simple fade-up animation for entrance
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      // Centered layout, no borders, no background color
       className="w-full max-w-lg mx-auto mt-16 flex flex-col items-center text-center px-4 pb-20"
     >
-      {/* Animated Anime Dance GIF */}
-      {/* Using a clean, popular dancing anime gif */}
       <img
         src="https://media.tenor.com/yo0TAG-MpD0AAAAm/lonely-lonely-lonely.webp"
         alt="Victory Dance"
-        // "object-contain" ensures the whole gif is visible without cropping
         className="w-auto h-64 sm:h-80 object-contain drop-shadow-xl"
       />
-
-      {/* Text Below */}
       <div className="mt-8 space-y-3">
         <h2 className="text-4xl font-black uppercase tracking-tighter italic text-black">
           You Crushed It!
@@ -136,12 +127,13 @@ export function WorkoutList({
     return exercises;
   }, [exercises]);
 
-  // 2. GROUPING
+  // 2. GROUPING & SORTING
   const groupedData = useMemo(() => {
     if (!finalExercises.length) return null;
     const groups: { category: string; items: WorkoutExercise[] }[] = [];
     const categoryMap = new Map<string, WorkoutExercise[]>();
 
+    // Step A: Group items
     for (const ex of finalExercises) {
       const cat = ex.category || "General";
       if (!categoryMap.has(cat)) {
@@ -150,10 +142,21 @@ export function WorkoutList({
       }
       categoryMap.get(cat)!.push(ex);
     }
-    return groups;
-  }, [finalExercises]);
 
-  // 3. AUTO-COLLAPSE LOGIC (NEW)
+    // Step B: SORT ITEMS WITHIN GROUPS
+    groups.forEach((group) => {
+      group.items.sort((a, b) => {
+        const aDone = completedIds.includes(a.id);
+        const bDone = completedIds.includes(b.id);
+        if (aDone === bDone) return 0; // Keep original order if status is same
+        return aDone ? 1 : -1; // Move completed (true) to bottom
+      });
+    });
+
+    return groups;
+  }, [finalExercises, completedIds]);
+
+  // 3. AUTO-COLLAPSE LOGIC
   useEffect(() => {
     if (!groupedData) return;
 
@@ -165,7 +168,6 @@ export function WorkoutList({
         completedIds.includes(item.id)
       );
 
-      // If complete and NOT currently collapsed, add to list
       if (isComplete && !collapsedCategories.includes(group.category)) {
         categoriesToCollapse.push(group.category);
         shouldUpdate = true;
@@ -175,9 +177,9 @@ export function WorkoutList({
     if (shouldUpdate) {
       setCollapsedCategories((prev) => [...prev, ...categoriesToCollapse]);
     }
-  }, [completedIds, groupedData]); // Run only when completion status changes
+  }, [completedIds, groupedData]);
 
-  // 4. CHECK GLOBAL COMPLETION (NEW)
+  // 4. CHECK GLOBAL COMPLETION
   const isGlobalDone = useMemo(() => {
     if (!finalExercises.length) return false;
     return finalExercises.every((ex) => completedIds.includes(ex.id));
@@ -203,7 +205,7 @@ export function WorkoutList({
           const isCollapsed = collapsedCategories.includes(group.category);
 
           return (
-            <div key={group.category} className="relative">
+            <motion.div layout key={group.category} className="relative">
               {/* --- HEADER (CLICK TO TOGGLE) --- */}
               <div
                 onClick={() => toggleSection(group.category)}
@@ -232,14 +234,12 @@ export function WorkoutList({
 
                   <div className="relative z-10 flex items-center justify-between p-3.5">
                     {/* Left: Name */}
-                    {/* ... inside your header map ... */}
-
                     <div className="flex items-center gap-3">
                       <div
                         className={cn(
                           "flex h-9 w-9 items-center justify-center rounded-lg border-[3px] border-black font-black uppercase shadow-[2px_2px_0px_0px_#000] transition-all duration-300",
                           isAllDone
-                            ? "bg-[#FFE27A] scale-110 rotate-3" // Gold & Tilted when done
+                            ? "bg-[#FFE27A] scale-110 rotate-3"
                             : "bg-black text-white"
                         )}
                       >
@@ -253,11 +253,9 @@ export function WorkoutList({
                               damping: 10,
                             }}
                           >
-                            {/* Trophy Icon with cool fill effect */}
                             <Trophy className="w-5 h-5 text-black fill-white/40 stroke-[2.5]" />
                           </motion.div>
                         ) : (
-                          // Default Letter
                           <span className="leading-none pb-0.5">
                             {group.category.charAt(0)}
                           </span>
@@ -267,7 +265,6 @@ export function WorkoutList({
                       <h3
                         className={cn(
                           "text-lg font-black uppercase tracking-tighter transition-colors duration-300",
-                          // White text with a hard black shadow when done to pop off the green
                           isAllDone
                             ? "text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]"
                             : "text-black"
@@ -325,11 +322,11 @@ export function WorkoutList({
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           );
         })}
 
-        {/* --- COMPLETION CARD (NEW) --- */}
+        {/* --- COMPLETION CARD --- */}
         <AnimatePresence>{isGlobalDone && <CompletionCard />}</AnimatePresence>
       </motion.div>
     </LayoutGroup>
