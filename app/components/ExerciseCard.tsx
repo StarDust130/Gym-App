@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import confetti from "canvas-confetti";
 import {
   ChevronDown,
@@ -10,7 +10,6 @@ import {
   Image as ImageIcon,
   Zap,
   Activity,
-  Dumbbell,
   ChevronLeft,
   ChevronRight,
   Plus,
@@ -37,9 +36,6 @@ type ExerciseLog = {
 
 // --- CHAOS CONFETTI ---
 const triggerRandomConfetti = () => {
-  const random = (min: number, max: number) =>
-    Math.random() * (max - min) + min;
-
   const allColors = ["#FF5555", "#B8FF9F", "#FFE27A", "#000000"];
   const shuffledColors = allColors.sort(() => 0.5 - Math.random()).slice(0, 4);
 
@@ -72,8 +68,33 @@ export const ExerciseCard = ({
   const [isOpen, setIsOpen] = useState(false);
   const [tab, setTab] = useState<TabType>("Images");
 
-  // --- RECOVERY DETECTION ---
-  const isRecovery = exercise.category === "Recovery";
+  // --- LOGIC: STRICT LOGGING RULES ---
+  const showLogging = useMemo(() => {
+    // 1. Valid Categories for Weight Lifting
+    const WEIGHT_CATEGORIES = [
+      "Back",
+      "Biceps",
+      "Forearm",
+      "Chest",
+      "Triceps",
+      "Legs",
+      "Shoulder",
+    ];
+
+    const isWeightCategory = WEIGHT_CATEGORIES.includes(exercise.category);
+
+    // 2. Specific Exceptions (e.g. Pushups)
+    const nameLower = exercise.name.toLowerCase();
+    const isBodyweightException =
+      nameLower.includes("pushups") ||
+      nameLower.includes("push up") ||
+      nameLower.includes("bodyweight");
+
+    return isWeightCategory && !isBodyweightException;
+  }, [exercise.category, exercise.name]);
+
+  const isRecovery =
+    exercise.category === "Mobility" || exercise.category === "Stretching";
 
   // --- STATE ---
   const [lastLog, setLastLog] = useState<ExerciseLog | null>(null);
@@ -100,7 +121,6 @@ export const ExerciseCard = ({
   const isTodayLog = lastLog?.date === new Date().toDateString();
 
   // --- MEDIA CONTROLS ---
-  // Filter out empty strings/nulls immediately
   const currentMediaList = useMemo(() => {
     const rawList =
       tab === "Images"
@@ -113,7 +133,7 @@ export const ExerciseCard = ({
 
   const hasMultiple = currentMediaList.length > 1;
 
-  // Check for content on mount to set initial loading state properly
+  // Initial Load Check
   useEffect(() => {
     if (tab !== "Impact" && currentMediaList.length > 0) {
       setIsMediaLoading(true);
@@ -122,27 +142,40 @@ export const ExerciseCard = ({
     }
   }, []);
 
-  const nextMedia = (e: any) => {
-    e.stopPropagation();
+  // --- NAVIGATION LOGIC ---
+  const goNext = () => {
     if (mediaIndex < currentMediaList.length - 1) {
       setIsMediaLoading(true);
       setMediaIndex((p) => p + 1);
     }
   };
-  const prevMedia = (e: any) => {
-    e.stopPropagation();
+
+  const goPrev = () => {
     if (mediaIndex > 0) {
       setIsMediaLoading(true);
       setMediaIndex((p) => p - 1);
     }
   };
 
-  // Smarter Tab Change
+  // --- SWIPE HANDLER (DRAG) ---
+  const handleDragEnd = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    const threshold = 50;
+    if (
+      info.offset.x < -threshold &&
+      mediaIndex < currentMediaList.length - 1
+    ) {
+      goNext();
+    } else if (info.offset.x > threshold && mediaIndex > 0) {
+      goPrev();
+    }
+  };
+
   const handleTabChange = (t: TabType) => {
     setTab(t);
     setMediaIndex(0);
-
-    // Calculate if the NEW tab has content
     const nextList =
       t === "Images" ? exercise.image : t === "Videos" ? exercise.video : [];
     const hasContent =
@@ -220,7 +253,6 @@ export const ExerciseCard = ({
           >
             {exercise.name}
           </h3>
-          {/* BADGES: CONDITIONAL LOGIC */}
           {isCompleted ? (
             <span className="mt-1 text-[10px] z-50 font-black uppercase text-neutral-500 tracking-widest">
               🏁 Completed
@@ -228,13 +260,11 @@ export const ExerciseCard = ({
           ) : (
             <div className="flex gap-2 mt-1">
               {isRecovery ? (
-                // Show Note/Time for Recovery
                 <Badge
                   text={exercise.note || "RECOVERY"}
                   color="bg-[#B8FF9F]"
                 />
               ) : (
-                // Show Sets/Reps for Weights
                 <>
                   <Badge
                     text={`${exercise.sets} SETS`}
@@ -268,8 +298,8 @@ export const ExerciseCard = ({
             className="overflow-hidden bg-neutral-50"
           >
             <div className="p-3 space-y-3 border-t-[3px] border-black relative">
-              {/* --- 1. STATS CARD (HIDDEN FOR RECOVERY) --- */}
-              {!isRecovery && (
+              {/* --- 1. STATS CARD (STRICT LOGIC APPLIED) --- */}
+              {showLogging && (
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -400,107 +430,150 @@ export const ExerciseCard = ({
                     mediaAspectRatio
                   )}
                 >
-                  {/* --- NAVIGATION ARROWS --- */}
-                  {tab !== "Impact" && !isMediaLoading && hasMultiple && (
+                  {/* === VISUALS TAB (IMAGES/VIDEO) === */}
+                  {tab !== "Impact" ? (
                     <>
-                      <button
-                        onClick={prevMedia}
-                        className="absolute left-2 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white border-2 border-black p-1 hover:scale-110"
-                      >
-                        <ChevronLeft className="h-3 w-3" />
-                      </button>
-                      <button
-                        onClick={nextMedia}
-                        className="absolute right-2 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white border-2 border-black p-1 hover:scale-110"
-                      >
-                        <ChevronRight className="h-3 w-3" />
-                      </button>
+                      {/* --- NAVIGATION ARROWS & DOTS --- */}
+                      {!isMediaLoading && hasMultiple && (
+                        <>
+                          {/* PREV BUTTON */}
+                          {mediaIndex > 0 && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                goPrev();
+                              }}
+                              className="absolute left-2 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white border-2 border-black p-1 hover:scale-110 shadow-sm"
+                            >
+                              <ChevronLeft className="h-4 w-4" />
+                            </button>
+                          )}
+
+                          {/* NEXT BUTTON */}
+                          {mediaIndex < currentMediaList.length - 1 && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                goNext();
+                              }}
+                              className="absolute right-2 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white border-2 border-black p-1 hover:scale-110 shadow-sm"
+                            >
+                              <ChevronRight className="h-4 w-4" />
+                            </button>
+                          )}
+
+                          {/* --- DOTS INDICATOR --- */}
+                          <div className="absolute bottom-3 left-0 right-0 z-30 flex justify-center gap-1.5 pointer-events-none">
+                            <div className="flex gap-1.5 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-full border border-white/20 pointer-events-auto">
+                              {currentMediaList.map((_, idx) => (
+                                <button
+                                  key={idx}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsMediaLoading(true);
+                                    setMediaIndex(idx);
+                                  }}
+                                  className={cn(
+                                    "h-2 w-2 rounded-full transition-all border border-black/50",
+                                    idx === mediaIndex
+                                      ? "bg-[#B8FF9F] w-4"
+                                      : "bg-white/70 hover:bg-white"
+                                  )}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </>
+                      )}
+
+                      {/* --- LOADER --- */}
+                      {isMediaLoading && (
+                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-neutral-900">
+                          <MediaLoader />
+                        </div>
+                      )}
+
+                      {/* --- GESTURE CONTAINER (DRAGGABLE) --- */}
+                      <div className="relative h-full w-full">
+                        <AnimatePresence mode="wait">
+                          {/* --- IMAGES --- */}
+                          {tab === "Images" &&
+                            (currentMediaList.length > 0 ? (
+                              currentMediaList[mediaIndex] && (
+                                <motion.img
+                                  key={mediaIndex}
+                                  src={currentMediaList[mediaIndex]}
+                                  className="h-full w-full object-contain bg-white cursor-grab active:cursor-grabbing"
+                                  onLoad={() => setIsMediaLoading(false)}
+                                  initial={{ opacity: 0, x: 20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  exit={{ opacity: 0, x: -20 }}
+                                  drag="x"
+                                  dragConstraints={{ left: 0, right: 0 }}
+                                  dragElastic={0.2}
+                                  onDragEnd={handleDragEnd}
+                                />
+                              )
+                            ) : (
+                              <EmptyState icon={ImageOff} label="No Visuals" />
+                            ))}
+
+                          {/* --- VIDEOS --- */}
+                          {tab === "Videos" &&
+                            (currentMediaList.length > 0 ? (
+                              currentMediaList[mediaIndex] && (
+                                <motion.div
+                                  key={mediaIndex}
+                                  className="h-full w-full bg-black cursor-grab active:cursor-grabbing"
+                                  initial={{ opacity: 0, x: 20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  exit={{ opacity: 0, x: -20 }}
+                                  drag="x"
+                                  dragConstraints={{ left: 0, right: 0 }}
+                                  dragElastic={0.2}
+                                  onDragEnd={handleDragEnd}
+                                >
+                                  <iframe
+                                    src={currentMediaList[mediaIndex]}
+                                    className="h-full w-full pointer-events-none"
+                                    onLoad={() => setIsMediaLoading(false)}
+                                  />
+                                </motion.div>
+                              )
+                            ) : (
+                              <EmptyState icon={VideoOff} label="No Footage" />
+                            ))}
+                        </AnimatePresence>
+                      </div>
                     </>
-                  )}
-
-                  {/* --- LOADER --- */}
-                  {isMediaLoading && tab !== "Impact" && (
-                    <div className="absolute inset-0 z-20 flex items-center justify-center bg-neutral-900">
-                      <MediaLoader />
-                    </div>
-                  )}
-
-                  <AnimatePresence mode="wait">
-                    {/* --- IMAGES TAB --- */}
-                    {tab === "Images" &&
-                      (currentMediaList.length > 0 ? (
-                        currentMediaList[mediaIndex] && (
-                          <motion.img
-                            key={mediaIndex}
-                            src={currentMediaList[mediaIndex]}
-                            className="h-full w-full object-contain bg-white"
-                            onLoad={() => setIsMediaLoading(false)}
-                          />
-                        )
-                      ) : (
-                        // EMPTY STATE: IMAGES
-                        <div className="h-full w-full flex flex-col items-center justify-center bg-[#F5F5F5] border-[3px] border-black border-dashed rounded-xl p-8">
-                          <div className="bg-white p-4 rounded-full border-[3px] border-black shadow-[4px_4px_0px_0px_#000] mb-4 -rotate-3">
-                            <ImageOff className="w-8 h-8 text-black" />
-                          </div>
-                          <h3 className="font-black text-2xl uppercase tracking-tighter text-black">
-                            No Visuals
-                          </h3>
-                          <p className="font-bold text-neutral-400 text-xs uppercase tracking-[0.2em] mt-1">
-                            Image Data Missing
-                          </p>
-                        </div>
-                      ))}
-
-                    {/* --- VIDEOS TAB --- */}
-                    {tab === "Videos" &&
-                      (currentMediaList.length > 0 ? (
-                        currentMediaList[mediaIndex] && (
-                          <motion.iframe
-                            key={mediaIndex}
-                            src={currentMediaList[mediaIndex]}
-                            className="h-full w-full"
-                            onLoad={() => setIsMediaLoading(false)}
-                          />
-                        )
-                      ) : (
-                        // EMPTY STATE: VIDEOS
-                        <div className="h-full w-full flex flex-col items-center justify-center bg-[#F5F5F5] border-[3px] border-black border-dashed rounded-xl p-8">
-                          <div className="bg-white p-4 rounded-full border-[3px] border-black shadow-[4px_4px_0px_0px_#000] mb-4 rotate-3">
-                            <VideoOff className="w-8 h-8 text-black" />
-                          </div>
-                          <h3 className="font-black text-2xl uppercase tracking-tighter text-black">
-                            No Footage
-                          </h3>
-                          <p className="font-bold text-neutral-400 text-xs uppercase tracking-[0.2em] mt-1">
-                            Archive is empty
-                          </p>
-                        </div>
-                      ))}
-                  </AnimatePresence>
-
-                  {/* --- IMPACT TAB --- */}
-                  {tab === "Impact" && (
-                    <div className="h-full w-full bg-white p-3 space-y-1.5 overflow-y-auto">
-                      <h4 className="text-[10px] font-black uppercase text-emerald-600 mb-1">
+                  ) : (
+                    // === IMPACT TAB (TEXT ONLY) ===
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="h-full w-full bg-white p-3 space-y-2 overflow-y-auto"
+                    >
+                      <h4 className="text-[10px] font-black uppercase text-emerald-600 mb-1 border-b-2 border-emerald-100 pb-1">
                         Target Muscles
                       </h4>
                       {exercise.impact && exercise.impact.length > 0 ? (
-                        exercise.impact.map((imp, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center gap-1.5 text-[10px] font-bold uppercase"
-                          >
-                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                            {imp}
-                          </div>
-                        ))
+                        <div className="grid grid-cols-2 gap-2">
+                          {exercise.impact.map((imp, i) => (
+                            <div
+                              key={i}
+                              className="flex items-center gap-2 text-[10px] font-bold uppercase bg-neutral-50 p-2 rounded-lg border-2 border-neutral-100"
+                            >
+                              <div className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                              {imp}
+                            </div>
+                          ))}
+                        </div>
                       ) : (
                         <p className="text-[10px] font-bold text-neutral-400 uppercase">
                           No impact data available.
                         </p>
                       )}
-                    </div>
+                    </motion.div>
                   )}
                 </motion.div>
               </div>
@@ -523,7 +596,21 @@ export const ExerciseCard = ({
   );
 };
 
-// --- SUBCOMPONENTS ---
+// --- HELPER COMPONENTS ---
+
+const EmptyState = ({ icon: Icon, label }: any) => (
+  <div className="h-full w-full flex flex-col items-center justify-center bg-[#F5F5F5] border-[3px] border-black border-dashed rounded-xl p-8">
+    <div className="bg-white p-4 rounded-full border-[3px] border-black shadow-[4px_4px_0px_0px_#000] mb-4 -rotate-3">
+      <Icon className="w-8 h-8 text-black" />
+    </div>
+    <h3 className="font-black text-2xl uppercase tracking-tighter text-black">
+      {label}
+    </h3>
+    <p className="font-bold text-neutral-400 text-xs uppercase tracking-[0.2em] mt-1">
+      Data Missing
+    </p>
+  </div>
+);
 
 const LogModal = ({ lastLog, onClose, onSave }: any) => {
   const [weight, setWeight] = useState(lastLog?.weight?.toString() || "");
