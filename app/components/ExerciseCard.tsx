@@ -68,9 +68,15 @@ export const ExerciseCard = ({
   const [isOpen, setIsOpen] = useState(false);
   const [tab, setTab] = useState<TabType>("Images");
 
+  // --- AUTO CLOSE WHEN COMPLETED ---
+  useEffect(() => {
+    if (isCompleted) {
+      setIsOpen(false);
+    }
+  }, [isCompleted]);
+
   // --- LOGIC: STRICT LOGGING RULES ---
   const showLogging = useMemo(() => {
-    // 1. Valid Categories for Weight Lifting
     const WEIGHT_CATEGORIES = [
       "Back",
       "Biceps",
@@ -82,8 +88,6 @@ export const ExerciseCard = ({
     ];
 
     const isWeightCategory = WEIGHT_CATEGORIES.includes(exercise.category);
-
-    // 2. Specific Exceptions (e.g. Pushups)
     const nameLower = exercise.name.toLowerCase();
     const isBodyweightException =
       nameLower.includes("pushups") ||
@@ -133,7 +137,6 @@ export const ExerciseCard = ({
 
   const hasMultiple = currentMediaList.length > 1;
 
-  // Initial Load Check
   useEffect(() => {
     if (tab !== "Impact" && currentMediaList.length > 0) {
       setIsMediaLoading(true);
@@ -142,7 +145,6 @@ export const ExerciseCard = ({
     }
   }, []);
 
-  // --- NAVIGATION LOGIC ---
   const goNext = () => {
     if (mediaIndex < currentMediaList.length - 1) {
       setIsMediaLoading(true);
@@ -157,7 +159,6 @@ export const ExerciseCard = ({
     }
   };
 
-  // --- SWIPE HANDLER (DRAG) ---
   const handleDragEnd = (
     event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
@@ -190,19 +191,18 @@ export const ExerciseCard = ({
 
   const mediaAspectRatio = tab === "Videos" ? "aspect-[9/16]" : "aspect-[4/3]";
 
-  // --- CLICK HANDLER ---
+  // --- CLICK HANDLER (INSTANT) ---
   const handleCheckClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!isCompleted) {
       triggerRandomConfetti();
-      setIsOpen(false);
     }
     onToggle();
   };
 
   return (
     <motion.div
-      layout
+      layout // This enables the smooth shuffle animation
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       className={cn(
         "relative w-full overflow-hidden rounded-3xl border-[3px] border-black bg-white transition-all duration-300",
@@ -218,7 +218,6 @@ export const ExerciseCard = ({
         onClick={() => setIsOpen(!isOpen)}
         className="relative z-10 flex cursor-pointer items-center gap-4 p-4 select-none"
       >
-        {/* CHECKBOX */}
         <motion.button
           whileTap={{ scale: 0.8, rotate: -10 }}
           onClick={handleCheckClick}
@@ -242,7 +241,6 @@ export const ExerciseCard = ({
           </AnimatePresence>
         </motion.button>
 
-        {/* INFO */}
         <div className="flex flex-1 flex-col justify-center min-w-0">
           <h3
             className={cn(
@@ -288,7 +286,6 @@ export const ExerciseCard = ({
         </motion.div>
       </div>
 
-      {/* EXPANDABLE BODY */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -298,7 +295,6 @@ export const ExerciseCard = ({
             className="overflow-hidden bg-neutral-50"
           >
             <div className="p-3 space-y-3 border-t-[3px] border-black relative">
-              {/* --- 1. STATS CARD (STRICT LOGIC APPLIED) --- */}
               {showLogging && (
                 <div
                   onClick={(e) => {
@@ -371,7 +367,6 @@ export const ExerciseCard = ({
                 </div>
               )}
 
-              {/* --- 2. TIPS --- */}
               {(exercise.note ||
                 (exercise.tips && exercise.tips.length > 0)) && (
                 <div className="relative rotate-1 rounded-sm border-2 border-black bg-[#FFEDA6] p-2.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">
@@ -400,7 +395,6 @@ export const ExerciseCard = ({
                 </div>
               )}
 
-              {/* --- 3. MEDIA --- */}
               <div className="space-y-1.5">
                 <div className="flex rounded-lg border-2 border-black bg-white p-0.5 shadow-[1px_1px_0px_0px_#000]">
                   <TabButton
@@ -430,13 +424,10 @@ export const ExerciseCard = ({
                     mediaAspectRatio
                   )}
                 >
-                  {/* === VISUALS TAB (IMAGES/VIDEO) === */}
                   {tab !== "Impact" ? (
                     <>
-                      {/* --- NAVIGATION ARROWS & DOTS --- */}
                       {!isMediaLoading && hasMultiple && (
                         <>
-                          {/* PREV BUTTON */}
                           {mediaIndex > 0 && (
                             <button
                               onClick={(e) => {
@@ -448,8 +439,6 @@ export const ExerciseCard = ({
                               <ChevronLeft className="h-4 w-4" />
                             </button>
                           )}
-
-                          {/* NEXT BUTTON */}
                           {mediaIndex < currentMediaList.length - 1 && (
                             <button
                               onClick={(e) => {
@@ -461,8 +450,6 @@ export const ExerciseCard = ({
                               <ChevronRight className="h-4 w-4" />
                             </button>
                           )}
-
-                          {/* --- DOTS INDICATOR --- */}
                           <div className="absolute bottom-3 left-0 right-0 z-30 flex justify-center gap-1.5 pointer-events-none">
                             <div className="flex gap-1.5 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-full border border-white/20 pointer-events-auto">
                               {currentMediaList.map((_, idx) => (
@@ -486,17 +473,14 @@ export const ExerciseCard = ({
                         </>
                       )}
 
-                      {/* --- LOADER --- */}
                       {isMediaLoading && (
                         <div className="absolute inset-0 z-20 flex items-center justify-center bg-neutral-900">
                           <MediaLoader />
                         </div>
                       )}
 
-                      {/* --- GESTURE CONTAINER (DRAGGABLE) --- */}
                       <div className="relative h-full w-full">
                         <AnimatePresence mode="wait">
-                          {/* --- IMAGES --- */}
                           {tab === "Images" &&
                             (currentMediaList.length > 0 ? (
                               currentMediaList[mediaIndex] && (
@@ -518,7 +502,6 @@ export const ExerciseCard = ({
                               <EmptyState icon={ImageOff} label="No Visuals" />
                             ))}
 
-                          {/* --- VIDEOS --- */}
                           {tab === "Videos" &&
                             (currentMediaList.length > 0 ? (
                               currentMediaList[mediaIndex] && (
@@ -547,7 +530,6 @@ export const ExerciseCard = ({
                       </div>
                     </>
                   ) : (
-                    // === IMPACT TAB (TEXT ONLY) ===
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -582,7 +564,6 @@ export const ExerciseCard = ({
         )}
       </AnimatePresence>
 
-      {/* --- LOG MODAL --- */}
       <AnimatePresence>
         {showLogModal && (
           <LogModal
@@ -595,8 +576,6 @@ export const ExerciseCard = ({
     </motion.div>
   );
 };
-
-// --- HELPER COMPONENTS ---
 
 const EmptyState = ({ icon: Icon, label }: any) => (
   <div className="h-full w-full flex flex-col items-center justify-center bg-[#F5F5F5] border-[3px] border-black border-dashed rounded-xl p-8">
