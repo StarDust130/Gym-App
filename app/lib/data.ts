@@ -669,25 +669,25 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // ===========================================
     "Cardio Day": [
       {
-      id: "cardio-1",
-      name: "Cardio (any)",
-      reps: "30 mins",
-      sets: "1 set",
-      category: "Cardio",
-      impact: ["Fat burning", "Heart health", "Endurance"],
-      note: "🚀 Steady cardio burns fat fast! Keep it moderate to melt away those pounds quickly.",
-      tips: [
-        "🏃‍♂️ Keep a steady pace – no rushing!",
-        "❤️ Stay in fat-burning zone: heart rate moderate, not too high.",
-        "💧 Drink water often to stay hydrated.",
-        "🌬️ Breathe deep and steady for better burn.",
-        "🔑 Do this daily for quick fat loss results!"
-      ],
-      image: [
-        "https://media.tenor.com/eXlIRe28PVgAAAAm/bubu-dudu-bubu.webp",
-        "https://media.tenor.com/HXbs_-Rwqj4AAAAm/train-trainer.webp",
-        "https://media.tenor.com/lEy7Yw63vQUAAAAM/beast-mode-cardio.gif",
-      ],
+        id: "cardio-1",
+        name: "Cardio (any)",
+        reps: "30 mins",
+        sets: "1 set",
+        category: "Cardio",
+        impact: ["Fat burning", "Heart health", "Endurance"],
+        note: "🚀 Steady cardio burns fat fast! Keep it moderate to melt away those pounds quickly.",
+        tips: [
+          "🏃‍♂️ Keep a steady pace – no rushing!",
+          "❤️ Stay in fat-burning zone: heart rate moderate, not too high.",
+          "💧 Drink water often to stay hydrated.",
+          "🌬️ Breathe deep and steady for better burn.",
+          "🔑 Do this daily for quick fat loss results!",
+        ],
+        image: [
+          "https://media.tenor.com/eXlIRe28PVgAAAAm/bubu-dudu-bubu.webp",
+          "https://media.tenor.com/HXbs_-Rwqj4AAAAm/train-trainer.webp",
+          "https://media.tenor.com/lEy7Yw63vQUAAAAM/beast-mode-cardio.gif",
+        ],
       },
     ],
 
@@ -703,11 +703,11 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 Main Sets",
         category: "Legs",
-        note: "#1 HARDEST & MOST IMPORTANT. Do FIRST when you have maximum strength. If barbell feels heavy, start with Hack Squat and slowly transition to Barbell Squat over weeks.",
+        note: "🔥 #1 Hardest & most important! Do first when strongest. If heavy, start with Hack Squat and switch to Barbell over time. 💪",
         tips: [
-          "Take deep breath and brace core",
-          "Push knees out while going down",
-          "Drive up through mid-foot, not toes",
+          "😤 Take deep breath, tighten tummy",
+          "👉 Push knees out going down",
+          "🚀 Drive up through middle of foot, not toes",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/BARBELL-SQUAT.gif",
@@ -717,7 +717,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://youtube.com/embed/iKCJCydYYrE?si=TJB4U56YNpkLPxyz",
           "https://youtube.com/embed/vaU2FSmUhNc?si=UR2nOpm8tbGDFGIm",
         ],
-        impact: ["Quads", "Glutes", "Overall leg strength"],
+        impact: ["💪 Strong quads", "🍑 Big glutes", "🏋️ Total leg power"],
       },
 
       {
@@ -726,13 +726,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
-        note: "#2 HEAVY MACHINE COMPOUND. Use after squats to add volume without balance stress.",
-        tips: ["Do not lock knees", "Lower platform slowly and controlled"],
+        note: "🏋️ #2 Heavy machine move. Do after squats for more work without balance worry. 🚀",
+        tips: ["❌ Don't lock knees", "🐌 Lower slow and steady"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2015/11/Leg-Press.gif",
         ],
         video: ["https://youtube.com/embed/EotSw18oR9w?si=sWRVUvAy84KwsBfk"],
-        impact: ["Quads", "Overall leg volume"],
+        impact: ["💪 Bigger quads", "🏋️ More leg size"],
       },
 
       {
@@ -741,17 +741,17 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
-        note: "#3 UNILATERAL STRENGTH. Do when legs are warm but not exhausted.",
+        note: "🏃 #3 One-leg strength. Do when legs are warm but not tired. ⚖️",
         tips: [
-          "Take long step forward",
-          "Back knee lightly touches floor",
-          "Chest upright, core tight",
+          "🚶 Take big step forward",
+          "🦵 Back knee touches floor lightly",
+          "📏 Chest up, tummy tight",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Lunge.gif",
         ],
         video: ["https://youtube.com/embed/YSuIZ6CbOQs?si=KdY87VwHtJpSk82i"],
-        impact: ["Quads", "Glutes", "Balance"],
+        impact: ["💪 Strong quads", "🍑 Firm glutes", "⚖️ Better balance"],
       },
 
       {
@@ -760,13 +760,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
-        note: "#4 KNEE-FRIENDLY LUNGE. Easier on knees than forward lunges.",
-        tips: ["Step back under control", "Front knee stays stable"],
+        note: "🦵 #4 Knee-friendly lunge. Easier on knees than forward ones. 😊",
+        tips: ["⬅️ Step back slow", "🦵 Front knee stays steady"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2022/09/Dumbell-reverse-lunge.gif",
         ],
         video: ["https://youtube.com/embed/38xlLGfguz4?si=fiwSRVEVK5kbsKHG"],
-        impact: ["Glutes", "Hamstrings"],
+        impact: ["🍑 Strong glutes", "🦵 Tight hamstrings"],
       },
 
       {
@@ -775,13 +775,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
-        note: "#5 QUAD ISOLATION. Do only after heavy leg work.",
-        tips: ["Pause 1 sec at top", "Slow negative reps"],
+        note: "💪 #5 Quad focus. Do after heavy leg work. 🎯",
+        tips: ["⏸️ Pause 1 sec at top", "🐌 Slow down on way back"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/LEG-EXTENSION.gif",
         ],
         video: ["https://youtube.com/embed/iQ92TuvBqRo?si=rVR7-38AaxnNutf2"],
-        impact: ["Quads isolation"],
+        impact: ["💪 Quads only"],
       },
 
       {
@@ -790,13 +790,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 Sets",
         category: "Legs",
-        note: "#6 HAMSTRINGS. Balance quads and protect knees.",
-        tips: ["Slow eccentric", "Do not lift hips"],
+        note: "🦵 #6 Hamstrings. Balance quads, protect knees. ⚖️",
+        tips: ["🐌 Slow on the way down", "❌ Don't lift hips"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif",
         ],
         video: ["https://youtube.com/embed/_lgE0gPvbik?si=WNsOc1jeRc9R42QC"],
-        impact: ["Hamstrings"],
+        impact: ["🦵 Strong hamstrings"],
       },
 
       {
@@ -805,13 +805,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 Sets",
         category: "Legs",
-        note: "#7 OPTIONAL GLUTE FOCUS. Add only if energy is left.",
-        tips: ["Chin tucked", "Full hip lockout"],
+        note: "🍑 #7 Optional glute focus. Add if energy left. 💥",
+        tips: ["👤 Chin tucked in", "🔒 Full hip lockout"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Hip-Thrust.gif",
         ],
         video: ["https://youtube.com/embed/96uDbymTaHM?si=NrG3yGfbFscWYmJC"],
-        impact: ["Glutes", "Posterior chain"],
+        impact: ["🍑 Big glutes", "🔗 Strong back chain"],
       },
 
       {
@@ -820,14 +820,14 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 Sets",
         category: "Legs",
-        note: "#8 CALVES (GASTROCNEMIUS). Heavy stretch and squeeze.",
-        tips: ["Pause at top", "Full stretch at bottom"],
+        note: "🦵 #8 Calf muscles. Stretch and squeeze hard. 💪",
+        tips: ["⏸️ Pause at top", "📏 Full stretch at bottom"],
         image: [
           "https://burnfit.io/wp-content/uploads/2023/11/STD_CALF_RAISE.gif",
           "https://training.fit/wp-content/uploads/2020/03/wadenheben-stehend-geraet.png",
         ],
         video: ["https://youtube.com/embed/baEXLy09Ncc?si=UnOyS8ClYxZFdyCg"],
-        impact: ["Gastrocnemius"],
+        impact: ["🦵 Strong calf top"],
       },
 
       {
@@ -836,13 +836,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "4 Sets",
         category: "Legs",
-        note: "#9 DEEP CALF (SOLEUS). Do after standing calves.",
-        tips: ["Short controlled range", "Constant tension"],
+        note: "🦵 #9 Deep calf. Do after standing ones. 🎯",
+        tips: ["📏 Short, controlled moves", "🔄 Keep tension on"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/06/Lever-Seated-Calf-Raise.gif",
         ],
         video: ["https://youtube.com/embed/pHm6LFuGGbs?si=GsNTPSIgvDZmK4De"],
-        impact: ["Soleus", "Lower calves"],
+        impact: ["🦵 Strong lower calf"],
       },
 
       {
@@ -851,14 +851,14 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "20 sec hold",
         sets: "1",
         category: "Legs",
-        note: "#10 FINISHER. Shin & ankle strength. Injury prevention.",
-        tips: ["Slow controlled movement"],
+        note: "🦵 #10 Finisher. Shin & ankle strength. Prevent injuries. 🛡️",
+        tips: ["🐌 Slow, controlled moves"],
         image: [
           "https://m.media-amazon.com/images/I/61r+fVBDPrL._SX679_.jpg",
           "https://intowellness.in/wp-content/uploads/2024/10/Tibia_Dorsal_Flexion_Machine.jpg",
         ],
         video: ["https://youtube.com/embed/0LSazUIfThI?si=JximLVaseWHczWPy"],
-        impact: ["Tibialis anterior"],
+        impact: ["🦵 Strong shin front"],
       },
       /* ================= SHOULDER ================= */
 
@@ -868,13 +868,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 Main Sets",
         category: "Shoulder",
-        note: "1st Week. Start shoulders with DB.",
-        tips: ["Neutral grip", "No lower back arch"],
+        note: "🏋️ Week 1. Start shoulders with dumbbells. 💪",
+        tips: ["🤝 Neutral grip", "❌ No back arch"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2023/09/Standing-Dumbbell-Overhead-Press.gif",
         ],
         video: ["https://youtube.com/embed/k6tzKisR3NY?si=-tEppXweec01YWDR"],
-        impact: ["Front delts", "Shoulder strength"],
+        impact: ["💪 Strong front shoulders", "🏋️ Shoulder power"],
       },
 
       {
@@ -883,14 +883,14 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "3 Main Sets",
         category: "Shoulder",
-        note: "2nd Week. Heavier than DB.",
-        tips: ["Glutes tight", "Bar path straight"],
+        note: "🏋️ Week 2. Heavier than dumbbells. 🚀",
+        tips: ["🍑 Tight glutes", "📏 Bar goes straight"],
         image: [
           "https://media.tenor.com/CV1FfGVNpdcAAAAM/desenvolvimento-militar.gif",
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Shoulder-Press.gif",
         ],
         video: ["https://youtube.com/embed/zoN5EH50Dro?si=nuOkAiQrBV4Altd0"],
-        impact: ["Delts", "Upper body power"],
+        impact: ["💪 Big shoulders", "🏋️ Upper body strength"],
       },
 
       {
@@ -899,13 +899,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
-        note: "1st Week. Strict form.",
-        tips: ["Lift to shoulder height", "Small bend in elbow"],
+        note: "🏋️ Week 1. Strict form only. 🎯",
+        tips: ["⬆️ Lift to shoulder height", "🦵 Small elbow bend"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Lateral-Raise.gif",
         ],
         video: ["https://youtube.com/embed/Kl3LEzQ5Zqs?si=NivM87vJOi1scVss"],
-        impact: ["Side delts"],
+        impact: ["💪 Wide side shoulders"],
       },
 
       {
@@ -914,13 +914,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
-        note: "2nd Week. Constant tension.",
-        tips: ["Slow reps", "No jerking"],
+        note: "🏋️ Week 2. Steady tension. 🔄",
+        tips: ["🐌 Slow reps", "❌ No jerking"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/09/Lever-Lateral-Raise.gif",
         ],
         video: ["https://youtube.com/embed/uEBut4ea6as?si=TSd8w65D_5fS_DTA"],
-        impact: ["Side delts"],
+        impact: ["💪 Wide side shoulders"],
       },
 
       {
@@ -929,8 +929,8 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
-        note: "Rear delts & posture.",
-        tips: ["Pull elbows wide", "Pause at squeeze"],
+        note: "💪 Back shoulders & posture. 📏",
+        tips: ["👈 Pull elbows wide", "⏸️ Pause at squeeze"],
         image: [
           "https://burnfit.io/wp-content/uploads/2023/11/REV_PEC_DECK_MC.gif",
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Face-Pull.gif",
@@ -939,7 +939,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://youtube.com/embed/7tgx6QHB0-A?si=wHmrlabC4mzM-ciZ",
           "https://youtube.com/embed/IeOqdw9WI90?si=qaY_IerfJjQXkfmO",
         ],
-        impact: ["Rear delts", "Upper back"],
+        impact: ["💪 Strong back shoulders", "🦴 Better upper back"],
       },
 
       {
@@ -948,13 +948,13 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "10-12",
         sets: "2 Sets",
         category: "Shoulder",
-        note: "Rotator cuff health. Go light.",
-        tips: ["Very light weight", "Slow control"],
+        note: "🛡️ Shoulder health. Use light weight. 😊",
+        tips: ["🪶 Very light", "🐌 Slow and steady"],
         image: [
           "https://liftmanual.com/wp-content/uploads/2023/04/dumbbell-seated-external-rotation.jpg",
           "https://gymvisual.com/img/p/2/7/3/2/6/27326.gif",
         ],
-        impact: ["Shoulder stability"],
+        impact: ["🛡️ Stable shoulders"],
       },
     ],
 
