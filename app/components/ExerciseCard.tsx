@@ -507,7 +507,7 @@ export const ExerciseCard = ({
                               currentMediaList[mediaIndex] && (
                                 <motion.div
                                   key={mediaIndex}
-                                  className="h-full w-full bg-black cursor-grab active:cursor-grabbing"
+                                  className="h-full w-full bg-black cursor-grab z-50 active:cursor-grabbing"
                                   initial={{ opacity: 0, x: 20 }}
                                   animate={{ opacity: 1, x: 0 }}
                                   exit={{ opacity: 0, x: -20 }}
@@ -518,8 +518,12 @@ export const ExerciseCard = ({
                                 >
                                   <iframe
                                     src={currentMediaList[mediaIndex]}
-                                    className="h-full w-full pointer-events-none"
+                                    // REMOVED: pointer-events-none
+                                    className="h-full w-full"
                                     onLoad={() => setIsMediaLoading(false)}
+                                    // OPTIONAL: Add allow attribute to ensure permissions pass through
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
                                   />
                                 </motion.div>
                               )
