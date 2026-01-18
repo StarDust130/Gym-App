@@ -63,28 +63,8 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         ],
         impact: ["Thick back", "Big pulling power", "Better posture"],
       },
-
       {
         id: "bk-2",
-        name: "BB Row – (Prone) Grip ",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Back",
-        note: "💪 SECOND BACK MOVE. Slightly lighter than first. Focus on lats.",
-        tips: [
-          "Reverse grip = palms facing up",
-          "Elbows close to body",
-          "Squeeze lats at top",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/04/Reverse-Grip-Barbell-Row.gif",
-        ],
-        video: ["https://youtube.com/embed/7SzAgsAVzMo?si=EfIrocw9W0RaOd46"],
-        impact: ["Lower lats", "Back thickness", "Stronger rows"],
-      },
-
-      {
-        id: "bk-3",
         name: "Low Machine Row / Seated Machine Row",
         reps: "10-12",
         sets: "3 sets",
@@ -103,7 +83,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
 
       {
-        id: "bk-4",
+        id: "bk-3",
         name: "Lat Pulldown",
         reps: "10-12",
         sets: "3 sets",
@@ -122,7 +102,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
 
       {
-        id: "bk-5",
+        id: "bk-4",
         name: "Straight-Arm Pulldown",
         reps: "10-12",
         sets: "2 sets",
@@ -141,7 +121,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
 
       {
-        id: "bk-6",
+        id: "bk-5",
         name: "Dumbbell Shrugs / Infinity Shrugs",
         reps: "10-12",
         sets: "3 sets",
@@ -160,7 +140,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
 
       {
-        id: "bk-7",
+        id: "bk-6",
         name: "Back Extension / Good Morning (≤15kg)",
         reps: "10-12",
         sets: "3 sets",
