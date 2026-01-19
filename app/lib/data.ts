@@ -307,152 +307,169 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // ===========================================
     // WEDNESDAY: CHEST & TRICEPS
     // ===========================================
-"Chest & Triceps": [
-  /* ================= CHEST (3 MOVES - ARMOR) ================= */
-  {
-    "id": "ch-2",
-    "name": "Incline Dumbbell Press",
-    "reps": "8-10",
-    "sets": "3 sets",
-    "category": "Chest",
-    "note": "🔥 EXERCISE 1. UPPER CHEST. Builds the 'shelf'. Do this first.",
-    "tips": [
-      "Bench at 30 degrees (not too steep)",
-      "Control weight down slowly",
-      "Squeeze upper chest at top"
-    ],
-    "image": [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif"
-    ],
-    "video": ["https://youtube.com/embed/8fXfwG4ftaQ?si=A0zwKBil2ghFddlw"],
-    "impact": ["Upper Chest Thickness", "Broad Shoulders"]
-  },
+    "Chest & Triceps": [
+      /* ================= CHEST (3 MOVES - ARMOR) ================= */
+      {
+        id: "ch-2",
+        name: "Incline Dumbbell Press",
+        reps: "8-10",
+        sets: "3 sets",
+        category: "Chest",
+        note: "🔥 EXERCISE 1. UPPER CHEST. Builds the 'shelf'. Do this first.",
+        tips: [
+          "Bench at 30 degrees (not too steep)",
+          "Control weight down slowly",
+          "Squeeze upper chest at top",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif",
+        ],
+        video: ["https://youtube.com/embed/8fXfwG4ftaQ?si=A0zwKBil2ghFddlw"],
+        impact: ["Upper Chest Thickness", "Broad Shoulders"],
+      },
 
-  {
-    "id": "ch-1",
-    "name": "Flat Dumbbell Press",
-    "reps": "8-10",
-    "sets": "3 sets",
-    "category": "Chest",
-    "note": "🧱 EXERCISE 2. MASS. Better than machine press for stabilization.",
-    "tips": [
-      "Tuck elbows slightly",
-      "Feet planted firmly",
-      "Drive up explosively"
-    ],
-    "image": [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press.gif"
-    ],
-    "video": ["https://youtube.com/embed/WbCEvFA0NJs?si=Dfojxgl3MGzpgFk2"],
-    "impact": ["Overall Chest Size", "Power"]
-  },
+      {
+        id: "ch-1",
+        name: "Flat Dumbbell Press",
+        reps: "8-10",
+        sets: "3 sets",
+        category: "Chest",
+        note: "🧱 EXERCISE 2. MASS. Better than machine press for stabilization.",
+        tips: [
+          "Tuck elbows slightly",
+          "Feet planted firmly",
+          "Drive up explosively",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press.gif",
+        ],
+        video: ["https://youtube.com/embed/WbCEvFA0NJs?si=Dfojxgl3MGzpgFk2"],
+        impact: ["Overall Chest Size", "Power"],
+      },
 
-  {
-    "id": "ch-5",
-    "name": "Cable Crossover (High to Low)",
-    "reps": "12-15",
-    "sets": "3 sets",
-    "category": "Chest",
-    "note": "🔪 EXERCISE 3. DEFINITION. Creates the inner chest line.",
-    "tips": [
-      "Step forward, lean slightly",
-      "Bring hands together at waist",
-      "Squeeze hard for 1 sec"
-    ],
-    "image": [
-      "https://www.inspireusafoundation.org/file/2024/02/cable-standing-crossover.gif"
-    ],
-    "video": ["https://youtube.com/embed/y4RJDSOBEl8?si=2egsqIPAxVxLFfZU"],
-    "impact": ["Inner Chest Line", "Separation"]
-  },
+      {
+        id: "ch-5",
+        name: "Cable Crossover (High to Low)",
+        reps: "12-15",
+        sets: "3 sets",
+        category: "Chest",
+        note: "🔪 EXERCISE 3. DEFINITION. Creates the inner chest line.",
+        tips: [
+          "Step forward, lean slightly",
+          "Bring hands together at waist",
+          "Squeeze hard for 1 sec",
+        ],
+        image: [
+          "https://www.inspireusafoundation.org/file/2024/02/cable-standing-crossover.gif",
+        ],
+        video: ["https://youtube.com/embed/y4RJDSOBEl8?si=2egsqIPAxVxLFfZU"],
+        impact: ["Inner Chest Line", "Separation"],
+      },
 
-  /* ================= TRICEPS (3 MOVES - HORSESHOE) ================= */
-  {
-    "id": "tr-1",
-    "name": "Assisted Dip Machine (or Weighted Dips)",
-    "reps": "10-12",
-    "sets": "3 sets",
-    "category": "Triceps",
-    "note": "👑 EXERCISE 4. THE KING. Use the machine if bodyweight is too hard.",
-    "tips": [
-      "Keep torso upright (don't lean)",
-      "Lower to 90 degrees",
-      "Lock out fully at top"
-    ],
-    "image": [
-      "https://fitnessprogramer.com/wp-content/uploads/2022/11/Asisted-Triceps-Dips.gif"
-    ],
-    "video": ["https://youtube.com/embed/LH9iZNaO7oU?si=t-NMoDG_7o-emsMD"],
-    "impact": ["Massive Triceps", "Arm Thickness"]
-  },
+      /* ================= TRICEPS (3 MOVES - HORSESHOE) ================= */
+      {
+        id: "tr-1",
+        name: "Assisted Dip Machine (or Weighted Dips)",
+        reps: "10-12",
+        sets: "3 sets",
+        category: "Triceps",
+        note: "👑 EXERCISE 4. THE KING. Use the machine if bodyweight is too hard.",
+        tips: [
+          "Keep torso upright (don't lean)",
+          "Lower to 90 degrees",
+          "Lock out fully at top",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2022/11/Asisted-Triceps-Dips.gif",
+        ],
+        video: ["https://youtube.com/embed/LH9iZNaO7oU?si=t-NMoDG_7o-emsMD"],
+        impact: ["Massive Triceps", "Arm Thickness"],
+      },
 
-  {
-    "id": "tr-2",
-    "name": "Skull Crusher (EZ Bar)",
-    "reps": "10-12",
-    "sets": "3 sets",
-    "category": "Triceps",
-    "note": "📏 EXERCISE 5. LONG HEAD. Makes the arm look huge from the side.",
-    "tips": [
-      "Elbows pointing up",
-      "Lower bar to forehead",
-      "Do not swing shoulders"
-    ],
-    "image": [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Triceps-Extension.gif",
-      "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Skull-Crusher.gif"
-    ],
-    "video": [
-      "https://youtube.com/embed/K3mFeNz4e3w?si=A1TDG_1EpuINXIwY",
-      "https://youtube.com/embed/EXUdJH-lhKc?si=Z1U-Jgke-inj2xv3"
-    ],
-    "impact": ["Tricep Belly", "Arm Size"]
-  },
+      {
+        id: "tr-2",
+        name: "Skull Crusher (EZ Bar)",
+        reps: "10-12",
+        sets: "3 sets",
+        category: "Triceps",
+        note: "📏 EXERCISE 5. LONG HEAD. Makes the arm look huge from the side.",
+        tips: [
+          "Elbows pointing up",
+          "Lower bar to forehead",
+          "Do not swing shoulders",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Triceps-Extension.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Skull-Crusher.gif",
+        ],
+        video: [
+          "https://youtube.com/embed/K3mFeNz4e3w?si=A1TDG_1EpuINXIwY",
+          "https://youtube.com/embed/EXUdJH-lhKc?si=Z1U-Jgke-inj2xv3",
+        ],
+        impact: ["Tricep Belly", "Arm Size"],
+      },
 
-  {
-    "id": "tr-3",
-    "name": "Triceps Rope Pushdown",
-    "reps": "12-15",
-    "sets": "3 sets",
-    "category": "Triceps",
-    "note": "🏁 EXERCISE 6. FINISHER. Burn out the muscle.",
-    "tips": [
-      "Elbows glued to ribs",
-      "Spread rope at bottom",
-      "Squeeze hard"
+      {
+        id: "tr-3",
+        name: "Triceps Rope Pushdown",
+        reps: "12-15",
+        sets: "3 sets",
+        category: "Triceps",
+        note: "🏁 EXERCISE 6. FINISHER. Burn out the muscle.",
+        tips: ["Elbows glued to ribs", "Spread rope at bottom", "Squeeze hard"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif",
+        ],
+        video: ["https://youtube.com/embed/1FjkhpZsaxc?si=UeI7YtnLqsvk9JP4"],
+        impact: ["Tricep Definition", "Horseshoe Look"],
+      },
     ],
-    "image": [
-      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif"
-    ],
-    "video": ["https://youtube.com/embed/1FjkhpZsaxc?si=UeI7YtnLqsvk9JP4"],
-    "impact": ["Tricep Definition", "Horseshoe Look"]
-  }
-],
 
     // ===========================================
     // THURSDAY: CARDIO & STRETCHING
     // ===========================================
     "Cardio Day": [
+      /* ================= PHASE 1: THE IGNITER (20 MINS) ================= */
       {
         id: "cardio-1",
-        name: "Cardio (any)",
-        reps: "30 mins",
+        name: "Phase 1: HIIT (Spin Bike or Elliptical)",
+        reps: "20 Mins",
         sets: "1 set",
         category: "Cardio",
-        impact: ["Fat burning", "Heart health", "Endurance"],
-        note: "🚀 Steady cardio burns fat fast! Keep it moderate to melt away those pounds quickly.",
+        target: "🎯 BURN GOAL: 200 Calories (High Intensity)",
+        note: "🚀 IGNITE. Use the Bike or Elliptical here to sprint safely.",
         tips: [
-          "🏃‍♂️ Keep a steady pace – no rushing!",
-          "❤️ Stay in fat-burning zone: heart rate moderate, not too high.",
-          "💧 Drink water often to stay hydrated.",
-          "🌬️ Breathe deep and steady for better burn.",
-          "🔑 Do this daily for quick fat loss results!",
+          "🔥 0-5 Mins: Warm Up (Moderate)",
+          "⚡ 5-20 Mins: 30 Sec SPRINT (Max Resistance) / 30 Sec REST",
+          "🥵 Empty the tank here. Deplete your sugar stores.",
+          "💧 Drink water immediately after.",
+        ],
+        image: [
+          "https://media.tenor.com/lEy7Yw63vQUAAAAM/beast-mode-cardio.gif",
+        ],
+        impact: ["Metabolic Spike", "Glycogen Depletion"],
+      },
+
+      /* ================= PHASE 2: THE FURNACE (40 MINS) ================= */
+      {
+        id: "cardio-2",
+        name: "Phase 2: Stair Climber (or Incline Treadmill)",
+        reps: "40 Mins",
+        sets: "1 set",
+        category: "Cardio",
+        target: "🎯 BURN GOAL: 350+ Calories (Total Day: 550+)",
+        note: "💀 THE GRIND. The Stair Climber is King for fat loss. Do it.",
+        tips: [
+          "🧗‍♂️ OPTION A (Best): Stair Climber. Moderate pace. Do not lean on rails too much.",
+          "⛰️ OPTION B (Easier): Incline Treadmill. Max Incline (12-15%), Speed 3-4. No running.",
+          "❤️ Zone 2: You should be sweating heavy but able to breathe.",
+          "🧠 Mental Game: This is where the belly fat burns. Don't quit.",
         ],
         image: [
           "https://media.tenor.com/eXlIRe28PVgAAAAm/bubu-dudu-bubu.webp",
           "https://media.tenor.com/HXbs_-Rwqj4AAAAm/train-trainer.webp",
-          "https://media.tenor.com/lEy7Yw63vQUAAAAM/beast-mode-cardio.gif",
         ],
+        impact: ["Visceral Fat Melt", "Glute/Calf Muscle"],
       },
     ],
 
