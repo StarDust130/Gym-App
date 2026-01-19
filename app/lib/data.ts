@@ -225,7 +225,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         ],
         image: [
           "https://ccuuubmtdurkmbeufybi.supabase.co/storage/v1/object/public/animations/0826.gif",
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Raise.gif"
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Raise.gif",
         ],
         video: ["https://youtube.com/embed/XQc0WHO90Lk?si=xf8AsOrWQ6x_ueJm"],
         impact: ["Lower Abs", "V-Cut"],
@@ -286,7 +286,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       /* ================= CARDIO (HIIT - ELLIPTICAL / CYCLE) ================= */
       {
         id: "lc-1",
-        name: "HIIT (Elliptical or Cycle)",
+        name: "Cardio (Fat Loss Time 😤)",
         reps: "15-20 Mins",
         sets: "1",
         category: "Cardio",
@@ -309,150 +309,84 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // ===========================================
     "Chest & Triceps": [
       // =========================
-      // CHEST
+      // CHEST (3 MOVES - MASS)
       // =========================
       {
-        id: "ch-1",
-        name: "Flat DB",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Chest",
-        note: "#1 CHEST START. Do first when strongest. Control descent.",
-        tips: [
-          "Lower dumbbells slowly (2–3 sec)",
-          "Do not lock elbows",
-          "Keep shoulder blades tight",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press.gif",
-        ],
-        video: ["https://youtube.com/embed/WbCEvFA0NJs?si=Dfojxgl3MGzpgFk2"],
-        impact: [
-          "Builds chest mass",
-          "Improves pressing strength",
-          "Base chest exercise",
-        ],
-      },
-
-      {
         id: "ch-2",
-        name: "Incline DB",
-        reps: "10-12",
+        name: "Incline DB Press",
+        reps: "8-10",
         sets: "3 sets",
         category: "Chest",
-        note: "#2 UPPER CHEST focus. Bench ~30° only.",
+        target: "🎯 GOAL: Lift 2kg heavier than last time",
+        note: "🔥 EXERCISE 1. UPPER CHEST. Do this first while fresh. This builds the 'shelf'.",
         tips: [
-          "Do not go too steep",
-          "Press up and slightly inward",
-          "Feel stretch at bottom",
+          "Bench at 30 degrees (not too steep)",
+          "Control the weight down slowly",
+          "Squeeze upper chest at top",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif",
         ],
         video: ["https://youtube.com/embed/8fXfwG4ftaQ?si=A0zwKBil2ghFddlw"],
-        impact: [
-          "Upper chest thickness",
-          "Better chest shape",
-          "Improves shoulder stability",
-        ],
+        impact: ["Upper Chest Thickness", "Broad Shoulder Look"],
       },
 
       {
-        id: "ch-3",
-        name: "Decline DB",
-        reps: "10-12",
+        id: "ch-1",
+        name: "Flat DB Press",
+        reps: "8-10",
         sets: "3 sets",
         category: "Chest",
-        note: "#3 LOWER CHEST. Optional if fatigue high.",
+        target: "🎯 GOAL: Control the negative (3 seconds down)",
+        note: "🧱 EXERCISE 2. MASS. The classic builder. Heavy.",
         tips: [
-          "Do not bounce at bottom",
-          "Keep wrists straight",
-          "Control weight fully",
+          "Tuck elbows slightly (don't flare)",
+          "Feet planted firmly on floor",
+          "Drive weight up explosively",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Decline-Dumbbell-Press.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press.gif",
         ],
-        video: ["https://youtube.com/embed/vVwnsVzw2G0?si=Sg9dVdbv3EWwTQac"],
-        impact: [
-          "Lower chest development",
-          "Improves chest fullness",
-          "Helps push strength",
-        ],
-      },
-
-      {
-        id: "ch-4",
-        name: "Pec dec fly",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Chest",
-        note: "1st Week isolation. Stretch chest fully.",
-        tips: [
-          "Do not slam weights",
-          "Pause 1 sec at squeeze",
-          "Elbows slightly bent",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pec-Deck-Fly.gif",
-        ],
-        video: ["https://youtube.com/embed/a9vQ_hwIksU?si=DpNsvvttIQMkvLt7"],
-        impact: [
-          "Chest separation",
-          "Improves muscle control",
-          "Better chest definition",
-        ],
+        video: ["https://youtube.com/embed/WbCEvFA0NJs?si=Dfojxgl3MGzpgFk2"],
+        impact: ["Overall Chest Size", "Pressing Power"],
       },
 
       {
         id: "ch-5",
-        name: "Cable crossover / Vertical pec fly",
-        reps: "10-12",
+        name: "Cable Crossover (High to Low)",
+        reps: "12-15",
         sets: "3 sets",
         category: "Chest",
-        note: "2nd Week. Constant tension.",
+        target: "🎯 GOAL: Feel the stretch, not the weight",
+        note: "🔪 EXERCISE 3. DEFINITION. Constant tension. Better than Pec Dec.",
         tips: [
-          "Cross hands slightly at bottom",
-          "Slow negative",
-          "Do not use momentum",
+          "Step forward, lean slightly",
+          "Bring hands together at waist",
+          "Squeeze inner chest hard",
         ],
         image: [
           "https://www.inspireusafoundation.org/file/2024/02/cable-standing-crossover.gif",
         ],
         video: ["https://youtube.com/embed/y4RJDSOBEl8?si=2egsqIPAxVxLFfZU"],
-        impact: [
-          "Chest lines & cuts",
-          "Improves inner chest",
-          "Finishing movement",
-        ],
-      },
-
-      {
-        id: "ch-6",
-        name: "Pushups (Knee) / (Regular)",
-        reps: "10-12",
-        sets: "3 sets",
-
-        category: "Chest",
-        video: ["https://youtube.com/embed/4Bc1tPaYkOo?si=Vdk3grrXTvaK0cqn"],
-        note: "Optional burnout. Beginners.",
-        tips: ["Keep body straight", "Elbows ~45° angle", "Slow tempo"],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Push-Up.gif",
-        ],
-        impact: ["Chest endurance", "Improves control", "Good finisher"],
+        impact: ["Inner Chest Line", "Chest Separation"],
       },
 
       // =========================
-      // TRICEPS
+      // TRICEPS (3 MOVES - HORSE SHOE)
       // =========================
       {
         id: "tr-1",
-        name: "Bar dips weight assisted / Close grip bench",
+        name: "Dips (Assisted or Weighted)",
         reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: "#1 TRICEPS MASS. Heavy compound.",
-        tips: ["Elbows close to body", "Full lockout", "Chest upright"],
+        target: "🎯 GOAL: Full range of motion",
+        note: "👑 EXERCISE 4. THE KING. This is the squat of the upper body.",
+        tips: [
+          "Keep torso upright for triceps",
+          "Lower until elbows are 90 degrees",
+          "Lock out at the top",
+        ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2022/11/Asisted-Triceps-Dips.gif",
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Close-Grip-Bench-Press.gif",
@@ -461,51 +395,22 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://youtube.com/embed/LH9iZNaO7oU?si=t-NMoDG_7o-emsMD",
           "https://youtube.com/embed/6zWoAllRufg?si=96IU372uz0YczAye",
         ],
-        impact: [
-          "Builds triceps mass",
-          "Improves pressing strength",
-          "Compound power",
-        ],
-      },
-
-      {
-        id: "tr-2",
-        name: "Bar dips resistance band assisted",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Triceps",
-        note: "2nd Week variation. (3rd Floor)",
-        tips: ["Control negative", "No shoulder shrug", "Full depth"],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Triceps-Dips.gif",
-        ],
-        video: ["https://youtube.com/embed/pz3dH1K9UkI?si=r-TKEn6HqJSXf4Zf"],
-        impact: ["Triceps strength", "Joint friendly", "Better depth"],
-      },
-
-      {
-        id: "tr-3",
-        name: "Triceps push down cable/rope",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Triceps",
-        note: "#2 TRICEPS ISOLATION.",
-        tips: ["Elbows fixed", "Spread rope at bottom", "Pause 1 sec"],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif",
-        ],
-        video: ["https://youtube.com/embed/1FjkhpZsaxc?si=UeI7YtnLqsvk9JP4"],
-        impact: ["Triceps definition", "Better arm shape", "Peak contraction"],
+        impact: ["Massive Triceps", "Arm Thickness"],
       },
 
       {
         id: "tr-4",
-        name: "Cable overhead triceps extension / Skull crusher DB",
+        name: "Skull Crusher (DB or EZ Bar)",
         reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: "1st Week long head focus.",
-        tips: ["Stretch fully overhead", "Elbows locked in", "Slow tempo"],
+        target: "🎯 GOAL: Isolate the Long Head",
+        note: "📏 EXERCISE 5. LONG HEAD. This makes the arm look big from the side.",
+        tips: [
+          "Keep elbows pointing up",
+          "Lower weight to forehead/ears",
+          "Do not swing shoulders",
+        ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/04/Cable-Rope-Overhead-Triceps-Extension.gif",
           "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Skull-Crusher.gif",
@@ -514,41 +419,27 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://youtube.com/embed/b5le--KkyH0?si=Yvs4Hcf3f9-rR47q",
           "https://youtube.com/embed/iuYB_fLp26Q?si=5AD_YDcGVENz63Ue",
         ],
-        impact: ["Long head growth", "Bigger triceps look", "Arm thickness"],
+        impact: ["Tricep Belly", "Arm Size"],
       },
 
       {
-        id: "tr-5",
-        name: "Triceps extension DB / Kickback DB",
-        reps: "10-12",
+        id: "tr-3",
+        name: "Triceps Rope Pushdown",
+        reps: "12-15",
         sets: "3 sets",
         category: "Triceps",
-        note: "2nd Week finisher.",
-        tips: ["Straight arm at top", "No swinging", "Light weight only"],
+        target: "🎯 GOAL: Burn out",
+        note: "🏁 EXERCISE 6. FINISHER. Isolate the lateral head.",
+        tips: [
+          "Elbows glued to your ribs",
+          "Spread the rope apart at bottom",
+          "Hold the squeeze for 1 second",
+        ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Dumbbell-Triceps-Extension.gif",
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Kickback.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif",
         ],
-        video: [
-          "https://youtube.com/embed/b_r_LW4HEcM?si=8qDyOj_fIkS_geLH",
-          "https://youtube.com/embed/WhBxKbe1-NU?si=NpaX0rxAYl3yoo_I",
-        ],
-        impact: ["Triceps detail", "Muscle separation", "End workout pump"],
-      },
-
-      {
-        id: "tr-6",
-        name: "Triceps press M/C",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Triceps",
-        note: "Final burnout.",
-        tips: ["Control machine path", "Squeeze at bottom", "No locking"],
-        image: [
-          "https://burnfit.io/wp-content/uploads/2023/11/SEAT_DIPS_MC.gif",
-        ],
-        video: ["https://youtube.com/embed/QYktfOJRyfU?si=Cc3VxjqA6ZTuvjaH"],
-        impact: ["Triceps pump", "Joint-safe finisher", "Volume overload"],
+        video: ["https://youtube.com/embed/1FjkhpZsaxc?si=UeI7YtnLqsvk9JP4"],
+        impact: ["Tricep Definition", "Horseshoe Look"],
       },
     ],
 
