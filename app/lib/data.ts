@@ -39,220 +39,170 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // MONDAY: BACK & BICEPS
     // ===========================================
     "Back , Biceps & Forearms": [
-      /* ================= BACK ================= */
-
+      /* ================= BACK (4 DISTINCT MOVES) ================= */
       {
         id: "bk-1",
-        name: "Bent-Over Barbell Row / Bench-Supported Row",
-        reps: "10-12",
+        name: "Bent-Over Barbell Row",
+        reps: "8-10",
         sets: "3 sets",
         category: "Back",
-        note: "🔥 START HERE. Strongest exercise for back. Do ONLY ONE version.\nWeek 1: Bent-over row (heavy).\nWeek 2: Bench-supported row (strict).",
+        note: "🔥 EXERCISE 1. THICKNESS. The heavy builder. Do this first while fresh.",
         tips: [
-          "Chest up, back straight",
-          "Pull bar toward lower ribs",
-          "Do not jerk the weight",
+          "Torso 45° angle",
+          "Pull bar to hip crease",
+          "Squeeze shoulder blades together",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Bent-Over-Row.gif",
-          "https://www.strengthlog.com/wp-content/uploads/2024/11/chest-supported-dumbbell-row.gif",
         ],
-        video: [
-          "https://www.youtube.com/embed/vT2GjY_Umpw",
-          "https://www.youtube.com/embed/czoQ_ncuqqI",
-        ],
-        impact: ["Thick back", "Big pulling power", "Better posture"],
+        video: ["https://www.youtube.com/embed/vT2GjY_Umpw"],
+        impact: ["Upper Back Density", "Overall Mass"],
       },
       {
         id: "bk-2",
-        name: "Low Machine Row / Seated Machine Row",
+        name: "Lat Pulldown (Wide Grip)",
         reps: "10-12",
         sets: "3 sets",
         category: "Back",
-        note: "🧠 MACHINE ROW. Keeps tension without stressing lower back.",
+        note: "📐 EXERCISE 2. WIDTH. Vertical pull. Distinct from the row.",
         tips: [
-          "Sit tall, chest up",
-          "Pull handle to stomach",
-          "Slow return (important)",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Cable-Row.gif",
-        ],
-        video: ["https://www.youtube.com/embed/UCXxvVItLoM"],
-        impact: ["Middle back", "Row strength", "Better control"],
-      },
-
-      {
-        id: "bk-3",
-        name: "Lat Pulldown",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Back",
-        note: "📐 WIDTH BUILDER. After rows. Stretch fully at top.",
-        tips: [
-          "Pull elbows down, not hands",
-          "Do not lean back too much",
-          "Pause 1 sec at bottom",
+          "Chest up, slight arch",
+          "Drive elbows down to hips",
+          "Full stretch at top",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lat-Pulldown.gif",
         ],
         video: ["https://www.youtube.com/embed/CAwf7n6Luuc"],
-        impact: ["Wide back", "V-shape", "Pull-up strength"],
+        impact: ["V-Taper", "Lat Width"],
       },
-
+      {
+        id: "bk-3",
+        name: "Seated Cable Row",
+        reps: "12-15",
+        sets: "3 sets",
+        category: "Back",
+        note: "🎯 EXERCISE 3. ISOLATION. Targets mid-back and lats without lower back strain.",
+        tips: [
+          "Torso upright",
+          "Pull low toward belly button",
+          "Squeeze for 1 second",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Cable-Row.gif",
+        ],
+        video: ["https://www.youtube.com/embed/UCXxvVItLoM"],
+        impact: ["Mid-Back Detail", "Lat Control"],
+      },
       {
         id: "bk-4",
-        name: "Straight-Arm Pulldown",
-        reps: "10-12",
-        sets: "2 sets",
-        category: "Back",
-        note: "🎯 LAT ISOLATION. Feel stretch + squeeze.",
-        tips: [
-          "Arms almost straight",
-          "Push bar down with lats",
-          "Slow and controlled",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/05/Cable-Straight-Arm-Pulldown.gif",
-        ],
-        video: ["https://youtube.com/embed/hAMcfubonDc?si=WWoc3ALQo2evyDXH"],
-        impact: ["Lat connection", "Better shape", "Mind-muscle"],
-      },
-
-      {
-        id: "bk-5",
-        name: "Dumbbell Shrugs / Infinity Shrugs",
-        reps: "10-12",
+        name: "Back Extension",
+        reps: "12-15",
         sets: "3 sets",
         category: "Back",
-        note: "🗿 TRAPS. Near end. Hold at top.",
+        note: "🛡️ EXERCISE 4. LOWER BACK. Essential for the 'Christmas Tree' look.",
         tips: [
-          "Lift shoulders straight up",
-          "Hold 1–2 sec",
-          "Do NOT roll shoulders",
+          "Hinge at hips only",
+          "Neutral spine",
+          "Squeeze glutes and lower back at top",
         ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Shrug.gif",
-        ],
-        video: ["https://youtube.com/embed/rFsSeClGnNA?si=hu_xVfvbodle-Rfy"],
-        impact: ["Big traps", "Neck thickness", "Stability"],
-      },
-
-      {
-        id: "bk-6",
-        name: "Back Extension / Good Morning (≤15kg)",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Back",
-        note: "🛡️ LOWER BACK SAFETY. Light weight only.",
-        tips: ["Slow movement", "Neutral spine", "Stop if pain"],
         image: [
           "https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2020/05/back-extension-frontloaded.gif?resize=600%2C600&ssl=1",
         ],
         video: ["https://youtube.com/embed/Wpreb69h2fE?si=ttyCZnQv7Xy9Y5cb"],
-        impact: ["Lower back strength", "Spine protection"],
+        impact: ["Spine Erectors", "Lower Back Strength"],
       },
 
-      /* ================= BICEPS ================= */
-
+      /* ================= BICEPS (3 DISTINCT ANGLES) ================= */
       {
         id: "bi-1",
-        name: "Supination Dumbbell Curl",
+        name: "Barbell Curl (Standing)",
+        reps: "8-10",
+        sets: "3 sets",
+        category: "Biceps",
+        note: "💪 EXERCISE 5. MASS (Short Head). Heavy loading. Fundamental.",
+        tips: ["Elbows tucked by ribs", "No swinging", "Squeeze hard at top"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Curl.gif",
+        ],
+        video: ["https://youtube.com/embed/54x2WF1_Suc?si=Krs73Ki6rbcjMNkV"],
+        impact: ["Overall Bicep Size", "Thickness"],
+      },
+      {
+        id: "bi-2",
+        name: "Incline Dumbbell Curl",
         reps: "10-12",
         sets: "3 sets",
         category: "Biceps",
-        note: "💪 BICEPS START. Fresh arms = best pump.",
-        tips: ["Rotate wrist fully", "Elbows fixed", "Squeeze at top"],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2022/06/Seated-dumbbell-alternating-curl.gif",
+        note: "🏔️ EXERCISE 6. PEAK (Long Head). The incline stretches the outer bicep. Critical for the 'Peak'.",
+        tips: [
+          "Bench at 45-60 degrees",
+          "Let arms hang fully behind you",
+          "Keep elbows back",
         ],
-        video: ["https://youtube.com/embed/MKWBV29S6c0?si=gdG5ELu4hftkT5li"],
-        impact: ["Biceps peak", "Better shape"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2022/02/Flexor-Incline-Dumbbell-Curls.gif",
+        ],
+        video: ["https://youtube.com/embed/S2cYwsDhpI4?si=tiu7n69Hs1TToxw4"],
+        impact: ["Bicep Peak", "Stretch"],
       },
-
       {
-        id: "bi-2",
-        name: "Reverse Cable Curl / Hammer Curl",
+        id: "bi-3",
+        name: "Hammer Curl",
         reps: "10-12",
-        sets: "2 sets",
+        sets: "3 sets",
         category: "Biceps",
-        note: "🔨 ARM THICKNESS. Hits brachialis.",
-        tips: ["Neutral grip", "Slow reps", "No swinging"],
+        note: "🔨 EXERCISE 7. WIDTH (Brachialis). Targets the muscle *under* the bicep to push it out.",
+        tips: [
+          "Neutral grip (thumbs up)",
+          "Cross body or straight up",
+          "Controlled tempo",
+        ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-Hammer-Curl.gif",
         ],
         video: ["https://youtube.com/embed/vm0zV_WQerE?si=gYGaao8dKT6-s3Vk"],
-        impact: ["Thicker arms", "Forearm help"],
+        impact: ["Arm Width", "Forearm Tie-in"],
       },
 
-      {
-        id: "bi-3",
-        name: "Concentration Curl / Preacher Curl",
-        reps: "10-12",
-        sets: "2 sets",
-        category: "Biceps",
-        note: "🎯 STRICT CURL. No cheating.",
-        tips: ["Slow lift", "Full stretch", "Focus on muscle"],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Concentration-Curl.gif",
-          "https://www.inspireusafoundation.org/file/2022/03/ez-bar-preacher-curl.gif",
-        ],
-        video: [
-          "https://youtube.com/embed/EjUnEEfTSEY?si=Y7arnZZDupSnpN4H",
-          "https://youtube.com/embed/7ixqAPO6JvU?si=oooquM5yRSFqyLyN",
-        ],
-        impact: ["Definition", "Clean biceps"],
-      },
-
-      {
-        id: "bi-4",
-        name: "Barbell Curl / Cable Curl",
-        reps: "10-12",
-        sets: "2 sets",
-        category: "Biceps",
-        note: "🏋️ MASS BUILDER. Control the weight.",
-        tips: ["No body swing", "Elbows tight", "Slow negative"],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Curl.gif",
-          "https://www.inspireusafoundation.org/file/2022/12/cable-drag-curl.gif",
-        ],
-        video: [
-          "https://youtube.com/embed/54x2WF1_Suc?si=Krs73Ki6rbcjMNkV",
-          "https://youtube.com/embed/CrbTqNOlFgE?si=9P9Ho07OdqTBslMN",
-        ],
-        impact: ["Arm size", "Strength"],
-      },
-
-      /* ================= FOREARMS ================= */
-
+      /* ================= FOREARMS (2 DISTINCT SIDES) ================= */
       {
         id: "fa-1",
-        name: "Gorilla Gripper",
-        reps: "10-12",
+        name: "Machine Wrist Curl (Standing)",
+        reps: "15-20",
         sets: "3 sets",
         category: "Forearm",
-        note: "🤝 GRIP POWER.",
-        tips: ["Squeeze hard", "Slow release"],
-        image: [
-          "https://5.imimg.com/data5/SELLER/Default/2021/9/PQ/YD/CM/12736245/gorilla-gripper-1000x1000.jpg",
+        note: "🔥 EXERCISE 8. FLEXORS. Use the machine in your image. Better isolation.",
+        tips: [
+          "Forearms flat on pad",
+          "Unroll fingers at bottom",
+          "Curl wrist completely up",
         ],
-        impact: ["Grip strength", "Better pulls"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Machine-Wrist-Curl.gif",
+        ],
+        video: [
+          "https://www.youtube.com/embed/M8TpHw5aYgA?si=af_0A8zrxs6aQZBN",
+        ],
+        impact: ["Inner Forearm Pop", "Vascularity/Veins"],
       },
-
       {
         id: "fa-2",
-        name: "Dumbbell Wrist Curl",
-        reps: "10-12",
-        sets: "2 sets",
+        name: "Reverse Barbell Curl (Palms Down)",
+        reps: "12-15",
+        sets: "3 sets",
         category: "Forearm",
-        note: "🏁 FINAL MOVE. Burnout.",
-        tips: ["Full stretch", "Slow reps"],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Wrist-Curl.gif",
+        note: "🖐️ EXERCISE 9. EXTENSORS. The top of the forearm. Completes the look.",
+        tips: [
+          "Overhand grip",
+          "Elbows tucked",
+          "Lift with the top of the hand",
         ],
-        video: ["https://youtube.com/embed/M8TpHw5aYgA?si=af_0A8zrxs6aQZBN"],
-        impact: ["Forearm size", "Wrist strength"],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Reverse-Curl.gif",
+        ],
+        video: ["https://www.youtube.com/embed/nRgxYDUeOzg"],
+        impact: ["Outer Forearm", "Brachioradialis"],
       },
     ],
     // ===========================================
