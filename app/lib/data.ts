@@ -307,141 +307,127 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // ===========================================
     // WEDNESDAY: CHEST & TRICEPS
     // ===========================================
-    "Chest & Triceps": [
-      // =========================
-      // CHEST (3 MOVES - MASS)
-      // =========================
-      {
-        id: "ch-2",
-        name: "Incline DB Press",
-        reps: "8-10",
-        sets: "3 sets",
-        category: "Chest",
-        target: "🎯 GOAL: Lift 2kg heavier than last time",
-        note: "🔥 EXERCISE 1. UPPER CHEST. Do this first while fresh. This builds the 'shelf'.",
-        tips: [
-          "Bench at 30 degrees (not too steep)",
-          "Control the weight down slowly",
-          "Squeeze upper chest at top",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif",
-        ],
-        video: ["https://youtube.com/embed/8fXfwG4ftaQ?si=A0zwKBil2ghFddlw"],
-        impact: ["Upper Chest Thickness", "Broad Shoulder Look"],
-      },
-
-      {
-        id: "ch-1",
-        name: "Flat DB Press",
-        reps: "8-10",
-        sets: "3 sets",
-        category: "Chest",
-        target: "🎯 GOAL: Control the negative (3 seconds down)",
-        note: "🧱 EXERCISE 2. MASS. The classic builder. Heavy.",
-        tips: [
-          "Tuck elbows slightly (don't flare)",
-          "Feet planted firmly on floor",
-          "Drive weight up explosively",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press.gif",
-        ],
-        video: ["https://youtube.com/embed/WbCEvFA0NJs?si=Dfojxgl3MGzpgFk2"],
-        impact: ["Overall Chest Size", "Pressing Power"],
-      },
-
-      {
-        id: "ch-5",
-        name: "Cable Crossover (High to Low)",
-        reps: "12-15",
-        sets: "3 sets",
-        category: "Chest",
-        target: "🎯 GOAL: Feel the stretch, not the weight",
-        note: "🔪 EXERCISE 3. DEFINITION. Constant tension. Better than Pec Dec.",
-        tips: [
-          "Step forward, lean slightly",
-          "Bring hands together at waist",
-          "Squeeze inner chest hard",
-        ],
-        image: [
-          "https://www.inspireusafoundation.org/file/2024/02/cable-standing-crossover.gif",
-        ],
-        video: ["https://youtube.com/embed/y4RJDSOBEl8?si=2egsqIPAxVxLFfZU"],
-        impact: ["Inner Chest Line", "Chest Separation"],
-      },
-
-      // =========================
-      // TRICEPS (3 MOVES - HORSE SHOE)
-      // =========================
-      {
-        id: "tr-1",
-        name: "Dips (Assisted or Weighted)",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Triceps",
-        target: "🎯 GOAL: Full range of motion",
-        note: "👑 EXERCISE 4. THE KING. This is the squat of the upper body.",
-        tips: [
-          "Keep torso upright for triceps",
-          "Lower until elbows are 90 degrees",
-          "Lock out at the top",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2022/11/Asisted-Triceps-Dips.gif",
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Close-Grip-Bench-Press.gif",
-        ],
-        video: [
-          "https://youtube.com/embed/LH9iZNaO7oU?si=t-NMoDG_7o-emsMD",
-          "https://youtube.com/embed/6zWoAllRufg?si=96IU372uz0YczAye",
-        ],
-        impact: ["Massive Triceps", "Arm Thickness"],
-      },
-
-      {
-        id: "tr-4",
-        name: "Skull Crusher (DB or EZ Bar)",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Triceps",
-        target: "🎯 GOAL: Isolate the Long Head",
-        note: "📏 EXERCISE 5. LONG HEAD. This makes the arm look big from the side.",
-        tips: [
-          "Keep elbows pointing up",
-          "Lower weight to forehead/ears",
-          "Do not swing shoulders",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/04/Cable-Rope-Overhead-Triceps-Extension.gif",
-          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Skull-Crusher.gif",
-        ],
-        video: [
-          "https://youtube.com/embed/b5le--KkyH0?si=Yvs4Hcf3f9-rR47q",
-          "https://youtube.com/embed/iuYB_fLp26Q?si=5AD_YDcGVENz63Ue",
-        ],
-        impact: ["Tricep Belly", "Arm Size"],
-      },
-
-      {
-        id: "tr-3",
-        name: "Triceps Rope Pushdown",
-        reps: "12-15",
-        sets: "3 sets",
-        category: "Triceps",
-        target: "🎯 GOAL: Burn out",
-        note: "🏁 EXERCISE 6. FINISHER. Isolate the lateral head.",
-        tips: [
-          "Elbows glued to your ribs",
-          "Spread the rope apart at bottom",
-          "Hold the squeeze for 1 second",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif",
-        ],
-        video: ["https://youtube.com/embed/1FjkhpZsaxc?si=UeI7YtnLqsvk9JP4"],
-        impact: ["Tricep Definition", "Horseshoe Look"],
-      },
+"Chest & Triceps": [
+  /* ================= CHEST (3 MOVES - ARMOR) ================= */
+  {
+    "id": "ch-2",
+    "name": "Incline Dumbbell Press",
+    "reps": "8-10",
+    "sets": "3 sets",
+    "category": "Chest",
+    "note": "🔥 EXERCISE 1. UPPER CHEST. Builds the 'shelf'. Do this first.",
+    "tips": [
+      "Bench at 30 degrees (not too steep)",
+      "Control weight down slowly",
+      "Squeeze upper chest at top"
     ],
+    "image": [
+      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif"
+    ],
+    "video": ["https://youtube.com/embed/8fXfwG4ftaQ?si=A0zwKBil2ghFddlw"],
+    "impact": ["Upper Chest Thickness", "Broad Shoulders"]
+  },
+
+  {
+    "id": "ch-1",
+    "name": "Flat Dumbbell Press",
+    "reps": "8-10",
+    "sets": "3 sets",
+    "category": "Chest",
+    "note": "🧱 EXERCISE 2. MASS. Better than machine press for stabilization.",
+    "tips": [
+      "Tuck elbows slightly",
+      "Feet planted firmly",
+      "Drive up explosively"
+    ],
+    "image": [
+      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press.gif"
+    ],
+    "video": ["https://youtube.com/embed/WbCEvFA0NJs?si=Dfojxgl3MGzpgFk2"],
+    "impact": ["Overall Chest Size", "Power"]
+  },
+
+  {
+    "id": "ch-5",
+    "name": "Cable Crossover (High to Low)",
+    "reps": "12-15",
+    "sets": "3 sets",
+    "category": "Chest",
+    "note": "🔪 EXERCISE 3. DEFINITION. Creates the inner chest line.",
+    "tips": [
+      "Step forward, lean slightly",
+      "Bring hands together at waist",
+      "Squeeze hard for 1 sec"
+    ],
+    "image": [
+      "https://www.inspireusafoundation.org/file/2024/02/cable-standing-crossover.gif"
+    ],
+    "video": ["https://youtube.com/embed/y4RJDSOBEl8?si=2egsqIPAxVxLFfZU"],
+    "impact": ["Inner Chest Line", "Separation"]
+  },
+
+  /* ================= TRICEPS (3 MOVES - HORSESHOE) ================= */
+  {
+    "id": "tr-1",
+    "name": "Assisted Dip Machine (or Weighted Dips)",
+    "reps": "10-12",
+    "sets": "3 sets",
+    "category": "Triceps",
+    "note": "👑 EXERCISE 4. THE KING. Use the machine if bodyweight is too hard.",
+    "tips": [
+      "Keep torso upright (don't lean)",
+      "Lower to 90 degrees",
+      "Lock out fully at top"
+    ],
+    "image": [
+      "https://fitnessprogramer.com/wp-content/uploads/2022/11/Asisted-Triceps-Dips.gif"
+    ],
+    "video": ["https://youtube.com/embed/LH9iZNaO7oU?si=t-NMoDG_7o-emsMD"],
+    "impact": ["Massive Triceps", "Arm Thickness"]
+  },
+
+  {
+    "id": "tr-2",
+    "name": "Skull Crusher (EZ Bar)",
+    "reps": "10-12",
+    "sets": "3 sets",
+    "category": "Triceps",
+    "note": "📏 EXERCISE 5. LONG HEAD. Makes the arm look huge from the side.",
+    "tips": [
+      "Elbows pointing up",
+      "Lower bar to forehead",
+      "Do not swing shoulders"
+    ],
+    "image": [
+      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Triceps-Extension.gif",
+      "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Skull-Crusher.gif"
+    ],
+    "video": [
+      "https://youtube.com/embed/K3mFeNz4e3w?si=A1TDG_1EpuINXIwY",
+      "https://youtube.com/embed/EXUdJH-lhKc?si=Z1U-Jgke-inj2xv3"
+    ],
+    "impact": ["Tricep Belly", "Arm Size"]
+  },
+
+  {
+    "id": "tr-3",
+    "name": "Triceps Rope Pushdown",
+    "reps": "12-15",
+    "sets": "3 sets",
+    "category": "Triceps",
+    "note": "🏁 EXERCISE 6. FINISHER. Burn out the muscle.",
+    "tips": [
+      "Elbows glued to ribs",
+      "Spread rope at bottom",
+      "Squeeze hard"
+    ],
+    "image": [
+      "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif"
+    ],
+    "video": ["https://youtube.com/embed/1FjkhpZsaxc?si=UeI7YtnLqsvk9JP4"],
+    "impact": ["Tricep Definition", "Horseshoe Look"]
+  }
+],
 
     // ===========================================
     // THURSDAY: CARDIO & STRETCHING
