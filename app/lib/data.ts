@@ -224,8 +224,8 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "⬇️ Control the drop slowly",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Raise.gif",
           "https://ccuuubmtdurkmbeufybi.supabase.co/storage/v1/object/public/animations/0826.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Raise.gif"
         ],
         video: ["https://youtube.com/embed/XQc0WHO90Lk?si=xf8AsOrWQ6x_ueJm"],
         impact: ["Lower Abs", "V-Cut"],
