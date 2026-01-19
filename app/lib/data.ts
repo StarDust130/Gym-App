@@ -624,7 +624,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Face-Pull.gif",
         ],
-        video: ["https://youtube.com/embed/IeOqdw9WI90?si=qaY_IerfJjQXkfmO"],
+        video: ["https://youtube.com/embed/IeOqdw9WI90?si=ut3MrakJbINIpt8k"],
         impact: ["Rear Delts", "Shoulder Health"],
       },
     ],
