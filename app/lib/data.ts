@@ -349,21 +349,21 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
 
       {
-        id: "ch-5",
-        name: "Cable Crossover (High to Low)",
+        id: "ch-new",
+        name: "Pec Deck Fly",
         reps: "12-15",
         sets: "3 sets",
         category: "Chest",
-        note: "🔪 EXERCISE 3. DEFINITION. Creates the inner chest line.",
+        note: "🦋 DEFINITION. Replaces Cable Crossover. Impossible to mess up.",
         tips: [
-          "Step forward, lean slightly",
-          "Bring hands together at waist",
-          "Squeeze hard for 1 sec",
+          "Adjust seat so handles are at chest height",
+          "Keep elbows high",
+          "Squeeze handles together for 1 second",
         ],
         image: [
-          "https://www.inspireusafoundation.org/file/2024/02/cable-standing-crossover.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pec-Deck-Fly.gif",
         ],
-        video: ["https://youtube.com/embed/y4RJDSOBEl8?si=2egsqIPAxVxLFfZU"],
+        video: ["https://youtube.com/embed/a9vQ_hwIksU?si=kNxflN9SAfw6EdCC"],
         impact: ["Inner Chest Line", "Separation"],
       },
 
