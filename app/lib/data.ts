@@ -309,24 +309,25 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // WEDNESDAY: CHEST & TRICEPS (Push Day)
     // ===========================================
     "Chest & Triceps": [
-      /* ================= CHEST (3 MOVES - ARMOR) ================= */
+      /* ================= CHEST (3 MOVES - BUILD THE ARMOR) ================= */
       {
         id: "ch-2",
         name: "Incline Dumbbell Press",
         reps: "8-10",
         sets: "3 sets",
         category: "Chest",
-        note: "🔥 EXERCISE 1. UPPER CHEST. Builds the 'shelf'. Do this first.",
+        note: "🦍 BEAST MODE. The most important lift for wide shoulders. Go Heavy.",
         tips: [
-          "Bench at 30 degrees (not too steep)",
-          "Control weight down slowly",
-          "Squeeze upper chest at top",
+          "✅ Set bench to 30° (Standard Incline)",
+          "✅ Lower slowly (3 sec count) ⬇️",
+          "✅ Explode up fast (1 sec count) 🚀",
+          "❌ Don't bounce the weights",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif",
         ],
         video: ["https://youtube.com/embed/8fXfwG4ftaQ?si=A0zwKBil2ghFddlw"],
-        impact: ["Upper Chest Thickness", "Broad Shoulders"],
+        impact: ["Upper Chest Shelf", "3D Shoulders"],
       },
 
       {
@@ -335,50 +336,53 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         reps: "8-10",
         sets: "3 sets",
         category: "Chest",
-        note: "🧱 EXERCISE 2. MASS. Better than machine press for stabilization.",
+        note: "🦍 GO HEAVY. Empty the tank here. Build pure mass.",
         tips: [
-          "Tuck elbows slightly",
-          "Feet planted firmly",
-          "Drive up explosively",
+          "✅ Plant feet hard on the floor 🦶",
+          "✅ Tuck elbows slightly (Arrow shape 🏹)",
+          "✅ Press weights together at the top",
+          "❌ Do not let dumbbells touch your chest",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press.gif",
         ],
         video: ["https://youtube.com/embed/WbCEvFA0NJs?si=Dfojxgl3MGzpgFk2"],
-        impact: ["Overall Chest Size", "Power"],
+        impact: ["Thick Chest", "Raw Power"],
       },
 
       {
         id: "ch-new",
-        name: "Pec Deck Fly",
+        name: "Pec Deck Fly (Machine)",
         reps: "12-15",
         sets: "3 sets",
         category: "Chest",
-        note: "🦋 DEFINITION. Replaces Cable Crossover. Impossible to mess up.",
+        note: "🛡️ STRICT FORM. Don't be an ego lifter. Squeeze hard.",
         tips: [
-          "Adjust seat so handles are at chest height",
-          "Keep elbows high",
-          "Squeeze handles together for 1 second",
+          "✅ Elbows high (Parallel to floor)",
+          "✅ Squeeze handles like crushing a melon 🍉",
+          "✅ Hold the squeeze for 1 second",
+          "❌ Don't use your shoulders to push",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pec-Deck-Fly.gif",
         ],
         video: ["https://youtube.com/embed/a9vQ_hwIksU?si=kNxflN9SAfw6EdCC"],
-        impact: ["Inner Chest Line", "Separation"],
+        impact: ["Inner Chest Line", "Sharp Definition"],
       },
 
-      /* ================= TRICEPS (3 MOVES - HORSESHOE) ================= */
+      /* ================= TRICEPS (3 MOVES - BUILD THE HORSESHOE) ================= */
       {
         id: "tr-1",
-        name: "Assisted Dip Machine (or Weighted Dips)",
+        name: "Assisted Dip Machine",
         reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: "👑 EXERCISE 4. THE KING. Use the machine if bodyweight is too hard.",
+        note: "👑 THE KING. The best move for big arms. Go as heavy as you can.",
         tips: [
-          "Keep torso upright (don't lean)",
-          "Lower to 90 degrees",
-          "Lock out fully at top",
+          "✅ Keep chest up & torso straight 🧍",
+          "✅ Lower only to 90 degrees (L-shape)",
+          "✅ Lock your elbows at the top 🔒",
+          "❌ Don't lean forward (That hits chest)",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2022/11/Asisted-Triceps-Dips.gif",
@@ -389,40 +393,43 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
 
       {
         id: "tr-new-1",
-        name: "Seated Overhead Dumbbell Extension",
+        name: "Seated Overhead DB Extension",
         reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: "📏 LONG HEAD. Replaces Skull Crusher. Safer for elbows.",
+        note: "📏 STRETCH IT. This makes your arm look huge from the side.",
         tips: [
-          "Sit on a bench with back support",
-          "Hold ONE heavy dumbbell with BOTH hands",
-          "Lower it behind your head, then press up to the ceiling",
+          "✅ Hold ONE heavy dumbbell with both hands 🤲",
+          "✅ Keep elbows pointing up (Don't flare out)",
+          "✅ Feel the deep stretch behind your head",
+          "❌ Don't arch your back",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Dumbbell-Triceps-Extension.gif",
         ],
         video: ["https://youtube.com/embed/b_r_LW4HEcM?si=Wfkv8SIphpyTCuHH"],
-        impact: ["Big Arm Look (Side View)"],
+        impact: ["Long Head Growth", "Sleeve Buster"],
       },
+
       {
         id: "tr-new-2",
-        name: "Tricep Machine Press (or Bench Dips)",
+        name: "Tricep Machine Press",
         reps: "12-15",
         sets: "3 sets",
         category: "Triceps",
-        note: "🏁 FINISHER. Replaces Rope Pushdown. Pure isolation.",
+        note: "🔥 BURN OUT. Finish the workout. Reps until you can't move.",
         tips: [
-          "Sit in the machine and push handles down",
-          "OR: Put hands on a bench and dip your body down",
-          "Burn it out until you can't move",
+          "✅ Keep constant tension (Don't stop)",
+          "✅ Push down hard & fast ⚡",
+          "✅ Squeeze the back of your arm",
+          "❌ Don't shrug your shoulders",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/04/Lever-Overhand-Triceps-Dip.gif",
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bench-Dips.gif",
         ],
         video: ["https://youtube.com/embed/QYktfOJRyfU?si=m2j1DK6La4ItPT3s"],
-        impact: ["Horseshoe Definition"],
+        impact: ["Horseshoe Detail", "Vein Popper"],
       },
     ],
 
