@@ -44,10 +44,10 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       {
         id: "bk-1",
         name: "Bent-Over Barbell Row",
-        reps: "8-10",
-        sets: "3 sets",
+        reps: "6-8",
+        sets: "4 sets",
         category: "Back",
-        note: "🔥 EXERCISE 1. THICKNESS. The heavy builder. Do this first while fresh.",
+        note: "🔥 EXERCISE 1. HEAVY WEIGHT .",
         tips: [
           "Torso 45° angle",
           "Pull bar to hip crease",
@@ -61,8 +61,8 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
       {
         id: "bk-2",
-        name: "Lat Pulldown (Wide Grip)",
-        reps: "10-12",
+        name: "Lat Pulldown (Mid Grip)",
+        reps: "8-10",
         sets: "3 sets",
         category: "Back",
         note: "📐 EXERCISE 2. WIDTH. Vertical pull. Distinct from the row.",
@@ -95,33 +95,15 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: ["https://www.youtube.com/embed/UCXxvVItLoM"],
         impact: ["Mid-Back Detail", "Lat Control"],
       },
-      {
-        id: "bk-4",
-        name: "Back Extension",
-        reps: "12-15",
-        sets: "3 sets",
-        category: "Back",
-        note: "🛡️ EXERCISE 4. LOWER BACK. Essential for the 'Christmas Tree' look.",
-        tips: [
-          "Hinge at hips only",
-          "Neutral spine",
-          "Squeeze glutes and lower back at top",
-        ],
-        image: [
-          "https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2020/05/back-extension-frontloaded.gif?resize=600%2C600&ssl=1",
-        ],
-        video: ["https://youtube.com/embed/Wpreb69h2fE?si=ttyCZnQv7Xy9Y5cb"],
-        impact: ["Spine Erectors", "Lower Back Strength"],
-      },
 
       /* ================= BICEPS (3 DISTINCT ANGLES) ================= */
       {
         id: "bi-1",
         name: "Barbell Curl (Standing)",
-        reps: "8-10",
-        sets: "3 sets",
+        reps: "6-8",
+        sets: "4 sets",
         category: "Biceps",
-        note: "💪 EXERCISE 5. MASS (Short Head). Heavy loading. Fundamental.",
+        note: "💪 EXERCISE 5. MASS  Heavy loading. Fundamental.",
         tips: ["Elbows tucked by ribs", "No swinging", "Squeeze hard at top"],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Curl.gif",
@@ -131,8 +113,8 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
       {
         id: "bi-2",
-        name: "Incline Dumbbell Curl",
-        reps: "10-12",
+        name: "Cable Bayesian Curl",
+        reps: "8-12",
         sets: "3 sets",
         category: "Biceps",
         note: "🏔️ EXERCISE 6. PEAK (Long Head). The incline stretches the outer bicep. Critical for the 'Peak'.",
@@ -142,9 +124,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Keep elbows back",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2022/02/Flexor-Incline-Dumbbell-Curls.gif",
+          "https://barbend.com/wp-content/uploads/2023/09/bayesian-cable-curl-barbend-movement-gif-masters.gif",
         ],
-        video: ["https://youtube.com/embed/S2cYwsDhpI4?si=tiu7n69Hs1TToxw4"],
+        video: ["https://youtube.com/embed/Q3rF30Wqp6s?si=qP39-Cg_PGha1oB-"],
         impact: ["Bicep Peak", "Stretch"],
       },
       {
@@ -203,6 +185,24 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Reverse-Curl.gif",
         ],
         video: ["https://www.youtube.com/embed/nRgxYDUeOzg"],
+        impact: ["Outer Forearm", "Brachioradialis"],
+      },
+      {
+        id: "fa-3",
+        name: "Farmer's Walk (Heavy Dumbbells)",
+        reps: "30-60 Seconds",
+        sets: "3 sets",
+        category: "Forearm",
+        note: "🚶 EXERCISE 10. GRIP STRENGTH. Walk with heavy dumbbells to build crushing grip and forearm density.",
+        tips: [
+          "Choose heavy dumbbells you can hold for 30-60 seconds",
+          "Keep shoulders back and chest up",
+          "Walk with controlled steps, maintaining grip on the weights",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2022/02/Farmers-walk_Cardio.gif",
+        ],
+        video: ["https://youtube.com/embed/1uOs1hP3u4A?si=16CYmd3nLgk57LPu"],
         impact: ["Outer Forearm", "Brachioradialis"],
       },
     ],
