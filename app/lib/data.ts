@@ -41,21 +41,25 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     "Push A (Heavy)": [
       {
         id: "pa-1",
-        name: "Barbell Bench Press",
-        reps: "5-8",
+        name: "Flat Dumbbell Press",
+        reps: "8-12",
         sets: "4 sets",
         category: "Chest",
-        note: "🦍 EXERCISE 1. HEAVY LOAD. Plant your feet, arch slightly, and move heavy weight.",
+        note: "🦍 EXERCISE 1. MAXIMUM STRETCH. Drop the ego. Control the negative for 3 seconds to maximize hypertrophy and fix imbalances.",
         tips: [
-          "Bar path should touch mid-chest",
-          "Drive feet into the floor",
-          "Tuck elbows to 45 degrees to save shoulders",
+          "Lower the dumbbells past your torso for a deep chest stretch",
+          "Tuck elbows to a 45-degree angle to protect shoulder joints",
+          "Drive feet firmly into the floor with a slight lower back arch",
+          "Push up and converge at the top, but do not clash the dumbbells together",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Bench-Press.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press.gif",
         ],
-        video: ["https://www.youtube.com/embed/rT7DgCr-3pg"],
-        impact: ["Overall Chest Mass", "Raw Pushing Power"],
+        video: ["https://youtube.com/embed/WbCEvFA0NJs?si=ru27-GXp6aehAK3U"],
+        impact: [
+          "Maximal Pectoral Hypertrophy",
+          "Symmetrical Chest Development",
+        ],
       },
       {
         id: "ch-2",
