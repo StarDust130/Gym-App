@@ -78,7 +78,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
       {
         id: "pa-3",
-        name: "Barbell Overhead Press",
+        name: "Barbell/ Dumbbell Overhead Press",
         reps: "6-8",
         sets: "3 sets",
         category: "Shoulder",
@@ -90,8 +90,12 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Overhead-Press.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2023/09/Standing-Dumbbell-Overhead-Press.gif",
         ],
-        video: ["https://www.youtube.com/embed/QAQ64hK4Xxs"],
+        video: [
+          "https://www.youtube.com/embed/QAQ64hK4Xxs",
+          "https://youtube.com/embed/k6tzKisR3NY",
+        ],
         impact: ["Front Delts", "Shoulder Width"],
       },
       {
@@ -114,7 +118,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
       {
         id: "pa-5",
-        name: "Cable Tricep Pushdown",
+        name: "Overhead Dumbbell Extension",
         reps: "12",
         sets: "3 sets",
         category: "Triceps",
@@ -125,9 +129,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Slow release back up",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Triceps-Extension.gif",
         ],
-        video: ["https://www.youtube.com/embed/2-LAMcpzODU"],
+        video: ["https://youtube.com/embed/b_r_LW4HEcM?si=8jpzkFzsjn1BE1LS"],
         impact: ["Tricep Horseshoe", "Arm Thickness"],
       },
     ],
