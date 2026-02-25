@@ -651,6 +651,27 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: ["https://www.youtube.com/embed/JbyjNymZOt0"],
         impact: ["Lower Calf Width", "Soleus Growth"],
       },
+      {
+        id: "lb-cardio-sat",
+        name: "Incline Fat-Burn Walk 🏔️",
+        reps: "15-20 Mins",
+        sets: "1 set",
+        category: "Light Cardio",
+        target: "150-200 Calories 🔥",
+        note: "🧘 PRE-SAUNA PROTOCOL: Raises core temperature and flushes leg toxins without joint impact. Perfect post-leg day.",
+        tips: [
+          "Set Incline to 10% - 12%.",
+          "Set Speed to 3.0 - 3.5 km/h (Brisk walk).",
+          "DO NOT hold the handrails; let your core stabilize your body.",
+          "Breathe deeply through your nose to prep for the sauna heat.",
+        ],
+        image: ["https://media.tenor.com/eXlIRe28PVgAAAAm/bubu-dudu-bubu.webp"],
+        impact: [
+          "Visceral Fat Loss 📉",
+          "Active Recovery 🔄",
+          "Core Endurance 🦾",
+        ],
+      },
     ],
 
     // ===========================================
