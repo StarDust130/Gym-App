@@ -415,21 +415,26 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
       {
         id: "pb-5",
-        name: "Skull Crusher with dumbbell",
-        reps: "12",
+        name: "Dumbbell Skullcrusher (Dual)",
+        reps: "10-12",
         sets: "3 sets",
         category: "Triceps",
-        note: "📏 EXERCISE 5. STRETCH. Overhead positioning isolates the long head of the tricep.",
+        note: "Lying position provides constant tension and a deeper stretch than a barbell.",
         tips: [
-          "Keep elbows pointing forward",
-          "Let the rope pull your hands deep behind your neck",
-          "Extend fully",
+          "Tilt upper arms 15° back toward your head to keep triceps engaged.",
+          "Lower dumbbells slowly toward your ears, not your forehead.",
+          "Keep elbows tucked in—do not let them flare out to the sides.",
+          "Drive the weight up without locking your elbows aggressively.",
         ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Skull-Crusher.gif",
         ],
         video: ["https://youtube.com/embed/iuYB_fLp26Q?si=TAAzMoyho7BYIQNF"],
-        impact: ["Tricep Long Head", "Arm Mass"],
+        impact: [
+          "Tricep Lateral Head",
+          "Tricep Long Head",
+          "Horseshoe Definition",
+        ],
       },
       {
         id: "pb-6",
