@@ -357,9 +357,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Control the descent",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Smith-Machine-Incline-Bench-Press.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Chest-Press-Machine.gif",
         ],
-        video: ["https://www.youtube.com/embed/8qBziL0AtaI"],
+        video: ["https://youtube.com/embed/i3e4CG5tnfs?si=VNlD9sPeueQlICOz"],
         impact: ["Upper Pecs", "Shoulder Safety"],
       },
       {
@@ -415,7 +415,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
       {
         id: "pb-5",
-        name: "Overhead Rope Tricep Extension",
+        name: "Skull Crusher with dumbbell",
         reps: "12",
         sets: "3 sets",
         category: "Triceps",
@@ -426,9 +426,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Extend fully",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Rope-Overhead-Triceps-Extension.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Skull-Crusher.gif",
         ],
-        video: ["https://www.youtube.com/embed/nQ-vTj-bKag"],
+        video: ["https://youtube.com/embed/iuYB_fLp26Q?si=TAAzMoyho7BYIQNF"],
         impact: ["Tricep Long Head", "Arm Mass"],
       },
       {
