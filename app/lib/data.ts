@@ -413,29 +413,30 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: ["https://youtube.com/embed/Kl3LEzQ5Zqs?si=NivM87vJOi1scVss"],
         impact: ["Side Delts", "V-Taper"],
       },
-      {
-        id: "pb-5",
-        name: "Dumbbell Skullcrusher (Dual)",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Triceps",
-        note: "Lying position provides constant tension and a deeper stretch than a barbell.",
-        tips: [
-          "Tilt upper arms 15° back toward your head to keep triceps engaged.",
-          "Lower dumbbells slowly toward your ears, not your forehead.",
-          "Keep elbows tucked in—do not let them flare out to the sides.",
-          "Drive the weight up without locking your elbows aggressively.",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Skull-Crusher.gif",
-        ],
-        video: ["https://youtube.com/embed/iuYB_fLp26Q?si=TAAzMoyho7BYIQNF"],
-        impact: [
-          "Tricep Lateral Head",
-          "Tricep Long Head",
-          "Horseshoe Definition",
-        ],
-      },
+     {
+  id: "pb-5",
+  name: "Weighted Tricep Dips",
+  reps: "8-12",
+  sets: "3 sets",
+  category: "Triceps",
+  note: "The S-Tier mass builder. Superior to skull crushers for overall arm thickness and power.",
+  tips: [
+    "Keep your torso upright (vertical) to shift 90% of the load onto the triceps.",
+    "Lower yourself until your elbows are at a 90-degree angle; do not go deeper to protect shoulders.",
+    "Keep elbows tucked close to your ribs—do not let them flare out.",
+    "Once you can do 12 clean bodyweight reps, add a 2.5kg or 5kg plate to a dip belt.",
+  ],
+  image: [
+    "https://fitnessprogramer.com/wp-content/uploads/2021/04/CHAIR-DIPS.gif",
+  ],
+  video: ["https://youtube.com/embed/2z8JmcrW-As?si=TricepFocus"],
+  impact: [
+    "Tricep Long Head",
+    "Tricep Lateral Head",
+    "Medial Head (Overall Thickness)",
+    "Lower Chest Stability",
+  ],
+},
       {
         id: "pb-cardio-top",
         name: "High-Intensity Spin Sprints 🚲🔥",
