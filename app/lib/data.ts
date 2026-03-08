@@ -595,7 +595,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Romanian-Deadlift.gif",
         ],
-        video: ["https://www.youtube.com/embed/JCXUYuzwNrM"],
+        video: ["https://youtube.com/embed/uTA4GWNwUEo" ,"https://www.youtube.com/embed/JCXUYuzwNrM"],
         impact: ["Hamstring Mass", "Glute Power"],
       },
       {
