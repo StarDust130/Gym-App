@@ -514,28 +514,28 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: ["https://www.youtube.com/embed/GjxNfL-I7Sg"],
         impact: ["Lat Sweep", "Back Width"],
       },
-      {
+ {
         id: "bi-2",
-        name: "Standing Cable Bicep Curls",
-        reps: "12-15",
+        name: "Machine Preacher Curl",
+        reps: "10-12",
         sets: "3 sets",
         category: "Biceps",
-        note: "S-TIER PUMP. Constant tension throughout the rep. Superior for 'veiny' forearm look.",
+        note: "S-TIER ISOLATION. Paralyzes the shoulder joint. Forces 100% mechanical tension directly into the short head of the bicep.",
         tips: [
-          "Stand 1 foot back from the machine to keep tension at the bottom of the rep.",
-          "Glue your elbows to your ribcage—do not let them swing forward or back.",
-          "Slow 3-second negative (lowering) to maximize muscle fiber damage.",
-          "Hard 1-second squeeze at the top; imagine trying to pop your bicep.",
+          "Jam your armpits tightly over the top of the pad. Zero gap allowed.",
+          "Keep your triceps glued to the pad. If your elbows lift, you are shifting tension to the joints.",
+          "Strict 3-second negative (lowering) phase. Do not drop the weight.",
+          "Stop just short of full lockout at the bottom to maintain constant muscle tension."
         ],
-        image: ["https://burnfit.io/wp-content/uploads/2023/11/CABLE_CURL.gif"],
+        image: ["https://fitnessprogramer.com/wp-content/uploads/2021/04/Lever-Preacher-Curl.gif"], // Update with your actual asset path
         video: [
-          "https://youtube.com/embed/4Z1CGs9LsAg?si=_VmSDtrum9SxRWbf",
-          "https://youtube.com/embed/CrbTqNOlFgE?si=rLNyRRBc8NfXSLHc",
+          "https://youtube.com/embed/P13VQDU1q9c?si=87UGfs0V_H9wmy7b", 
+      
         ],
         impact: [
-          "Bicep Long & Short Head",
-          "Forearm Vascularity",
-          "Constant Muscle Tension",
+          "Bicep Short Head (Width & Fullness)",
+          "Zero Momentum Isolation",
+          "Brachialis Activation"
         ],
       },
       {
