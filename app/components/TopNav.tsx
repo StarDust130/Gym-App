@@ -9,10 +9,7 @@ import { Dumbbell, Salad } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-const NAV_ITEMS = [
-  { href: "/", label: "Workout", icon: Dumbbell },
-  { href: "/diet", label: "Diet", icon: Salad },
-];
+const NAV_ITEMS = [{ href: "/", label: "Workout", icon: Dumbbell }];
 
 export function TopNav() {
   const pathname = usePathname();
@@ -42,7 +39,7 @@ export function TopNav() {
       animate={{ y: hidden ? -110 : 0 }}
       className={cn(
         "sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-xl transition-shadow",
-        scrolled ? "shadow-[0_20px_60px_rgba(15,23,42,0.12)]" : "shadow-none"
+        scrolled ? "shadow-[0_20px_60px_rgba(15,23,42,0.12)]" : "shadow-none",
       )}
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:px-6">
@@ -69,7 +66,7 @@ export function TopNav() {
                   "flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.2em] transition",
                   isActive
                     ? "bg-primary text-primary-foreground shadow-[inset_2px_2px_6px_rgba(0,0,0,0.25)]"
-                    : "text-muted-foreground hover:text-foreground"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
                 aria-current={isActive ? "page" : undefined}
               >
