@@ -20,6 +20,7 @@ import {
   Goal,
   VideoOff,
   ImageOff,
+  Trash2,
 } from "lucide-react";
 import { WorkoutExercise } from "../lib/data";
 import { cn } from "@/lib/utils";
@@ -60,13 +61,20 @@ export const ExerciseCard = ({
   exercise,
   isCompleted,
   onToggle,
+  onRemove,
+  onEdit,
 }: {
   exercise: WorkoutExercise;
   isCompleted: boolean;
   onToggle: () => void;
+  onRemove?: () => void;
+  onEdit?: () => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [tab, setTab] = useState<TabType>("Images");
+
+  // Double-tap to remove state
+  const [removeStep, setRemoveStep] = useState(0);
 
   // --- AUTO CLOSE WHEN COMPLETED ---
   useEffect(() => {
@@ -216,13 +224,13 @@ export const ExerciseCard = ({
       {/* HEADER */}
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="relative z-10 flex cursor-pointer items-center gap-4 p-4 select-none"
+        className="relative z-10 flex cursor-pointer items-start gap-4 p-4 select-none group"
       >
         <motion.button
           whileTap={{ scale: 0.8, rotate: -10 }}
           onClick={handleCheckClick}
           className={cn(
-            "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-[3px] border-black transition-colors shadow-[2px_2px_0px_0px_#000]",
+            "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-[3px] border-black transition-colors shadow-[2px_2px_0px_0px_#000] mt-1",
             isCompleted
               ? "bg-neutral-400 border-neutral-500 shadow-none"
               : "bg-white hover:bg-neutral-50",
@@ -241,7 +249,7 @@ export const ExerciseCard = ({
           </AnimatePresence>
         </motion.button>
 
-        <div className="flex flex-1 flex-col justify-center min-w-0">
+        <div className="flex flex-1 flex-col justify-center min-w-0 pr-2">
           <h3
             className={cn(
               "font-black text-base uppercase tracking-tight text-black",
@@ -278,7 +286,7 @@ export const ExerciseCard = ({
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           className={cn(
-            "rounded-full border-2 border-black p-1 bg-white shrink-0",
+            "rounded-full border-2 border-black p-1 bg-white shrink-0 ml-auto",
             isCompleted && "border-neutral-400 bg-transparent",
           )}
         >
@@ -584,6 +592,79 @@ export const ExerciseCard = ({
                   )}
                 </motion.div>
               </div>
+
+              {/* Action Buttons inside Card */}
+              {(onRemove || onEdit) && (
+                <div className="pt-2 flex justify-end gap-2 border-t-[3px] border-black/10 mt-2">
+                  <AnimatePresence>
+                    {removeStep > 0 ? (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                        animate={{ opacity: 1, scale: 1, x: 0 }}
+                        exit={{ opacity: 0, scale: 0.8, x: 20 }}
+                        className="flex gap-2 w-full"
+                      >
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (removeStep === 1) {
+                              setRemoveStep(2);
+                            } else {
+                              onRemove?.();
+                            }
+                          }}
+                          className="flex h-10 flex-1 px-3 items-center justify-center rounded-xl border-[3px] border-black bg-[#FF5555] text-white font-black text-xs uppercase tracking-tight shadow-[2px_2px_0px_0px_#000] hover:bg-black active:translate-y-[2px] active:shadow-none transition-all"
+                        >
+                          {removeStep === 1
+                            ? "Are you sure?"
+                            : "Confirm Delete"}
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setRemoveStep(0);
+                          }}
+                          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-[3px] border-black bg-white text-black shadow-[2px_2px_0px_0px_#000] hover:bg-neutral-100 active:translate-y-[2px] active:shadow-none transition-all"
+                        >
+                          <X className="h-5 w-5 stroke-[3]" />
+                        </button>
+                      </motion.div>
+                    ) : (
+                      <>
+                        {onEdit && (
+                          <motion.button
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onEdit();
+                            }}
+                            className="flex h-10 flex-1 items-center justify-center gap-2 rounded-xl border-[3px] border-black bg-white text-black font-black text-[10px] uppercase tracking-wide shadow-[2px_2px_0px_0px_#000] hover:bg-[#8BE9FA] hover:shadow-[1px_1px_0px_0px_#000] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000] transition-all"
+                          >
+                            <Edit2 className="h-4 w-4 stroke-[3]" />
+                            Edit Custom
+                          </motion.button>
+                        )}
+                        {onRemove && (
+                          <motion.button
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setRemoveStep(1);
+                            }}
+                            className="flex h-10 w-12 shrink-0 items-center justify-center rounded-xl border-[3px] border-black bg-white text-neutral-400 shadow-[2px_2px_0px_0px_#000] hover:bg-[#FF5555] hover:text-white hover:shadow-[1px_1px_0px_0px_#000] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000] transition-all"
+                          >
+                            <Trash2 className="h-4 w-4 stroke-[3]" />
+                          </motion.button>
+                        )}
+                      </>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
             </div>
           </motion.div>
         )}
