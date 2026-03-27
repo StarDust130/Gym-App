@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { CalendarDays, Flame, Settings2 } from "lucide-react";
+import { CalendarDays, Flame, Settings2, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ type DashboardHeaderProps = {
   focus: string;
   planName: string;
   onOpenSettings: () => void;
+  onOpenAddExercise: () => void;
 };
 
 export function DashboardHeader({
@@ -24,6 +25,7 @@ export function DashboardHeader({
   focus,
   planName,
   onOpenSettings,
+  onOpenAddExercise,
 }: DashboardHeaderProps) {
   return (
     <motion.section
@@ -39,15 +41,26 @@ export function DashboardHeader({
             <span className="inline-flex min-h-7 items-center gap-1.5 rounded-full border border-border/40 bg-white/90 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.28em] shadow-sm backdrop-blur">
               {greeting}
             </span>
-            <Button
-              onClick={onOpenSettings}
-              size="icon-sm"
-              variant="ghost"
-              className="border border-border/60 bg-white/80 text-foreground shadow-[2px_2px_0_var(--border)] hover:-translate-y-0.5"
-              aria-label="Edit profile"
-            >
-              <Settings2 className="size-4" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={onOpenAddExercise}
+                size="icon-sm"
+                variant="ghost"
+                className="border border-border/60 bg-white/80 text-foreground shadow-[2px_2px_0_var(--border)] hover:-translate-y-0.5"
+                aria-label="Add Exercise"
+              >
+                <Plus className="size-4" />
+              </Button>
+              <Button
+                onClick={onOpenSettings}
+                size="icon-sm"
+                variant="ghost"
+                className="border border-border/60 bg-white/80 text-foreground shadow-[2px_2px_0_var(--border)] hover:-translate-y-0.5"
+                aria-label="Edit profile"
+              >
+                <Settings2 className="size-4" />
+              </Button>
+            </div>
           </div>
           <div className="space-y-1 text-balance sm:space-y-2">
             <h2 className="text-xl font-semibold leading-tight sm:text-2xl">
@@ -55,31 +68,30 @@ export function DashboardHeader({
                 {name}
               </span>
               ,{" "}
-                <span className="text-base sm:text-lg">
+              <span className="text-base sm:text-lg">
                 {(() => {
                   const lowered = name.trim().toLowerCase();
                   if (
-                  lowered === "archiviste" ||  lowered === "shreyesh" ||
-                  lowered.includes("arc")
+                    lowered === "archiviste" ||
+                    lowered === "shreyesh" ||
+                    lowered.includes("arc")
                   ) {
-                  return "you are gaylord 😏";
+                    return "you are gaylord 😏";
                   }
                   return "Ready to crush it today?";
                 })()}
-                </span>
+              </span>
             </h2>
             <p className="text-xs text-muted-foreground/80 sm:text-sm">
               {todayLabel} ·{" "}
               <span className="font-semibold text-foreground">
-                {new Date(dateDisplay).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                {new Date(dateDisplay).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
               </span>
             </p>
-          </div>
-          <div className="flex flex-wrap gap-2 text-[0.65rem] font-semibold uppercase tracking-widest text-foreground/80">
-            <span className="inline-flex items-center rounded-full border border-border/50 bg-foreground text-background px-3 py-1 shadow-sm">
-               {planName}
-            </span>
-          
           </div>
         </div>
 
@@ -108,15 +120,18 @@ type HeaderStatProps = {
 
 function HeaderStat({ icon, label, value }: HeaderStatProps) {
   return (
-    <div className="flex items-center gap-2 rounded-2xl border border-border/70 bg-white/80 px-3 py-2 text-left shadow-[2px_2px_0_var(--border)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_var(--border)] backdrop-blur sm:gap-3 sm:px-4 sm:py-4">
-      <div className="flex size-8 items-center justify-center rounded-full border border-border/60 bg-secondary/50 text-border sm:size-11">
+    <div className="flex items-center gap-2 rounded-2xl border border-border/70 bg-white/80 px-3 py-2 text-left shadow-[2px_2px_0_var(--border)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_var(--border)] backdrop-blur sm:gap-3 sm:px-4 sm:py-4 overflow-hidden">
+      <div className="flex size-8 shrink-0 items-center justify-center rounded-full border border-border/60 bg-secondary/50 text-border sm:size-11">
         {icon}
       </div>
-      <div className="leading-tight">
-        <p className="text-[0.55rem] uppercase tracking-[0.15em] text-muted-foreground sm:text-[0.65rem] sm:tracking-[0.3em]">
+      <div className="leading-tight min-w-0 flex-1">
+        <p className="text-[0.55rem] uppercase tracking-[0.15em] text-muted-foreground sm:text-[0.65rem] sm:tracking-[0.3em] truncate">
           {label}
         </p>
-        <p className="text-sm font-semibold text-foreground sm:text-lg">
+        <p
+          className="text-sm font-semibold text-foreground sm:text-lg truncate"
+          title={value}
+        >
           {value}
         </p>
       </div>
