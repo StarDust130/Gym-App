@@ -872,7 +872,7 @@ export function Dashboard({
                         </motion.div>
                         <p className="leading-tight">{addExerciseError}</p>
                       </div>
-                    </motion.div>
+                    </motion.div>d
                   )}
                 </AnimatePresence>
                 <div className="space-y-1.5">

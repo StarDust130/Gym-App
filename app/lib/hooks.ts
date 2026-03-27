@@ -11,12 +11,12 @@ import {
 const STORE_KEY = "gym-app-store";
 const DEFAULT_EXERCISE_IDS = new Set(
   Object.values(MOCK_WORKOUT_PLAN.workouts).flatMap((list) =>
-    list.map((exercise) => exercise.id)
-  )
+    list.map((exercise) => exercise.id),
+  ),
 );
 const DEFAULT_PLAN_MATCH_THRESHOLD = Math.max(
   5,
-  Math.floor(DEFAULT_EXERCISE_IDS.size * 0.5)
+  Math.floor(DEFAULT_EXERCISE_IDS.size * 0.5),
 );
 
 type UserProfile = {
@@ -114,6 +114,7 @@ export function useWorkoutStore() {
   const updateUserSettings = (payload: {
     name?: string;
     plan?: WorkoutPlan;
+    preserveProgress?: boolean;
   }) => {
     setState((prev) => {
       if (!prev.userProfile && !prev.workoutPlan) {
@@ -142,8 +143,10 @@ export function useWorkoutStore() {
         nextPlan = resolvedPlan.plan;
         nextPlanSource = resolvedPlan.planSource;
         nextPlanVersion = resolvedPlan.planVersion;
-        nextCompleted = [];
-        nextResetDate = todayKey;
+        if (!payload.preserveProgress) {
+          nextCompleted = [];
+          nextResetDate = todayKey;
+        }
       }
 
       return {
@@ -169,7 +172,7 @@ export function useWorkoutStore() {
 
 function migratePersistedState(
   raw: PersistedWorkoutStoreState,
-  todayKey: string
+  todayKey: string,
 ): WorkoutStoreState {
   const safeCompleted = Array.isArray(raw.completedExercises)
     ? raw.completedExercises
@@ -201,16 +204,16 @@ function migratePersistedState(
     base.planSource = "default";
     base.planVersion = WORKOUT_PLAN_VERSION;
   }
-// 🔥 FORCE RESET OLD DEFAULT SAVED AS CUSTOM
-if (
-  base.planSource === "custom" &&
-  base.workoutPlan?.planName === "Fitness Passion Gym (Beginner)"
-) {
-  base.workoutPlan = MOCK_WORKOUT_PLAN;
-  base.planSource = "default";
-  base.planVersion = WORKOUT_PLAN_VERSION;
-  base.completedExercises = [];
-}
+  // 🔥 FORCE RESET OLD DEFAULT SAVED AS CUSTOM
+  if (
+    base.planSource === "custom" &&
+    base.workoutPlan?.planName === "Fitness Passion Gym (Beginner)"
+  ) {
+    base.workoutPlan = MOCK_WORKOUT_PLAN;
+    base.planSource = "default";
+    base.planVersion = WORKOUT_PLAN_VERSION;
+    base.completedExercises = [];
+  }
 
   if (base.userProfile && !base.planSource && base.workoutPlan) {
     if (looksLikeDefaultPlan(base.workoutPlan)) {
@@ -246,7 +249,6 @@ function looksLikeDefaultPlan(plan: WorkoutPlan | null): boolean {
   // 🔥 ONLY trust planName match for default
   return plan.planName === MOCK_WORKOUT_PLAN.planName;
 }
-
 
 function resolvePlanSelection(plan: WorkoutPlan): {
   plan: WorkoutPlan;
