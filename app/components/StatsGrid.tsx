@@ -3,13 +3,7 @@ import { CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useMemo, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import {
-  RotateCcw,
-  Timer as TimerIcon,
-  Zap,
-  CheckCircle2,
-  PartyPopper,
-} from "lucide-react";
+import { CheckCircle2, PartyPopper, Zap } from "lucide-react";
 import Confetti from "react-confetti";
 
 interface StatsGridProps {
@@ -22,8 +16,6 @@ interface StatsGridProps {
 }
 
 const emojis = ["🐥", "💪", "🔥", "⚡", "🎯", "🚀", "⭐", "🏋️", "🎉", "✨"];
-const WORKOUT_DURATION = 45 * 60; // 45 minutes
-const TIMER_STORAGE_KEY = "workout-timer-state";
 
 // --- Helper Hook: Get Window Size ---
 function useWindowSize() {
@@ -48,67 +40,6 @@ function useWindowSize() {
 }
 
 export function StatsGrid(props: StatsGridProps) {
-  // --- TIMER STATE ---
-  const [timerState, setTimerState] = useState(() => {
-    try {
-      const saved = localStorage.getItem(TIMER_STORAGE_KEY);
-      if (!saved) {
-        return {
-          isActive: false,
-          startTimestamp: null,
-          timeLeft: WORKOUT_DURATION,
-          remainingAtLastStart: WORKOUT_DURATION,
-        };
-      }
-
-      const parsed = JSON.parse(saved) as {
-        isActive: boolean;
-        startTimestamp: number | null;
-        remainingAtLastStart: number;
-      };
-
-      const savedRemaining =
-        typeof parsed.remainingAtLastStart === "number"
-          ? parsed.remainingAtLastStart
-          : WORKOUT_DURATION;
-
-      if (parsed.isActive && parsed.startTimestamp) {
-        const now = Date.now();
-        const elapsed = Math.floor((now - parsed.startTimestamp) / 1000);
-        const remaining = savedRemaining - elapsed;
-        return {
-          isActive: true,
-          startTimestamp: parsed.startTimestamp,
-          timeLeft: remaining,
-          remainingAtLastStart: savedRemaining,
-        };
-      } else {
-        return {
-          isActive: false,
-          startTimestamp: null,
-          timeLeft: savedRemaining,
-          remainingAtLastStart: savedRemaining,
-        };
-      }
-    } catch {
-      // if something is wrong, fall back to defaults
-      return {
-        isActive: false,
-        startTimestamp: null,
-        timeLeft: WORKOUT_DURATION,
-        remainingAtLastStart: WORKOUT_DURATION,
-      };
-    }
-  });
-
-  const { isActive, startTimestamp, timeLeft, remainingAtLastStart } =
-    timerState;
-
-  // OLD UI STATES
-  const [endTime, setEndTime] = useState<string | null>(null);
-  const [completionDuration, setCompletionDuration] = useState<string | null>(
-    null
-  );
   const [showConfetti, setShowConfetti] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -126,153 +57,12 @@ export function StatsGrid(props: StatsGridProps) {
     setMounted(true);
   }, []);
 
-  // --- REAL TIME TIMER LOOP ---
   useEffect(() => {
-    if (!isActive || !startTimestamp) return;
-
-    const interval = setInterval(() => {
-      const now = Date.now();
-      const elapsed = Math.floor((now - startTimestamp) / 1000);
-      const remaining = remainingAtLastStart - elapsed;
-      setTimerState((prev) => ({ ...prev, timeLeft: remaining }));
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [isActive, startTimestamp, remainingAtLastStart]);
-
-  // --- HANDLE FINISH (BASED ON PROGRESS) ---
-  useEffect(() => {
-    if (isFinished && isActive) {
-      setTimerState((prev) => ({
-        ...prev,
-        isActive: false,
-        startTimestamp: null,
-        remainingAtLastStart: timeLeft,
-      }));
-
-      // total elapsed based on countdown
-      const totalElapsed = WORKOUT_DURATION - timeLeft;
-      const m = Math.floor(totalElapsed / 60);
-      const s = totalElapsed % 60;
-      const durationString = `${m} min ${s > 0 ? `${s}s` : ""}`;
-
-      setCompletionDuration(durationString);
-
-      setEndTime(
-        new Date().toLocaleTimeString("en-US", {
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true,
-        })
-      );
-
+    if (isFinished && mounted) {
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 5000);
-
-      // update storage to paused at current remaining
-      localStorage.setItem(
-        TIMER_STORAGE_KEY,
-        JSON.stringify({
-          isActive: false,
-          startTimestamp: null,
-          remainingAtLastStart: timeLeft,
-        })
-      );
     }
-  }, [isFinished, isActive, timeLeft]);
-
-  const persistTimerState = (
-    nextIsActive: boolean,
-    nextStartTimestamp: number | null,
-    nextRemainingAtLastStart: number
-  ) => {
-    localStorage.setItem(
-      TIMER_STORAGE_KEY,
-      JSON.stringify({
-        isActive: nextIsActive,
-        startTimestamp: nextStartTimestamp,
-        remainingAtLastStart: nextRemainingAtLastStart,
-      })
-    );
-  };
-
-  const toggleTimer = () => {
-    if (isFinished) return;
-
-    // START / RESUME
-    if (!isActive) {
-      const now = Date.now();
-      // snapshot current remaining as baseline for this run
-      const baselineRemaining = timeLeft;
-
-      setTimerState((prev) => ({
-        ...prev,
-        isActive: true,
-        startTimestamp: now,
-        remainingAtLastStart: baselineRemaining,
-      }));
-
-      persistTimerState(true, now, baselineRemaining);
-      return;
-    }
-
-    // PAUSE
-    if (isActive) {
-      let remainingNow = timeLeft;
-
-      if (startTimestamp) {
-        const now = Date.now();
-        const elapsed = Math.floor((now - startTimestamp) / 1000);
-        remainingNow = remainingAtLastStart - elapsed;
-      }
-
-      setTimerState((prev) => ({
-        ...prev,
-        isActive: false,
-        startTimestamp: null,
-        timeLeft: remainingNow,
-        remainingAtLastStart: remainingNow,
-      }));
-
-      persistTimerState(false, null, remainingNow);
-    }
-  };
-
-  const resetTimer = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setTimerState({
-      isActive: false,
-      startTimestamp: null,
-      timeLeft: WORKOUT_DURATION,
-      remainingAtLastStart: WORKOUT_DURATION,
-    });
-    setEndTime(null);
-    setCompletionDuration(null);
-    setShowConfetti(false);
-
-    localStorage.removeItem(TIMER_STORAGE_KEY);
-  };
-
-  const formatTime = (seconds: number) => {
-    const isOvertime = seconds < 0;
-    const absSeconds = Math.abs(seconds);
-    const m = Math.floor(absSeconds / 60);
-    const s = absSeconds % 60;
-    return {
-      text: `${isOvertime ? "+" : ""}${m.toString().padStart(2, "0")}:${s
-        .toString()
-        .padStart(2, "0")}`,
-      isOvertime,
-    };
-  };
-
-  const { text: timeText, isOvertime } = formatTime(timeLeft);
-
-  const getStatusColor = () => {
-    if (isFinished) return "text-emerald-600";
-    if (isOvertime) return "text-red-600";
-    return "text-primary";
-  };
+  }, [isFinished, mounted]);
 
   return (
     <motion.div
@@ -294,182 +84,80 @@ export function StatsGrid(props: StatsGridProps) {
               gravity={0.2}
             />
           </div>,
-          document.body
+          document.body,
         )}
 
       <motion.div
-        animate={
-          isOvertime && isActive && !isFinished
-            ? {
-                borderColor: ["#e5e7eb", "#ef4444", "#e5e7eb"],
-                boxShadow: [
-                  "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                  "0 0 0 4px rgba(239, 68, 68, 0.1)",
-                  "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                ],
-              }
-            : {
-                borderColor: isFinished ? "#10b981" : "#e5e7eb",
-                boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-              }
-        }
-        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+        animate={{
+          borderColor: isFinished ? "#10b981" : "#e5e7eb",
+          boxShadow: isFinished
+            ? "0 10px 15px -3px rgba(16, 185, 129, 0.2)"
+            : "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+        }}
+        transition={{ duration: 0.5 }}
         className="neubrut-card relative overflow-hidden rounded-xl border bg-white shadow-lg ring-1 ring-black/5 backdrop-blur-sm"
       >
-        <CardContent className="space-y-6 px-5 py-6 relative z-10">
-          {/* --- TIMER SECTION --- */}
-          <div
-            onClick={toggleTimer}
-            className="relative flex flex-col items-center justify-center cursor-pointer select-none active:scale-95 transition-transform duration-200 min-h-[100px]"
-          >
-            <div className="flex items-center gap-2 text-muted-foreground mb-2">
-              {isFinished ? (
-                <PartyPopper className="w-3.5 h-3.5 text-emerald-500" />
-              ) : (
-                <TimerIcon className="w-3.5 h-3.5" />
-              )}
-              <span className="text-[10px] uppercase tracking-[0.3em] font-semibold">
-                {isFinished
-                  ? "Session Complete"
-                  : isOvertime
-                  ? "Overtime"
-                  : "Session Timer"}
+        <CardContent className="space-y-6 px-5 py-6 flex flex-col justify-center min-h-[140px]">
+          {isFinished && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="absolute top-4 right-4 flex items-center gap-1.5 text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider"
+            >
+              <PartyPopper className="w-3.5 h-3.5" />
+              Complete
+            </motion.div>
+          )}
+
+          {/* --- PROGRESS SECTION --- */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] uppercase tracking-[0.3em] font-semibold text-muted-foreground flex items-center gap-2">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                Workout Progress
               </span>
+              {!isFinished && (
+                <div className="flex items-center gap-2 bg-secondary/50 px-3 py-1 rounded-full">
+                  <span
+                    className="text-xl leading-none"
+                    role="img"
+                    aria-label="emoji"
+                  >
+                    {dailyEmoji}
+                  </span>
+                  <span className="text-sm font-bold text-foreground">
+                    {props.todayExercisesDone} / {props.todayExercisesTotal}
+                  </span>
+                </div>
+              )}
             </div>
 
-            <div className="relative flex items-center gap-3">
-              <motion.div
-                key="timer-display"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className={`text-5xl font-bold tracking-tighter tabular-nums leading-none ${getStatusColor()}`}
-              >
-                {timeText}
-              </motion.div>
-
-              <AnimatePresence>
-                {!isFinished &&
-                  timeLeft !== WORKOUT_DURATION &&
-                  startTimestamp && (
-                    <motion.button
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0, opacity: 0 }}
-                      onClick={resetTimer}
-                      className="absolute -right-12 p-2 text-muted-foreground hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
-                    >
-                      <RotateCcw className="w-5 h-5" />
-                    </motion.button>
-                  )}
-              </AnimatePresence>
-            </div>
-
-            <div className="h-5 mt-2 flex items-center justify-center w-full">
-              <AnimatePresence mode="wait">
-                {isFinished ? (
-                  <motion.div
-                    key="finished"
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col items-center text-emerald-600"
-                  >
-                    <div className="flex items-center gap-1.5 text-xs font-bold">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      Completed in {completionDuration}
-                    </div>
-
-                    <span className="text-[10px] font-medium opacity-80 mt-0.5">
-                      {startTimestamp
-                        ? new Date(startTimestamp).toLocaleTimeString("en-US", {
-                            hour: "numeric",
-                            minute: "2-digit",
-                            hour12: true,
-                          })
-                        : null}{" "}
-                      - {endTime}
-                    </span>
-                  </motion.div>
-                ) : isActive ? (
-                  <motion.div
-                    key="active"
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 5 }}
-                    className={`flex items-center gap-1.5 text-xs font-medium ${
-                      isOvertime
-                        ? "text-red-500 font-bold animate-pulse"
-                        : "text-emerald-600"
-                    }`}
-                  >
-                    {isOvertime && <Zap className="w-3 h-3 fill-current" />}
-                    {isOvertime
-                      ? "Limit Exceeded!"
-                      : startTimestamp
-                      ? `Started at ${new Date(
-                          startTimestamp
-                        ).toLocaleTimeString("en-US", {
-                          hour: "numeric",
-                          minute: "2-digit",
-                          hour12: true,
-                        })}`
-                      : "Running..."}
-                  </motion.div>
-                ) : (
-                  <motion.p
-                    key="paused"
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 5 }}
-                    className="text-xs font-medium text-muted-foreground"
-                  >
-                    Tap to Start
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-
-          <div className="h-px w-full bg-border/60" />
-
-          {/* --- BOTTOM INFO SECTION --- */}
-          <div className="space-y-5">
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">
-                  Workout Completed
-                </p>
-                <p className="text-3xl font-semibold text-primary">
+            <div className="relative pt-1">
+              <Progress
+                value={props.progressPercent}
+                className="h-2.5 sm:h-3 rounded-full bg-secondary/30 w-full overflow-hidden"
+              />
+              <div className="flex justify-between items-center mt-2.5">
+                <span className="text-3xl sm:text-4xl font-black tracking-tighter text-foreground">
                   {Math.round(props.progressPercent)}%
-                </p>
-              </div>
-              <motion.div
-                key={`${props.todayExercisesDone}-${props.todayExercisesTotal}`}
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 280,
-                  damping: 20,
-                }}
-                className="inline-flex items-center gap-2 rounded-md border border-primary/40 bg-primary/5 px-2.5 py-1.5 text-xs font-semibold text-foreground shadow-[3px_3px_0_rgba(0,0,0,0.15)]"
-              >
-                <span className="text-lg leading-none">{dailyEmoji}</span>
-                <span className="tracking-wide">
-                  {props.todayExercisesDone}
-                  <span className="mx-0.5 text-muted-foreground">/</span>
-                  {props.todayExercisesTotal}
                 </span>
-              </motion.div>
+                <AnimatePresence>
+                  {isFinished && (
+                    <motion.div
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="text-emerald-600 flex items-center gap-1.5"
+                    >
+                      <CheckCircle2 className="w-5 h-5" />
+                      <span className="text-sm font-bold">Done!</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
-
-            <Progress
-              value={props.progressPercent}
-              className="h-1.5 border border-border bg-transparent [&>div]:bg-linear-to-r [&>div]:from-primary [&>div]:to-primary/60"
-            />
           </div>
         </CardContent>
       </motion.div>
     </motion.div>
   );
 }
-//hello
