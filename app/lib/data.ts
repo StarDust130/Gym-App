@@ -241,7 +241,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         name: "Barbell Squat",
         reps: "5-8",
         sets: "4 Sets",
-        category: "Legs", 
+        category: "Legs",
         note: "🔥 EXERCISE 1. THE KING. Releases testosterone. Do not skip.",
         tips: [
           "😤 Take deep breath into belly",
@@ -514,7 +514,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: ["https://www.youtube.com/embed/GjxNfL-I7Sg"],
         impact: ["Lat Sweep", "Back Width"],
       },
- {
+      {
         id: "bi-2",
         name: "Machine Preacher Curl",
         reps: "10-12",
@@ -525,17 +525,16 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Jam your armpits tightly over the top of the pad. Zero gap allowed.",
           "Keep your triceps glued to the pad. If your elbows lift, you are shifting tension to the joints.",
           "Strict 3-second negative (lowering) phase. Do not drop the weight.",
-          "Stop just short of full lockout at the bottom to maintain constant muscle tension."
+          "Stop just short of full lockout at the bottom to maintain constant muscle tension.",
         ],
-        image: ["https://fitnessprogramer.com/wp-content/uploads/2021/04/Lever-Preacher-Curl.gif"], // Update with your actual asset path
-        video: [
-          "https://youtube.com/embed/P13VQDU1q9c?si=87UGfs0V_H9wmy7b", 
-      
-        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/04/Lever-Preacher-Curl.gif",
+        ], // Update with your actual asset path
+        video: ["https://youtube.com/embed/P13VQDU1q9c?si=87UGfs0V_H9wmy7b"],
         impact: [
           "Bicep Short Head (Width & Fullness)",
           "Zero Momentum Isolation",
-          "Brachialis Activation"
+          "Brachialis Activation",
         ],
       },
       {
@@ -595,7 +594,10 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Romanian-Deadlift.gif",
         ],
-        video: ["https://youtube.com/embed/uTA4GWNwUEo" ,"https://www.youtube.com/embed/JCXUYuzwNrM"],
+        video: [
+          "https://youtube.com/embed/uTA4GWNwUEo",
+          "https://www.youtube.com/embed/JCXUYuzwNrM",
+        ],
         impact: ["Hamstring Mass", "Glute Power"],
       },
       {
@@ -618,25 +620,25 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
       },
       {
         id: "lb-3",
-        name: "Bulgarian Split Squat 🦵🔥",
-        reps: "8-12 Per Leg",
-        sets: "3 Sets",
-        category: "Legs / Unilateral",
-        note: "🏆 THE UPGRADE: Rear-foot elevation creates a massive stretch. Superior to lunges for building mass and core stability.",
+        name: "Machine Hip Thrust",
+        reps: "10-12",
+        sets: "3 sets",
+        category: "Legs",
+        note: "🍑 EXERCISE 3. S-TIER GLUTE ISOLATION. Eliminates barbell setup time and stabilization tax. Pure mechanical tension.",
         tips: [
-          "Rest your back foot on a bench or chair behind you.",
-          "Keep your front shin vertical to protect your knee.",
-          "Lean slightly forward (15°) to maximize glute and quad activation.",
-          "Drive upward through the heel of your front foot.",
+          "Fasten the seatbelt tightly across your pelvic bone, not your stomach.",
+          "Tuck your chin to your chest to keep your spine neutral.",
+          "Drive hard through your heels, not your toes.",
+          "Violent 2-second squeeze at the top of the movement.",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/05/Dumbbell-Bulgarian-Split-Squat.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2022/02/Hip-Thrust-Machine.gif",
         ],
-        video: ["https://youtube.com/embed/Q20qIs79tJc?si=BtqMSG8OwCCaRTG-"],
+        video: ["https://youtube.com/embed/m8g9VogoxMo?si=SGgX7GCmSkHh9w3s"], // Update with actual machine video
         impact: [
           "Deep Glute Growth 🍑",
-          "Quad Definition 🍗",
-          "Core Stability 🦾",
+          "Zero Lower Back Strain 🦾",
+          "Time Efficiency ⏱️",
         ],
       },
       {
