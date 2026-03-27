@@ -11,8 +11,10 @@ import { WorkoutExercise } from "../lib/data";
 type WorkoutListProps = {
   exercises: WorkoutExercise[];
   completedIds: string[];
+  skippedIds: string[];
   isLoading?: boolean;
   onToggle: (exerciseId: string) => void;
+  onSkipToggle: (exerciseId: string) => void;
   onRemove: (exerciseId: string) => void;
   onEdit?: (exercise: WorkoutExercise) => void;
 };
@@ -105,8 +107,10 @@ const CompletionCard = () => {
 export function WorkoutList({
   exercises,
   completedIds,
+  skippedIds,
   isLoading = false,
   onToggle,
+  onSkipToggle,
   onRemove,
   onEdit,
 }: WorkoutListProps) {
@@ -150,15 +154,15 @@ export function WorkoutList({
     // Step B: SORT ITEMS WITHIN GROUPS
     groups.forEach((group) => {
       group.items.sort((a, b) => {
-        const aDone = completedIds.includes(a.id);
-        const bDone = completedIds.includes(b.id);
+        const aDone = completedIds.includes(a.id) || skippedIds.includes(a.id);
+        const bDone = completedIds.includes(b.id) || skippedIds.includes(b.id);
         if (aDone === bDone) return 0; // Keep original order if status is same
         return aDone ? 1 : -1; // Move completed (true) to bottom
       });
     });
 
     return groups;
-  }, [finalExercises, completedIds]);
+  }, [finalExercises, completedIds, skippedIds]);
 
   // 3. AUTO-COLLAPSE LOGIC
   useEffect(() => {
@@ -168,8 +172,9 @@ export function WorkoutList({
     let shouldUpdate = false;
 
     groupedData.forEach((group) => {
-      const isComplete = group.items.every((item) =>
-        completedIds.includes(item.id),
+      const isComplete = group.items.every(
+        (item) =>
+          completedIds.includes(item.id) || skippedIds.includes(item.id),
       );
 
       if (isComplete && !collapsedCategories.includes(group.category)) {
@@ -181,13 +186,15 @@ export function WorkoutList({
     if (shouldUpdate) {
       setCollapsedCategories((prev) => [...prev, ...categoriesToCollapse]);
     }
-  }, [completedIds, groupedData]);
+  }, [completedIds, skippedIds, groupedData]);
 
   // 4. CHECK GLOBAL COMPLETION
   const isGlobalDone = useMemo(() => {
     if (!finalExercises.length) return false;
-    return finalExercises.every((ex) => completedIds.includes(ex.id));
-  }, [finalExercises, completedIds]);
+    return finalExercises.every(
+      (ex) => completedIds.includes(ex.id) || skippedIds.includes(ex.id),
+    );
+  }, [finalExercises, completedIds, skippedIds]);
 
   if (isLoading) return <LoadingSkeleton />;
   if (!groupedData || groupedData.length === 0) return <RestDayCard />;
@@ -200,8 +207,8 @@ export function WorkoutList({
         animate={{ opacity: 1 }}
       >
         {groupedData.map((group) => {
-          const completedCount = group.items.filter((i) =>
-            completedIds.includes(i.id),
+          const completedCount = group.items.filter(
+            (i) => completedIds.includes(i.id) || skippedIds.includes(i.id),
           ).length;
           const totalCount = group.items.length;
           const isAllDone = completedCount === totalCount && totalCount > 0;
@@ -319,7 +326,9 @@ export function WorkoutList({
                           key={exercise.id}
                           exercise={exercise}
                           isCompleted={completedIds.includes(exercise.id)}
+                          isSkipped={skippedIds.includes(exercise.id)}
                           onToggle={() => onToggle(exercise.id)}
+                          onSkip={() => onSkipToggle(exercise.id)}
                           onRemove={
                             exercise.id.startsWith("custom-")
                               ? () => onRemove(exercise.id)

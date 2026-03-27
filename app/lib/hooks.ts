@@ -32,6 +32,7 @@ type WorkoutStoreState = {
   planSource: PlanSource | null;
   planVersion: string | null;
   completedExercises: string[];
+  skippedExercises: string[];
   lastResetDate: string | null;
 };
 
@@ -41,6 +42,7 @@ type PersistedWorkoutStoreState = {
   planSource: PlanSource | null;
   planVersion: string | null;
   completedExercises: string[];
+  skippedExercises?: string[];
   lastResetDate: string | null;
   // legacy field from previous versions
   workoutPlanFingerprint?: string | null;
@@ -52,6 +54,7 @@ const initialState: WorkoutStoreState = {
   planSource: null,
   planVersion: null,
   completedExercises: [],
+  skippedExercises: [],
   lastResetDate: null,
 };
 
@@ -80,6 +83,7 @@ export function useWorkoutStore() {
       planSource: state.planSource,
       planVersion: state.planVersion,
       completedExercises: state.completedExercises,
+      skippedExercises: state.skippedExercises,
       lastResetDate: state.lastResetDate,
     };
     window.localStorage.setItem(STORE_KEY, JSON.stringify(persistable));
@@ -93,6 +97,7 @@ export function useWorkoutStore() {
       planSource: resolvedPlan.planSource,
       planVersion: resolvedPlan.planVersion,
       completedExercises: [],
+      skippedExercises: [],
       lastResetDate: todayKey,
     });
   };
@@ -105,6 +110,24 @@ export function useWorkoutStore() {
         completedExercises: exists
           ? prev.completedExercises.filter((id) => id !== exerciseId)
           : [...prev.completedExercises, exerciseId],
+        skippedExercises: prev.skippedExercises.filter(
+          (id) => id !== exerciseId,
+        ),
+      };
+    });
+  };
+
+  const toggleSkip = (exerciseId: string) => {
+    setState((prev) => {
+      const exists = prev.skippedExercises.includes(exerciseId);
+      return {
+        ...prev,
+        skippedExercises: exists
+          ? prev.skippedExercises.filter((id) => id !== exerciseId)
+          : [...prev.skippedExercises, exerciseId],
+        completedExercises: prev.completedExercises.filter(
+          (id) => id !== exerciseId,
+        ),
       };
     });
   };
@@ -136,6 +159,7 @@ export function useWorkoutStore() {
       let nextPlanSource = prev.planSource;
       let nextPlanVersion = prev.planVersion;
       let nextCompleted = prev.completedExercises;
+      let nextSkipped = prev.skippedExercises;
       let nextResetDate = prev.lastResetDate;
 
       if (payload.plan) {
@@ -145,6 +169,7 @@ export function useWorkoutStore() {
         nextPlanVersion = resolvedPlan.planVersion;
         if (!payload.preserveProgress) {
           nextCompleted = [];
+          nextSkipped = [];
           nextResetDate = todayKey;
         }
       }
@@ -156,6 +181,7 @@ export function useWorkoutStore() {
         planSource: nextPlanSource,
         planVersion: nextPlanVersion,
         completedExercises: nextCompleted,
+        skippedExercises: nextSkipped,
         lastResetDate: nextResetDate,
       };
     });
@@ -165,6 +191,7 @@ export function useWorkoutStore() {
     ...state,
     completeOnboarding,
     toggleComplete,
+    toggleSkip,
     resetAll,
     updateUserSettings,
   };
@@ -177,6 +204,9 @@ function migratePersistedState(
   const safeCompleted = Array.isArray(raw.completedExercises)
     ? raw.completedExercises
     : [];
+  const safeSkipped = Array.isArray(raw.skippedExercises)
+    ? raw.skippedExercises
+    : [];
 
   const base: WorkoutStoreState = {
     userProfile: raw.userProfile ?? null,
@@ -184,6 +214,7 @@ function migratePersistedState(
     planSource: raw.planSource ?? null,
     planVersion: raw.planVersion ?? raw.workoutPlanFingerprint ?? null,
     completedExercises: safeCompleted,
+    skippedExercises: safeSkipped,
     lastResetDate: raw.lastResetDate ?? todayKey,
   };
 
@@ -198,6 +229,7 @@ function migratePersistedState(
     base.planVersion = WORKOUT_PLAN_VERSION;
     if (versionChanged) {
       base.completedExercises = [];
+      base.skippedExercises = [];
     }
   } else if (!base.workoutPlan) {
     base.workoutPlan = MOCK_WORKOUT_PLAN;
@@ -213,6 +245,7 @@ function migratePersistedState(
     base.planSource = "default";
     base.planVersion = WORKOUT_PLAN_VERSION;
     base.completedExercises = [];
+    base.skippedExercises = [];
   }
 
   if (base.userProfile && !base.planSource && base.workoutPlan) {
@@ -228,6 +261,7 @@ function migratePersistedState(
 
   if (base.lastResetDate !== todayKey) {
     base.completedExercises = [];
+    base.skippedExercises = [];
     base.lastResetDate = todayKey;
   }
 

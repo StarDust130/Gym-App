@@ -9,7 +9,9 @@ export default function HomePage() {
     userProfile,
     workoutPlan,
     completedExercises,
+    skippedExercises,
     toggleComplete,
+    toggleSkip,
     completeOnboarding,
     updateUserSettings,
   } = useWorkoutStore();
@@ -30,7 +32,9 @@ export default function HomePage() {
       joinDate={userProfile.joinDate}
       workoutPlan={workoutPlan}
       completedExercises={completedExercises}
+      skippedExercises={skippedExercises}
       toggleComplete={toggleComplete}
+      toggleSkip={toggleSkip}
       onUpdateSettings={updateUserSettings}
     />
   );

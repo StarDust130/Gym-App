@@ -27,7 +27,9 @@ interface DashboardProps {
   joinDate: string;
   workoutPlan: WorkoutPlan;
   completedExercises: string[];
+  skippedExercises: string[];
   toggleComplete: (exerciseId: string) => void;
+  toggleSkip: (exerciseId: string) => void;
   onUpdateSettings: (payload: {
     name?: string;
     plan?: WorkoutPlan;
@@ -52,7 +54,9 @@ export function Dashboard({
   joinDate,
   workoutPlan,
   completedExercises,
+  skippedExercises,
   toggleComplete,
+  toggleSkip,
   onUpdateSettings,
 }: DashboardProps) {
   const today = new Date();
@@ -63,9 +67,12 @@ export function Dashboard({
   const progressPercent = exercisesToday.length
     ? Math.min(
         100,
-        (completedExercises.filter((id) =>
+        ((completedExercises.filter((id) =>
           exercisesToday.some((ex) => ex.id === id),
-        ).length /
+        ).length +
+          skippedExercises.filter((id) =>
+            exercisesToday.some((ex) => ex.id === id),
+          ).length) /
           exercisesToday.length) *
           100,
       )
@@ -480,6 +487,9 @@ export function Dashboard({
               todayExercisesDone={
                 completedExercises.filter((id) =>
                   exercisesToday.some((ex) => ex.id === id),
+                ).length +
+                skippedExercises.filter((id) =>
+                  exercisesToday.some((ex) => ex.id === id),
                 ).length
               }
               todayExercisesTotal={exercisesToday.length}
@@ -512,8 +522,10 @@ export function Dashboard({
                 <WorkoutList
                   exercises={exercisesToday}
                   completedIds={completedExercises}
+                  skippedIds={skippedExercises}
                   dayLabel={todayLabel}
                   onToggle={toggleComplete}
+                  onSkipToggle={toggleSkip}
                   onRemove={handleRemoveExercise}
                   onEdit={openEditExercise}
                 />

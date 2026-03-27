@@ -21,6 +21,7 @@ import {
   VideoOff,
   ImageOff,
   Trash2,
+  SkipForward,
 } from "lucide-react";
 import { WorkoutExercise } from "../lib/data";
 import { cn } from "@/lib/utils";
@@ -60,13 +61,17 @@ const getSmartFeedback = (reps: number) => {
 export const ExerciseCard = ({
   exercise,
   isCompleted,
+  isSkipped,
   onToggle,
+  onSkip,
   onRemove,
   onEdit,
 }: {
   exercise: WorkoutExercise;
   isCompleted: boolean;
+  isSkipped?: boolean;
   onToggle: () => void;
+  onSkip?: () => void;
   onRemove?: () => void;
   onEdit?: () => void;
 }) => {
@@ -76,12 +81,12 @@ export const ExerciseCard = ({
   // Double-tap to remove state
   const [removeStep, setRemoveStep] = useState(0);
 
-  // --- AUTO CLOSE WHEN COMPLETED ---
+  // --- AUTO CLOSE WHEN COMPLETED OR SKIPPED ---
   useEffect(() => {
-    if (isCompleted) {
+    if (isCompleted || isSkipped) {
       setIsOpen(false);
     }
-  }, [isCompleted]);
+  }, [isCompleted, isSkipped]);
 
   // --- LOGIC: STRICT LOGGING RULES ---
   const showLogging = useMemo(() => {
@@ -217,7 +222,7 @@ export const ExerciseCard = ({
         isOpen
           ? "shadow-[8px_8px_0px_0px_#000]"
           : "shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] hover:-translate-y-0.5",
-        isCompleted &&
+        (isCompleted || isSkipped) &&
           "bg-neutral-100 border-neutral-400 opacity-60 grayscale-[0.8] shadow-none hover:translate-y-0 hover:shadow-none",
       )}
     >
@@ -230,20 +235,33 @@ export const ExerciseCard = ({
           whileTap={{ scale: 0.8, rotate: -10 }}
           onClick={handleCheckClick}
           className={cn(
-            "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-[3px] border-black transition-colors shadow-[2px_2px_0px_0px_#000] mt-1",
+            "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-[3px] border-black transition-colors mt-1",
             isCompleted
-              ? "bg-neutral-400 border-neutral-500 shadow-none"
-              : "bg-white hover:bg-neutral-50",
+              ? "bg-[#B8FF9F] border-black shadow-none"
+              : isSkipped
+                ? "bg-neutral-300 border-neutral-500 shadow-none"
+                : "bg-white hover:bg-neutral-50 shadow-[2px_2px_0px_0px_#000]",
           )}
         >
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {isCompleted && (
               <motion.div
+                key="completed"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0 }}
               >
-                <Check className="h-6 w-6 text-white stroke-[4]" />
+                <Check className="h-6 w-6 text-black stroke-[4]" />
+              </motion.div>
+            )}
+            {isSkipped && !isCompleted && (
+              <motion.div
+                key="skipped"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+              >
+                <SkipForward className="h-5 w-5 text-neutral-600 stroke-[3]" />
               </motion.div>
             )}
           </AnimatePresence>
@@ -594,7 +612,7 @@ export const ExerciseCard = ({
               </div>
 
               {/* Action Buttons inside Card */}
-              {(onRemove || onEdit) && (
+              {(onRemove || onEdit || onSkip) && (
                 <div className="pt-2 flex justify-end gap-2 border-t-[3px] border-black/10 mt-2">
                   <AnimatePresence>
                     {removeStep > 0 ? (
@@ -631,6 +649,26 @@ export const ExerciseCard = ({
                       </motion.div>
                     ) : (
                       <>
+                        {onSkip && (
+                          <motion.button
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onSkip();
+                            }}
+                            className={cn(
+                              "flex h-10 flex-1 items-center justify-center gap-2 rounded-xl border-[3px] border-black text-black font-black text-[10px] uppercase tracking-wide shadow-[2px_2px_0px_0px_#000] hover:shadow-[1px_1px_0px_0px_#000] active:translate-y-[1px] active:shadow-none transition-all",
+                              isSkipped
+                                ? "bg-neutral-200 hover:bg-neutral-300"
+                                : "bg-[#FFE27A] hover:bg-[#FFD000]",
+                            )}
+                          >
+                            <SkipForward className="h-4 w-4 stroke-[3]" />
+                            {isSkipped ? "Unskip" : "Skip"}
+                          </motion.button>
+                        )}
                         {onEdit && (
                           <motion.button
                             initial={{ opacity: 0 }}
@@ -692,7 +730,7 @@ const EmptyState = ({ icon: Icon, label }: any) => (
       {label}
     </h3>
     <p className="font-bold text-neutral-400 text-xs uppercase tracking-[0.2em] mt-1">
-      Data Missing
+      No content available 🤭
     </p>
   </div>
 );
