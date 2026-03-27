@@ -13,6 +13,8 @@ type WorkoutListProps = {
   completedIds: string[];
   isLoading?: boolean;
   onToggle: (exerciseId: string) => void;
+  onRemove: (exerciseId: string) => void;
+  onEdit?: (exercise: WorkoutExercise) => void;
 };
 
 // --- STRETCHING DATA ---
@@ -105,6 +107,8 @@ export function WorkoutList({
   completedIds,
   isLoading = false,
   onToggle,
+  onRemove,
+  onEdit,
 }: WorkoutListProps) {
   // Collapsible State
   const [collapsedCategories, setCollapsedCategories] = useState<string[]>([]);
@@ -113,7 +117,7 @@ export function WorkoutList({
     setCollapsedCategories((prev) =>
       prev.includes(category)
         ? prev.filter((c) => c !== category)
-        : [...prev, category]
+        : [...prev, category],
     );
   };
 
@@ -165,7 +169,7 @@ export function WorkoutList({
 
     groupedData.forEach((group) => {
       const isComplete = group.items.every((item) =>
-        completedIds.includes(item.id)
+        completedIds.includes(item.id),
       );
 
       if (isComplete && !collapsedCategories.includes(group.category)) {
@@ -197,7 +201,7 @@ export function WorkoutList({
       >
         {groupedData.map((group) => {
           const completedCount = group.items.filter((i) =>
-            completedIds.includes(i.id)
+            completedIds.includes(i.id),
           ).length;
           const totalCount = group.items.length;
           const isAllDone = completedCount === totalCount && totalCount > 0;
@@ -215,7 +219,7 @@ export function WorkoutList({
                   layout
                   className={cn(
                     "relative overflow-hidden rounded-xl border-[3px] border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors duration-500",
-                    isAllDone ? "bg-emerald-400" : "bg-white"
+                    isAllDone ? "bg-emerald-400" : "bg-white",
                   )}
                 >
                   {/* Progress Bar */}
@@ -240,7 +244,7 @@ export function WorkoutList({
                           "flex h-9 w-9 items-center justify-center rounded-lg border-[3px] border-black font-black uppercase shadow-[2px_2px_0px_0px_#000] transition-all duration-300",
                           isAllDone
                             ? "bg-[#FFE27A] scale-110 rotate-3"
-                            : "bg-black text-white"
+                            : "bg-black text-white",
                         )}
                       >
                         {isAllDone ? (
@@ -267,7 +271,7 @@ export function WorkoutList({
                           "text-lg font-black uppercase tracking-tighter transition-colors duration-300",
                           isAllDone
                             ? "text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]"
-                            : "text-black"
+                            : "text-black",
                         )}
                       >
                         {group.category}
@@ -281,7 +285,7 @@ export function WorkoutList({
                           "rounded-md border-2 border-black px-2 py-1 text-xs font-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)]",
                           isAllDone
                             ? "bg-white text-emerald-600"
-                            : "bg-black text-white"
+                            : "bg-black text-white",
                         )}
                       >
                         {isAllDone ? "Done" : `${completedCount}/${totalCount}`}
@@ -290,7 +294,7 @@ export function WorkoutList({
                         animate={{ rotate: isCollapsed ? -90 : 0 }}
                         className={cn(
                           "rounded-full p-1 border-2 border-black bg-white",
-                          isAllDone && "opacity-80"
+                          isAllDone && "opacity-80",
                         )}
                       >
                         <ChevronDown className="w-4 h-4 text-black stroke-[3]" />
@@ -316,6 +320,16 @@ export function WorkoutList({
                           exercise={exercise}
                           isCompleted={completedIds.includes(exercise.id)}
                           onToggle={() => onToggle(exercise.id)}
+                          onRemove={
+                            exercise.id.startsWith("custom-")
+                              ? () => onRemove(exercise.id)
+                              : undefined
+                          }
+                          onEdit={
+                            exercise.id.startsWith("custom-") && onEdit
+                              ? () => onEdit(exercise)
+                              : undefined
+                          }
                         />
                       ))}
                     </div>
