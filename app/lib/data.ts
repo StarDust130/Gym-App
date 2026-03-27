@@ -22,7 +22,7 @@ export type WorkoutPlan = {
 };
 
 export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
-  planName: "Fitness Passion Gym (Skinny-Fat Recomposition - 10/10 Protocol)",
+  planName: "Thor Plan 😎",
 
   schedule: {
     Monday: "Push A (Heavy)",
@@ -241,7 +241,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         name: "Barbell Squat",
         reps: "5-8",
         sets: "4 Sets",
-        category: "Legs",
+        category: "Legs", 
         note: "🔥 EXERCISE 1. THE KING. Releases testosterone. Do not skip.",
         tips: [
           "😤 Take deep breath into belly",
@@ -413,30 +413,30 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: ["https://youtube.com/embed/Kl3LEzQ5Zqs?si=NivM87vJOi1scVss"],
         impact: ["Side Delts", "V-Taper"],
       },
-     {
-  id: "pb-5",
-  name: "Weighted Tricep Dips",
-  reps: "8-12",
-  sets: "3 sets",
-  category: "Triceps",
-  note: "The S-Tier mass builder. Superior to skull crushers for overall arm thickness and power.",
-  tips: [
-    "Keep your torso upright (vertical) to shift 90% of the load onto the triceps.",
-    "Lower yourself until your elbows are at a 90-degree angle; do not go deeper to protect shoulders.",
-    "Keep elbows tucked close to your ribs—do not let them flare out.",
-    "Once you can do 12 clean bodyweight reps, add a 2.5kg or 5kg plate to a dip belt.",
-  ],
-  image: [
-    "https://fitnessprogramer.com/wp-content/uploads/2021/04/CHAIR-DIPS.gif",
-  ],
-  video: ["https://youtube.com/embed/2z8JmcrW-As?si=TricepFocus"],
-  impact: [
-    "Tricep Long Head",
-    "Tricep Lateral Head",
-    "Medial Head (Overall Thickness)",
-    "Lower Chest Stability",
-  ],
-},
+      {
+        id: "pb-5",
+        name: "Weighted Tricep Dips",
+        reps: "8-12",
+        sets: "3 sets",
+        category: "Triceps",
+        note: "The S-Tier mass builder. Superior to skull crushers for overall arm thickness and power.",
+        tips: [
+          "Keep your torso upright (vertical) to shift 90% of the load onto the triceps.",
+          "Lower yourself until your elbows are at a 90-degree angle; do not go deeper to protect shoulders.",
+          "Keep elbows tucked close to your ribs—do not let them flare out.",
+          "Once you can do 12 clean bodyweight reps, add a 2.5kg or 5kg plate to a dip belt.",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/04/CHAIR-DIPS.gif",
+        ],
+        video: ["https://youtube.com/embed/2z8JmcrW-As?si=TricepFocus"],
+        impact: [
+          "Tricep Long Head",
+          "Tricep Lateral Head",
+          "Medial Head (Overall Thickness)",
+          "Lower Chest Stability",
+        ],
+      },
       {
         id: "pb-cardio-top",
         name: "High-Intensity Spin Sprints 🚲🔥",
