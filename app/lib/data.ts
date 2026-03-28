@@ -613,7 +613,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Squeeze hard at bottom",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif",
+          "https://fitliferegime.com/wp-content/uploads/2023/08/Seated-Machine-Calf-Raise.gif",
         ],
         video: ["https://youtube.com/embed/_lgE0gPvbik?si=WNsOc1jeRc9R42QC"],
         impact: ["Hamstring Detail", "Knee Health"],
