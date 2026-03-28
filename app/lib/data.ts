@@ -613,7 +613,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Squeeze hard at bottom",
         ],
         image: [
-          "https://fitliferegime.com/wp-content/uploads/2023/08/Seated-Machine-Calf-Raise.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/08/Seated-Leg-Curl.gif",
         ],
         video: ["https://youtube.com/embed/_lgE0gPvbik?si=WNsOc1jeRc9R42QC"],
         impact: ["Hamstring Detail", "Knee Health"],
@@ -654,7 +654,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Pause and squeeze at the top",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Calf-Raise.gif",
+          "https://fitliferegime.com/wp-content/uploads/2023/08/Seated-Machine-Calf-Raise.gif",
         ],
         video: ["https://www.youtube.com/embed/JbyjNymZOt0"],
         impact: ["Lower Calf Width", "Soleus Growth"],
