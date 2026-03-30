@@ -93,7 +93,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Do not use leg drive (Strict press)",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Overhead-Press.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/07/Barbell-Standing-Military-Press.gif",
           "https://fitnessprogramer.com/wp-content/uploads/2023/09/Standing-Dumbbell-Overhead-Press.gif",
         ],
         video: [
