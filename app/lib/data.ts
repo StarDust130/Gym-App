@@ -300,7 +300,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "High reps for growth",
         ],
         image: [
-          "https://burnfit.io/wp-content/uploads/2023/11/STD_CALF_RAISE.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2022/04/Standing-Barbell-Calf-Raise.gif",
         ],
         video: ["https://youtube.com/embed/baEXLy09Ncc?si=UnOyS8ClYxZFdyCg"],
         impact: ["Calf Size", "Ankle Stability"],
