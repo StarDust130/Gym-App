@@ -460,42 +460,8 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: ["https://www.youtube.com/embed/eGo4IYtl4hNd"],
         impact: ["Lat Width", "Upper Back"],
       },
-      {
-        id: "bk-tbar",
-        name: "Chest-Supported Machine Row",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Back",
-        note: "🎯 EXERCISE 2. UPPER BACK DENSITY. Paralyzes the lower back so 100% of the force goes into the rhomboids. Saves your spine for tomorrow's RDLs.",
-        tips: [
-          "Jam your chest hard into the pad.",
-          "Pull your elbows back and squeeze your shoulder blades together.",
-          "Do not lift your chest off the pad to cheat the weight up.",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lever-T-bar-Row.gif",
-        ],
-        video: ["https://youtube.com/embed/G8l_8chR5BE"],
-        impact: ["Mid-Back Thickness", "Lower Back Safety"],
-      },
-      {
-        id: "plb-3",
-        name: "Straight Arm Lat Pulldown",
-        reps: "12",
-        sets: "3 sets",
-        category: "Back",
-        note: "🔪 EXERCISE 3. ISOLATION. Pure lat activation without using your biceps.",
-        tips: [
-          "Keep arms straight with a slight bend in elbows",
-          "Push the bar down to your thighs",
-          "Hinge slightly forward at the hips",
-        ],
-        image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Straight-Arm-Lat-Pulldown.gif",
-        ],
-        video: ["https://www.youtube.com/embed/GjxNfL-I7Sg"],
-        impact: ["Lat Sweep", "Back Width"],
-      },
+      
+
       {
         id: "bi-2",
         name: "Machine Preacher Curl",
@@ -529,7 +495,25 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Neutral grip (thumbs up)",
           "Cross body or straight up",
           "Controlled tempo",
+            {
+        id: "bk-tbar-wide",
+        name: "Wide-Grip T-Bar Row",
+        reps: "10-12",
+        sets: "3 sets",
+        category: "Back",
+        note: "🎯 EXERCISE 2. BACK DENSITY. The wide grip forces the rhomboids and rear delts to do the heavy lifting. This builds the '3D' thickness that rows are made for.",
+        tips: [
+          "Use a wide-grip handle (V-handle is for Tuesday, use the wide bar today).",
+          "Keep a slight bend in your knees and a flat, neutral spine—do not round your back.",
+          "Pull the weight toward your upper stomach/lower chest, flaring your elbows out slightly.",
+          "Squeeze your shoulder blades together at the top like you are trying to crush a grape between them.",
+          "Control the descent; do not let the weight drop or pull your shoulders out of socket."
         ],
+        image: ["https://fitnessprogramer.com/wp-content/uploads/2021/02/Lever-T-bar-Row.gif" , "https://fitnessprogramer.com/wp-content/uploads/2021/04/t-bar-rows.gif"],
+        video: ["https://youtube.com/embed/v8-97kGInNo"],
+        impact: ["Mid-Back Thickness", "Rear Delt Width", "Trapezius Density"],
+      },
+  ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-Hammer-Curl.gif",
         ],
