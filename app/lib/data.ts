@@ -552,7 +552,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Curl wrists up forcefully.",
         ],
         image: [
-          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Wrist-Curl.gif",
+          "https://www.vivafitness.net/wp-content/uploads/kh280-1024x1024.jpg",
         ],
         video: ["https://www.youtube.com/embed/C2IYWXb64M4"],
         impact: ["Inner Forearm Pop", "Vascularity"],
