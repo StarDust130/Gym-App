@@ -212,7 +212,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: ["https://youtube.com/embed/54x2WF1_Suc?si=Krs73Ki6rbcjMNkV"],
         impact: ["Overall Bicep Size", "Thickness"],
       },
-{
+      {
         id: "sh-5-rev",
         name: "Machine Reverse Pec Deck",
         reps: "12-15",
@@ -228,7 +228,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Delt-Machine-Flys.gif",
         ],
-        video: ["https://youtube.com/embed/7tgx6QHB0-A?si=3ZNWCOx3puBArCOp"], 
+        video: ["https://youtube.com/embed/7tgx6QHB0-A?si=3ZNWCOx3puBArCOp"],
         impact: ["Rear Delts", "3D Shoulder Look"],
       },
     ],
@@ -460,7 +460,49 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: ["https://www.youtube.com/embed/eGo4IYtl4hNd"],
         impact: ["Lat Width", "Upper Back"],
       },
-      
+      {
+        id: "bk-tbar-wide",
+        name: "Wide-Grip T-Bar Row",
+        reps: "10-12",
+        sets: "3 sets",
+        category: "Back",
+        note: "🎯 EXERCISE 2. BACK DENSITY. The wide grip forces the rhomboids and rear delts to do the heavy lifting. This builds the '3D' thickness that rows are made for.",
+        tips: [
+          "✅ Wide Grip: Use the outermost horizontal handles. Do not use the narrow V-handle today.",
+          "✅ Chest/Spine Support: If using a machine, keep your chest glued to the pad. If using a barbell, keep your back flat like a table.",
+          "✅ Flare Elbows: Pull the weight toward your upper stomach, flaring your elbows out slightly to hit the upper back.",
+          "✅ Scapular Squeeze: Squeeze your shoulder blades together at the top like you are trying to crush a grape.",
+          "❌ No Momentum: Do not bounce your knees or swing your torso to get the weight up.",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lever-T-bar-Row.gif",
+          "https://fitnessprogramer.com/wp-content/uploads/2021/04/t-bar-rows.gif",
+        ],
+        video: [
+          "https://youtube.com/embed/ZbOUxXRS42s?si=nJrbb-Zc5NjqiFd6",
+          "https://youtube.com/embed/8pR3JoZ0iBU?si=ql9r12vO0hp09rYQ",
+        ],
+        impact: ["Mid-Back Thickness", "Rear Delt Width", "Trapezius Density"],
+      },
+      {
+        id: "plb-lat-wide",
+        name: "Lat Pulldown (Wide Grip)",
+        reps: "10-12",
+        sets: "3 sets",
+        category: "Back",
+        note: "📐 EXERCISE 3. THE WIDE SWEEP. Using the outermost grip on the long bar to force the lats to flare. Mandatory for the V-taper look.",
+        tips: [
+          "Grip the bar at the very ends of the curved sections.",
+          "Lean back slightly (15°) and pull the bar to your upper chest.",
+          "Lead with the elbows—drive them down and out to the sides.",
+          "3-second slow release to maximize the stretch on the outer lat fibers.",
+        ],
+        image: [
+          "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lat-Pulldown.gif",
+        ],
+        video: ["https://youtube.com/embed/HWGntttgJQw?si=KApeYGaFIKLQLXTS"],
+        impact: ["Outer Lat Flare", "V-Taper Width", "Upper Back Integration"],
+      },
 
       {
         id: "bi-2",
@@ -495,25 +537,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Neutral grip (thumbs up)",
           "Cross body or straight up",
           "Controlled tempo",
-            {
-        id: "bk-tbar-wide",
-        name: "Wide-Grip T-Bar Row",
-        reps: "10-12",
-        sets: "3 sets",
-        category: "Back",
-        note: "🎯 EXERCISE 2. BACK DENSITY. The wide grip forces the rhomboids and rear delts to do the heavy lifting. This builds the '3D' thickness that rows are made for.",
-        tips: [
-          "Use a wide-grip handle (V-handle is for Tuesday, use the wide bar today).",
-          "Keep a slight bend in your knees and a flat, neutral spine—do not round your back.",
-          "Pull the weight toward your upper stomach/lower chest, flaring your elbows out slightly.",
-          "Squeeze your shoulder blades together at the top like you are trying to crush a grape between them.",
-          "Control the descent; do not let the weight drop or pull your shoulders out of socket."
         ],
-        image: ["https://fitnessprogramer.com/wp-content/uploads/2021/02/Lever-T-bar-Row.gif" , "https://fitnessprogramer.com/wp-content/uploads/2021/04/t-bar-rows.gif"],
-        video: ["https://youtube.com/embed/v8-97kGInNo"],
-        impact: ["Mid-Back Thickness", "Rear Delt Width", "Trapezius Density"],
-      },
-  ],
         image: [
           "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-Hammer-Curl.gif",
         ],
