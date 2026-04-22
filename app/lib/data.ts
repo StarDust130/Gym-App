@@ -26,9 +26,9 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
 
   schedule: {
     Monday: "Push A (Heavy)",
-    Tuesday: "Pull A",
-    Wednesday: "Legs A (Quad Focus + Core)",
-    Thursday: "Push B (Hypertrophy)",
+    Tuesday: "Pull A + Core",
+    Wednesday: "Legs A (Quad Focus)",
+    Thursday: "Push B + Core",
     Friday: "Pull B (Width + Arms + Forearms)",
     Saturday: "Legs B (Posterior Chain)",
     Sunday: "Rest Day",
@@ -231,6 +231,24 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         video: ["https://youtube.com/embed/7tgx6QHB0-A?si=3ZNWCOx3puBArCOp"],
         impact: ["Rear Delts", "3D Shoulder Look"],
       },
+      {
+        id: "abs-3",
+        name: "Hanging Leg Raise",
+        reps: "12",
+        sets: "3 sets",
+        category: "Abs",
+        note: "🔥 EXERCISE 5. LOWER ABS. Hang strict. No swinging.",
+        tips: [
+          "🚫 Do not use momentum",
+          "🦵 Legs straight (or knees up if failing)",
+          "⬇️ Control the drop slowly",
+        ],
+        image: [
+          "https://ccuuubmtdurkmbeufybi.supabase.co/storage/v1/object/public/animations/0826.gif",
+        ],
+        video: ["https://youtube.com/embed/XQc0WHO90Lk?si=xf8AsOrWQ6x_ueJm"],
+        impact: ["Lower Abs", "V-Cut"],
+      },
     ],
 
     // ===========================================
@@ -304,40 +322,6 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
         ],
         video: ["https://youtube.com/embed/baEXLy09Ncc?si=UnOyS8ClYxZFdyCg"],
         impact: ["Calf Size", "Ankle Stability"],
-      },
-      {
-        id: "abs-3",
-        name: "Hanging Leg Raise",
-        reps: "12",
-        sets: "3 sets",
-        category: "Abs",
-        note: "🔥 EXERCISE 5. LOWER ABS. Hang strict. No swinging.",
-        tips: [
-          "🚫 Do not use momentum",
-          "🦵 Legs straight (or knees up if failing)",
-          "⬇️ Control the drop slowly",
-        ],
-        image: [
-          "https://ccuuubmtdurkmbeufybi.supabase.co/storage/v1/object/public/animations/0826.gif",
-        ],
-        video: ["https://youtube.com/embed/XQc0WHO90Lk?si=xf8AsOrWQ6x_ueJm"],
-        impact: ["Lower Abs", "V-Cut"],
-      },
-      {
-        id: "abs-6",
-        name: "Plank (Strict Hold)",
-        reps: "60 Secs",
-        sets: "2 sets",
-        category: "Abs",
-        note: "🛡️ EXERCISE 6. CORE LOCK. Squeeze everything.",
-        tips: [
-          "🍑 Glutes tight (Squeeze them)",
-          "⚓ Belly button pulled to spine",
-          "📉 No sagging hips!",
-        ],
-        image: ["https://www.inspireusafoundation.org/file/2022/01/plank.gif"],
-        video: ["https://youtube.com/embed/ftSgOmyQyEg?si=u6PPn6keN49-9mV8"],
-        impact: ["Deep Core", "Posture"],
       },
     ],
 
@@ -435,6 +419,22 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
           "Increase resistance until it feels like pedaling through mud.",
         ],
         impact: ["Visceral Fat Loss 💣", "Core Tightening 🦾"],
+      },
+      {
+        id: "abs-6",
+        name: "Plank (Strict Hold)",
+        reps: "60 Secs",
+        sets: "2 sets",
+        category: "Abs",
+        note: "🛡️ EXERCISE 6. CORE LOCK. Squeeze everything.",
+        tips: [
+          "🍑 Glutes tight (Squeeze them)",
+          "⚓ Belly button pulled to spine",
+          "📉 No sagging hips!",
+        ],
+        image: ["https://www.inspireusafoundation.org/file/2022/01/plank.gif"],
+        video: ["https://youtube.com/embed/ftSgOmyQyEg?si=u6PPn6keN49-9mV8"],
+        impact: ["Deep Core", "Posture"],
       },
     ],
 
