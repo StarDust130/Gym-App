@@ -143,7 +143,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // ===========================================
     // TUESDAY: PULL A (Heavy Rows)
     // ===========================================
-    "Pull A": [
+    "Pull A + Core": [
       {
         id: "bk-1",
         name: "Bent-Over Barbell Row",
@@ -328,7 +328,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
     // ===========================================
     // THURSDAY: PUSH B (Hypertrophy)
     // ===========================================
-    "Push B (Hypertrophy)": [
+    "Push B + Core": [
       {
         id: "pb-1",
         name: "Incline Machine Press",
