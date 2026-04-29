@@ -27,7 +27,7 @@ export const MOCK_WORKOUT_PLAN: WorkoutPlan = {
   schedule: {
     Monday: "Push A (Heavy)",
     Tuesday: "Pull A + Core",
-    Wednesday: "Legs A (Quad Focus)",
+    Wednesday: "Legs A (Quad Focus + Core)",
     Thursday: "Push B + Core",
     Friday: "Pull B (Width + Arms + Forearms)",
     Saturday: "Legs B (Posterior Chain)",
